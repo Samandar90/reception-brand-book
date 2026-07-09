@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
 import { SettingsProvider } from '@/contexts/SettingsContext'
@@ -77,9 +77,9 @@ export default function App() {
         <AuthProvider>
           <ProgressProvider>
             <TooltipProvider delayDuration={200}>
-              <BrowserRouter>
+              <HashRouter>
                 <AppRoutes />
-              </BrowserRouter>
+              </HashRouter>
               <Toaster position="top-center" />
             </TooltipProvider>
           </ProgressProvider>
