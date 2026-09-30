@@ -28,7 +28,6 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { supabase } from '@/lib/supabase'
 import { useLanguage } from '@/i18n/LanguageContext'
 import type { TranslationKey } from '@/i18n/translations'
 import { useAuth } from '@/contexts/AuthContext'
@@ -81,32 +80,6 @@ interface DetailData {
 const ACTIVITY_FETCH_LIMIT = 1000
 const TIMELINE_LIMIT = 100
 
-/** writing_rubric is not part of TestAttempt yet — read it separately (best effort; a graded answer without it shows a note). */
-async function fetchWritingRubrics(userId: string): Promise<Record<string, WritingRubric>> {
-  try {
-    const { data, error } = await supabase
-      .from('test_attempts')
-      .select('id, writing_rubric')
-      .eq('user_id', userId)
-      .not('writing_rubric', 'is', null)
-    if (error || !data) return {}
-    const out: Record<string, WritingRubric> = {}
-    for (const row of data as { id: string; writing_rubric: unknown }[]) {
-      const r = row.writing_rubric as Partial<WritingRubric> | null
-      if (r && typeof r === 'object') {
-        out[row.id] = {
-          task: Number(r.task ?? 0),
-          tone: Number(r.tone ?? 0),
-          grammar: Number(r.grammar ?? 0),
-          vocabulary: Number(r.vocabulary ?? 0),
-        }
-      }
-    }
-    return out
-  } catch {
-    return {}
-  }
-}
 
 // ─── Details parsing (attempt.details is free-form JSON) ─────────────────────
 
@@ -226,9 +199,10 @@ function EmployeeDetailPage({ id }: { id: string }) {
       fetchEmployeeAttempts(id),
       fetchEmployeeActivity(id, ACTIVITY_FETCH_LIMIT),
       fetchGrants(id),
-      fetchWritingRubrics(id),
     ])
-      .then(([profile, mods, attempts, activity, grants, rubrics]) => {
+      .then(([profile, mods, attempts, activity, grants]) => {
+        const rubrics: Record<string, WritingRubric> = {}
+        for (const a of attempts) if (a.writingRubric) rubrics[a.id] = a.writingRubric
         if (cancelled) return
         setNow(Date.now())
         setError(false)

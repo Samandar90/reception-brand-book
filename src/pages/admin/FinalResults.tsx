@@ -24,9 +24,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { StatCard } from '@/components/shared/StatCard'
 import { cn } from '@/lib/utils'
 import { useLanguage } from '@/i18n/LanguageContext'
-import { supabase } from '@/lib/supabase'
-import { ATTEMPT_COLUMNS, mapAttempt, type TestAttemptRow } from '@/lib/api'
-import { LIVE_STATUSES, fetchAnswers, fetchParticipants, fetchSession, gradeOpenAnswer } from '@/lib/finalApi'
+import {
+  LIVE_STATUSES,
+  fetchAnswers,
+  fetchFinalAttempts,
+  fetchParticipants,
+  fetchSession,
+  gradeOpenAnswer,
+} from '@/lib/finalApi'
 import { getFinalQuestion } from '@/data/final'
 import { getModuleBySlug } from '@/data/modules'
 import type {
@@ -53,16 +58,6 @@ function formatDate(iso: string | null, lang: Language): string {
   } catch {
     return d.toLocaleString()
   }
-}
-
-async function fetchFinalAttempts(sessionId: string): Promise<TestAttempt[]> {
-  const { data, error } = await supabase
-    .from('test_attempts')
-    .select(ATTEMPT_COLUMNS)
-    .eq('session_id', sessionId)
-    .eq('kind', 'final')
-  if (error) throw error
-  return (data as TestAttemptRow[]).map(mapAttempt)
 }
 
 type GradingStatus = 'graded' | 'pending' | 'none'

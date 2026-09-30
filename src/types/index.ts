@@ -218,7 +218,7 @@ export interface FinalOpenQuestion {
 
 export type FinalQuestion = FinalChoiceQuestion | FinalOpenQuestion
 
-// ─── Live final test (mirrors supabase tables) ───────────────────────────────
+// ─── Live final test (mirrors the server tables) ─────────────────────────────
 
 export type FinalStatus = 'lobby' | 'question' | 'reveal' | 'finished' | 'cancelled'
 

@@ -1,6 +1,8 @@
 # Hotel Academy — платформа оценки сотрудников ресепшена
 
-Дата: 2026-09-30. Статус: реализовано (фронтенд + бэкенд), бэкенд проверен сквозным тестом `scripts/smoke-test.mjs` (63/63).
+Дата: 2026-09-30. Статус: реализовано. Сервер проверен сквозным тестом `scripts/smoke-test.mjs` (87/87).
+
+> **Изменение 2026-09-30:** бесплатного места в Supabase не нашлось, владелец выбрал Render Starter ($7/мес). Бэкенд перенесён с Supabase на собственный сервер Node + Express + SQLite на постоянном диске Render. Логика (права, пересдачи, подсчёт баллов финала, смешанный итог 70/30) перенесена один в один; разделы ниже описывают её в терминах таблиц, которые теперь живут в SQLite (`server/db.ts`).
 
 ## 1. Цель
 
@@ -13,10 +15,12 @@
 
 ## 2. Архитектура
 
-- **Frontend** — SPA (React 19, Vite, TS, Tailwind 4, HashRouter) на GitHub Pages.
-- **Backend** — Supabase: Postgres + RLS, Auth, Realtime, Edge Function `admin-users`.
-- **Роли** — `admin` / `employee` в `profiles.role`. Роль в JWT не используется, поэтому деактивация действует сразу.
-- **Конфигурация** — `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (repo variables при сборке, `.env.local` локально). Сервисный ключ только в Edge Function. Сборка падает без переменных, живой сайт не заменяется пустым.
+- **Один сервис на Render (Starter)**: Node 24 + Express 5 отдаёт собранный SPA (React 19, Vite, HashRouter) и API `/api/*`.
+- **Данные** — SQLite (better-sqlite3, WAL) в `DATA_DIR` на постоянном диске Render. Без смонтированного диска сервер в production не стартует.
+- **Вход** — логин + пароль (scrypt), непрозрачный токен сессии в httpOnly cookie (Secure, SameSite=Lax), в базе хранится только sha256. «Запомнить устройство» — 30 дней со скользящим продлением, иначе 12 часов. Каждый изменяющий запрос обязан нести заголовок `x-academy: 1` (защита от подделки запросов с чужих сайтов). Подбор пароля ограничен: 10 ошибок за 15 минут.
+- **Права** — проверяются на сервере в маршрутах (`requireUser`, `requireAdmin`); сотрудник видит только свои данные.
+- **Реальное время** — Server-Sent Events `/api/final/stream`: один поток на вкладку, события `session`, `participants`, `answer` (только админам). Клиент считает событие поводом перечитать данные.
+- **Первый запуск** — `SETUP_KEY` из переменных окружения, работает только пока нет ни одного администратора.
 
 ## 3. Данные
 
@@ -32,7 +36,7 @@
 | `final_participants` | Участники: display_name, last_seen_at (heartbeat), answered_count, score, rank |
 | `final_answers` | Ответы, оцениваются на сервере; open_score 0–5 ставит админ |
 
-Представления (security_invoker): `employee_overview` (сводка по сотруднику), `question_stats` (% правильных по каждому вопросу).
+Сводки считаются запросами сервера: обзор команды (`GET /api/admin/overview`) и статистика вопросов (`GET /api/admin/question-stats`). Ключи вопросов финала сервер берёт прямо из банка `src/data/final/` — на телефоны они не отправляются.
 
 ## 4. Аккаунты и вход
 
@@ -81,4 +85,4 @@
 
 ## 8. Деплой
 
-См. README: проект Supabase → миграция → выключить регистрацию → секрет и функция → repo variables → Run workflow → `/setup`.
+См. README: сервис Render (Starter, Frankfurt) → переменные `NODE_ENV`, `DATA_DIR`, `SETUP_KEY` → диск `/var/data` → `/setup` → переадресация старого адреса GitHub Pages.

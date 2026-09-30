@@ -21,6 +21,7 @@ const FAILURE_KEY: Record<SignInFailure, TranslationKey> = {
   disabled: 'login.accountDisabled',
   network: 'login.networkError',
   not_configured: 'login.notConfigured',
+  rate_limited: 'login.tooMany',
 }
 
 export default function Login() {

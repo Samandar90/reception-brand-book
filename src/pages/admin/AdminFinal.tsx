@@ -348,7 +348,7 @@ export default function AdminFinal() {
       })
       navigate(`/present/${session.id}`)
     } catch (e) {
-      if (errorCode(e) === '23505') {
+      if (errorCode(e) === 'live_session_exists' || errorCode(e) === '23505') {
         toast.error(t('finalAdmin.new.liveExists'))
         void load()
       } else {

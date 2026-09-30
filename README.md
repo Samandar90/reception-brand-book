@@ -2,48 +2,33 @@
 
 Портал для сотрудников ресепшена: 15 обучающих модулей, тест знаний, тесты уровня английского и русского языка (A1–C1 с письменной частью), живой финальный тест, который владелец проводит очно, и админ-панель с эффективностью каждого сотрудника.
 
-Сайт: https://samandar90.github.io/reception-brand-book/
-
 ## Как это устроено
+
+Один сервис на Render (тариф Starter) отдаёт и сайт, и API. Данные лежат в файле SQLite на постоянном диске Render.
 
 | Часть | Технология | Где лежит |
 |---|---|---|
-| Сайт | React 19 + Vite + Tailwind, GitHub Pages | `src/` |
-| База данных, вход, живой тест | Supabase (Postgres, Auth, Realtime) | `supabase/migrations/` |
-| Создание аккаунтов сотрудникам | Supabase Edge Function `admin-users` | `supabase/functions/admin-users/` |
-| Проверка всего бэкенда | сквозной тест (63 проверки) | `scripts/smoke-test.mjs` |
+| Сайт | React 19 + Vite + Tailwind | `src/` |
+| Сервер и API | Node 24 + Express 5 + SQLite (better-sqlite3), запуск через `tsx` | `server/` |
+| Живой финал | Server-Sent Events: `/api/final/stream` | `server/realtime.ts`, `src/lib/finalApi.ts` |
+| Вопросы финала (с ключами) | читаются сервером прямо из банка | `src/data/final/` |
+| Сквозная проверка | 87 проверок по HTTP | `scripts/smoke-test.mjs` |
 
-Роли: **владелец (admin)** открывает аккаунты, видит результаты всех, проводит финальный тест, оценивает письменные ответы. **Сотрудник** учится и сдаёт тесты. Регистрации с сайта нет: аккаунты создаёт только владелец.
+Роли: **владелец (admin)** открывает аккаунты, видит результаты всех, проводит финальный тест, оценивает письменные ответы. **Сотрудник** учится и сдаёт тесты. Регистрации с сайта нет: аккаунты создаёт только владелец. Вход по логину и паролю, сессия в httpOnly cookie. Отключённый сотрудник выходит из системы сразу.
 
-## Первый запуск в интернете (один раз)
+## Запуск на Render (один раз)
 
-1. **Проект Supabase.** Создайте проект на https://supabase.com (регион Frankfurt, `eu-central-1`).
-2. **Схема базы.** Supabase → SQL Editor → вставьте и выполните файл `supabase/migrations/20260930120000_academy_init.sql`. Либо через CLI:
+1. **Сервис.** Web Service из этого репозитория, ветка `master`, регион Frankfurt, тариф Starter.
+   - Build Command: `npm ci --include=dev && npm run build`
+   - Start Command: `npm start`
+   - Health Check Path: `/api/health`
+2. **Переменные окружения:** `NODE_ENV=production`, `DATA_DIR=/var/data`, `SETUP_KEY=<длинный случайный ключ>`.
+3. **Диск.** Service → Disks → Add Disk: mount path `/var/data`, размер 1 GB. Без диска сервер не стартует: иначе каждое обновление стирало бы все результаты.
+4. **Аккаунт владельца.** Откройте сайт → «Первый запуск: создать аккаунт владельца» → введите `SETUP_KEY`, имя, логин и пароль. Ссылка исчезает, как только владелец создан.
+5. **Сотрудники.** Админ-панель → Аккаунты → «Создать аккаунт». Сайт покажет адрес, логин и пароль для сотрудника.
+6. **Старый адрес на GitHub Pages.** Задайте переменную репозитория `ACADEMY_URL` (адрес Render) и запустите Actions → «Redirect GitHub Pages to Render» — старые ссылки будут переадресовывать на новый сайт.
 
-   ```bash
-   npx supabase link --project-ref <REF>
-   ```
-
-   ```bash
-   npx supabase db push
-   ```
-
-3. **Запретить регистрацию.** Authentication → Sign In / Providers → выключите «Allow new users to sign up». Провайдер Email оставьте включённым, «Confirm email» выключите.
-4. **Функция аккаунтов.** Выложите функцию и задайте ключ установки (одноразовый, нужен только для создания владельца):
-
-   ```bash
-   npx supabase functions deploy admin-users --no-verify-jwt
-   ```
-
-   Ключ можно задать секретом `ADMIN_BOOTSTRAP_KEY` (Edge Functions → Secrets) или строкой в закрытой таблице через SQL Editor:
-
-   ```sql
-   insert into public.app_config (key, value) values ('bootstrap_key', '<длинный-случайный-ключ>');
-   ```
-
-5. **Сайт.** GitHub → репозиторий → Settings → Secrets and variables → Actions → вкладка **Variables** → добавьте `VITE_SUPABASE_URL` (Project URL) и `VITE_SUPABASE_ANON_KEY` (anon / publishable key) из Supabase → Settings → API. Затем запустите Actions → «Deploy to GitHub Pages» → Run workflow. Без этих переменных сборка останавливается и живой сайт не меняется.
-6. **Аккаунт владельца.** Откройте сайт → «Первый запуск: создать аккаунт владельца» → введите ключ из шага 4, имя, логин и пароль. Ссылка исчезает, как только владелец создан. После этого ключ можно удалить: `delete from public.app_config where key = 'bootstrap_key';`
-7. **Сотрудники.** Админ-панель → Аккаунты → «Создать аккаунт». Сайт покажет адрес, логин и пароль, которые нужно передать сотруднику.
+Резервные копии: Render ежедневно делает снимки диска. Файл базы: `/var/data/academy.sqlite3`.
 
 ## Как проводить финальный тест
 
@@ -52,7 +37,7 @@
 3. Откроется экран ведущего. Когда все в лобби, нажмите «Начать». Кнопки «Показать ответ» и «Следующий вопрос», либо пробел.
 4. После финала: Админ-панель → Финальный тест → Результаты → оцените открытые ответы по шкале 0–5.
 
-Итог сотрудника: 70 % вопросы с выбором и 30 % открытые ответы. Очки за скорость влияют только на место в таблице.
+Итог сотрудника: 70 % вопросы с вариантами и 30 % открытые ответы. Очки за скорость влияют только на место в таблице. При равных очках выше тот, кто отвечал быстрее.
 
 ## Правила тестов
 
@@ -67,25 +52,25 @@ npm install
 ```
 
 ```bash
-npx supabase start
+npm run dev:server
 ```
 
 ```bash
 npm run dev
 ```
 
-`npx supabase start` поднимает локальный Supabase в Docker (порты 553xx). Создайте `.env.local` по образцу `.env.example`, взяв `API_URL` и `ANON_KEY` из вывода команды. Локальный ключ установки лежит в `supabase/functions/.env`.
+`dev:server` поднимает API на порту 8787 с базой `./data/academy.sqlite3`, `dev` — сайт на Vite, который проксирует `/api` на сервер. Локальный ключ первого запуска: `local-setup-key`.
 
-Проверка бэкенда (на чистой локальной базе после `npx supabase db reset`):
+Демо-данные (владелец `owner/owner123`, сотрудники с паролем `demo123`):
 
 ```bash
-SUPABASE_ANON_KEY=<local anon key> npm run smoke
+npx tsx scripts/seed-demo.ts
 ```
 
-Демо-данные для локального просмотра (5 сотрудников с результатами, пароль `demo123`):
+Сквозная проверка сервера (при запущенном `dev:server`):
 
 ```bash
-SUPABASE_ANON_KEY=<local anon key> node scripts/seed-demo.mjs
+npm run smoke
 ```
 
 Прочие команды: `npm run build`, `npm run lint`, `npm run typecheck`.

@@ -33,6 +33,11 @@ export const authDict = {
     uz: 'Login va parolni administrator beradi',
     en: 'Your administrator provides your login and password',
   },
+  'login.tooMany': {
+    ru: 'Слишком много попыток. Подождите 15 минут или попросите администратора сбросить пароль.',
+    uz: "Juda ko'p urinish. 15 daqiqa kuting yoki administratordan parolni tiklashni so'rang.",
+    en: 'Too many attempts. Wait 15 minutes or ask your administrator to reset your password.',
+  },
   'login.firstLaunch': {
     ru: 'Первый запуск: создать аккаунт владельца',
     uz: 'Birinchi ishga tushirish: egasining hisobini yaratish',
@@ -46,9 +51,9 @@ export const authDict = {
   },
   'setup.keyLabel': { ru: 'Ключ установки', uz: "O'rnatish kaliti", en: 'Setup key' },
   'setup.keyHint': {
-    ru: 'Секрет ADMIN_BOOTSTRAP_KEY из настроек Supabase (Edge Functions → Secrets).',
-    uz: 'Supabase sozlamalaridagi ADMIN_BOOTSTRAP_KEY maxfiy kaliti (Edge Functions → Secrets).',
-    en: 'The ADMIN_BOOTSTRAP_KEY secret from Supabase (Edge Functions → Secrets).',
+    ru: 'Одноразовый ключ, который вам выдал разработчик (переменная SETUP_KEY на сервере).',
+    uz: 'Dasturchi bergan bir martalik kalit (serverdagi SETUP_KEY o\'zgaruvchisi).',
+    en: 'The one-time key from your developer (the SETUP_KEY variable on the server).',
   },
   'setup.nameLabel': { ru: 'Ваше имя', uz: 'Ismingiz', en: 'Your name' },
   'setup.loginHint': {
