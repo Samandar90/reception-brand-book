@@ -9,17 +9,20 @@ import { useLanguage } from '@/i18n/LanguageContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
 import { generateCertificatePdf } from '@/lib/pdf'
-import { HOTEL_NAME } from '@/lib/constants'
+import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, HOTEL_NAME } from '@/lib/constants'
 
 export default function Certificate() {
   const { t, lang } = useLanguage()
-  const { employeeName, setEmployeeName } = useAuth()
-  const { progressPercent, completedCount } = useProgress()
-  const [name, setName] = useState(employeeName)
+  const { user } = useAuth()
+  const { progressPercent, completedCount, bestPercent, latestAttempt } = useProgress()
+  const [name, setName] = useState(user?.fullName ?? '')
   const [generating, setGenerating] = useState(false)
   const certRef = useRef<HTMLDivElement>(null)
 
-  const unlocked = progressPercent >= 100
+  const knowledgeBest = bestPercent('knowledge') ?? 0
+  const unlocked = progressPercent >= 100 && knowledgeBest >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
+  const englishLevel = latestAttempt('english')?.level ?? null
+  const russianLevel = latestAttempt('russian')?.level ?? null
   const today = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US', {
     year: 'numeric',
     month: 'long',
@@ -28,7 +31,6 @@ export default function Certificate() {
 
   async function handleDownload() {
     if (!certRef.current) return
-    setEmployeeName(name)
     setGenerating(true)
     try {
       await generateCertificatePdf(certRef.current, `${HOTEL_NAME.replace(/\s+/g, '-')}-Certificate-${name || 'Employee'}.pdf`)
@@ -44,6 +46,9 @@ export default function Certificate() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t('certificate.title')}</h1>
           <p className="mt-2 text-[15px] text-muted-foreground">{t('certificate.locked')}</p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t('test.knowledge')}: {knowledgeBest > 0 ? `${Math.round(knowledgeBest)}%` : t('common.notPassed')}
+          </p>
         </div>
       </div>
     )
@@ -113,6 +118,13 @@ export default function Certificate() {
           <p style={{ color: '#4a4438' }} className="max-w-md text-[15px] leading-relaxed">
             {bookingSuffix(lang)}
           </p>
+
+          {(englishLevel || russianLevel) && (
+            <p style={{ color: '#7a7263' }} className="text-sm">
+              {t('certificate.levels')}:{' '}
+              {[englishLevel && `English ${englishLevel}`, russianLevel && `Русский ${russianLevel}`].filter(Boolean).join(' · ')}
+            </p>
+          )}
 
           <div className="mt-2 flex items-center gap-3">
             <Award style={{ color: '#c9a94d' }} className="size-5" />

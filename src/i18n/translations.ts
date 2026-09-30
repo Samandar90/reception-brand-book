@@ -1,4 +1,11 @@
 import type { Language } from '@/types'
+import { commonDict } from './dicts/common'
+import { authDict } from './dicts/auth'
+import { testsDict } from './dicts/tests'
+import { finalDict } from './dicts/final'
+import { adminDict } from './dicts/admin'
+import { learningDict } from './dicts/learning'
+import { finalAdminDict } from './dicts/finalAdmin'
 
 export const LANGUAGE_LABELS: Record<Language, string> = {
   ru: 'Русский',
@@ -12,7 +19,7 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
   en: '🇬🇧',
 }
 
-const dict = {
+const base = {
   appName: { ru: 'Hotel Academy', uz: 'Hotel Academy', en: 'Hotel Academy' },
   appSubtitle: {
     ru: 'Портал обучения ресепшена',
@@ -39,14 +46,8 @@ const dict = {
   'common.minutes': { ru: 'мин', uz: 'daqiqa', en: 'min' },
 
   // login
-  'login.pinLabel': { ru: 'PIN-код', uz: 'PIN-kod', en: 'PIN code' },
-  'login.pinPlaceholder': { ru: 'Введите PIN', uz: 'PIN kiriting', en: 'Enter PIN' },
-  'login.nameLabel': { ru: 'Ваше имя', uz: 'Ismingiz', en: 'Your name' },
-  'login.namePlaceholder': { ru: 'Иван Иванов', uz: 'Ism Familiya', en: 'Jane Smith' },
   'login.rememberDevice': { ru: 'Запомнить это устройство', uz: 'Bu qurilmani eslab qolish', en: 'Remember this device' },
   'login.unlock': { ru: 'Войти', uz: 'Kirish', en: 'Unlock' },
-  'login.invalidPin': { ru: 'Неверный PIN-код', uz: 'PIN-kod noto\'g\'ri', en: 'Incorrect PIN' },
-  'login.nameRequired': { ru: 'Введите ваше имя', uz: 'Ismingizni kiriting', en: 'Please enter your name' },
 
   // nav
   'nav.dashboard': { ru: 'Дашборд', uz: 'Boshqaruv paneli', en: 'Dashboard' },
@@ -145,10 +146,11 @@ const dict = {
   },
   'certificate.date': { ru: 'Дата', uz: 'Sana', en: 'Date' },
   'certificate.locked': {
-    ru: 'Пройдите все 15 модулей, чтобы разблокировать сертификат',
-    uz: 'Sertifikatni ochish uchun barcha 15 modulni yakunlang',
-    en: 'Complete all 15 modules to unlock your certificate',
+    ru: 'Пройдите все 15 модулей и сдайте тест знаний минимум на 80 %, чтобы получить сертификат',
+    uz: 'Sertifikat olish uchun barcha 15 modulni yakunlang va bilim testini kamida 80 % ga topshiring',
+    en: 'Complete all 15 modules and score at least 80% on the knowledge test to unlock your certificate',
   },
+  'certificate.levels': { ru: 'Уровень языка', uz: 'Til darajasi', en: 'Language level' },
 
   // settings
   'settings.title': { ru: 'Настройки', uz: 'Sozlamalar', en: 'Settings' },
@@ -164,18 +166,29 @@ const dict = {
   'settings.animations': { ru: 'Анимации', uz: 'Animatsiyalar', en: 'Animations' },
   'settings.on': { ru: 'Вкл', uz: 'Yoqilgan', en: 'On' },
   'settings.off': { ru: 'Выкл', uz: 'O\'chirilgan', en: 'Off' },
-  'settings.resetProgress': { ru: 'Сбросить прогресс', uz: 'Jarayonni tiklash', en: 'Reset progress' },
-  'settings.resetConfirmTitle': { ru: 'Сбросить весь прогресс?', uz: 'Barcha jarayon tiklansinmi?', en: 'Reset all progress?' },
+  'settings.resetProgress': { ru: 'Сбросить прогресс модулей', uz: 'Modullar jarayonini tiklash', en: 'Reset module progress' },
+  'settings.resetConfirmTitle': { ru: 'Сбросить прогресс модулей?', uz: 'Modullar jarayoni tiklansinmi?', en: 'Reset module progress?' },
   'settings.resetConfirmBody': {
-    ru: 'Это действие удалит все пройденные модули и результаты тестов. Отменить нельзя.',
-    uz: 'Bu amal barcha bajarilgan modullar va test natijalarini o\'chiradi. Buni qaytarib bo\'lmaydi.',
-    en: 'This will erase all completed modules and quiz results. This cannot be undone.',
+    ru: 'Все модули снова станут непройденными. Результаты тестов сохраняются и остаются видны администратору.',
+    uz: 'Barcha modullar yana bajarilmagan bo\'ladi. Test natijalari saqlanib qoladi va administratorga ko\'rinadi.',
+    en: 'All modules will be marked as not completed. Test results are kept and stay visible to the administrator.',
   },
   'settings.resetConfirmAction': { ru: 'Да, сбросить', uz: 'Ha, tiklash', en: 'Yes, reset' },
   'settings.logout': { ru: 'Выйти', uz: 'Chiqish', en: 'Log out' },
 
   // search / phrasebook
   'phrase.category': { ru: 'Категория', uz: 'Toifa', en: 'Category' },
+} satisfies Record<string, Record<Language, string>>
+
+const dict = {
+  ...base,
+  ...commonDict,
+  ...authDict,
+  ...testsDict,
+  ...finalDict,
+  ...adminDict,
+  ...learningDict,
+  ...finalAdminDict,
 } satisfies Record<string, Record<Language, string>>
 
 export type TranslationKey = keyof typeof dict

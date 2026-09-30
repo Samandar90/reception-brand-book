@@ -1,63 +1,96 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
-import { readStorage, writeStorage } from '@/lib/storage'
-import { ACADEMY_PIN, AUTH_STORAGE_KEY } from '@/lib/constants'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import type { Profile } from '@/types'
+import { fetchMyProfile } from '@/lib/api'
+import { apiPost, ApiError, UNAUTHORIZED_EVENT } from '@/lib/http'
 
-interface AuthState {
-  unlocked: boolean
-  employeeName: string
-  rememberDevice: boolean
-}
+export type AuthStatus = 'loading' | 'signedOut' | 'signedIn'
 
-const DEFAULT_AUTH: AuthState = {
-  unlocked: false,
-  employeeName: '',
-  rememberDevice: false,
-}
+export type SignInFailure = 'invalid' | 'disabled' | 'network' | 'not_configured' | 'rate_limited'
+export type SignInResult = { ok: true } | { ok: false; reason: SignInFailure }
 
 interface AuthContextValue {
-  unlocked: boolean
-  employeeName: string
-  login: (pin: string, name: string, remember: boolean) => boolean
-  logout: () => void
-  setEmployeeName: (name: string) => void
+  status: AuthStatus
+  user: Profile | null
+  isAdmin: boolean
+  /** Kept for the login page: the academy server is always part of the same site. */
+  configured: boolean
+  signIn: (login: string, password: string, remember: boolean) => Promise<SignInResult>
+  signOut: () => Promise<void>
+  refreshProfile: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+interface AuthState {
+  status: AuthStatus
+  user: Profile | null
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [auth, setAuth] = useState<AuthState>(() => {
-    const stored = readStorage(AUTH_STORAGE_KEY, DEFAULT_AUTH)
-    return stored.rememberDevice ? stored : DEFAULT_AUTH
-  })
+  const [state, setState] = useState<AuthState>({ status: 'loading', user: null })
 
-  const login = useCallback((pin: string, name: string, remember: boolean): boolean => {
-    if (pin !== ACADEMY_PIN) return false
-    const next: AuthState = { unlocked: true, employeeName: name.trim(), rememberDevice: remember }
-    setAuth(next)
-    if (remember) {
-      writeStorage(AUTH_STORAGE_KEY, next)
-    } else {
-      writeStorage(AUTH_STORAGE_KEY, DEFAULT_AUTH)
+  useEffect(() => {
+    let cancelled = false
+    fetchMyProfile()
+      .then((user) => {
+        if (!cancelled) setState(user && user.isActive ? { status: 'signedIn', user } : { status: 'signedOut', user: null })
+      })
+      .catch(() => {
+        if (!cancelled) setState({ status: 'signedOut', user: null })
+      })
+    // Any API call answered with 401 means the session ended (expired, reset or account disabled).
+    const onUnauthorized = () => setState({ status: 'signedOut', user: null })
+    window.addEventListener(UNAUTHORIZED_EVENT, onUnauthorized)
+    return () => {
+      cancelled = true
+      window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized)
     }
-    return true
   }, [])
 
-  const logout = useCallback(() => {
-    setAuth(DEFAULT_AUTH)
-    writeStorage(AUTH_STORAGE_KEY, DEFAULT_AUTH)
+  const signIn = useCallback(async (login: string, password: string, remember: boolean): Promise<SignInResult> => {
+    try {
+      const { user } = await apiPost<{ user: Profile }>('/auth/login', {
+        login: login.trim().toLowerCase(),
+        password,
+        remember,
+      })
+      setState({ status: 'signedIn', user })
+      return { ok: true }
+    } catch (e) {
+      if (e instanceof ApiError) {
+        if (e.code === 'disabled') return { ok: false, reason: 'disabled' }
+        if (e.code === 'too_many_attempts') return { ok: false, reason: 'rate_limited' }
+        if (e.status === 400 || e.status === 401) return { ok: false, reason: 'invalid' }
+      }
+      return { ok: false, reason: 'network' }
+    }
   }, [])
 
-  const setEmployeeName = useCallback((name: string) => {
-    setAuth((prev) => {
-      const next = { ...prev, employeeName: name }
-      if (prev.rememberDevice) writeStorage(AUTH_STORAGE_KEY, next)
-      return next
-    })
+  const signOut = useCallback(async () => {
+    try {
+      await apiPost('/auth/logout')
+    } catch {
+      // signing out locally is what matters
+    }
+    setState({ status: 'signedOut', user: null })
   }, [])
 
-  const value = useMemo(
-    () => ({ unlocked: auth.unlocked, employeeName: auth.employeeName, login, logout, setEmployeeName }),
-    [auth.unlocked, auth.employeeName, login, logout, setEmployeeName],
+  const refreshProfile = useCallback(async () => {
+    const profile = await fetchMyProfile()
+    setState((prev) => (profile ? { status: 'signedIn', user: profile } : prev))
+  }, [])
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      status: state.status,
+      user: state.user,
+      isAdmin: state.user?.role === 'admin',
+      configured: true,
+      signIn,
+      signOut,
+      refreshProfile,
+    }),
+    [state, signIn, signOut, refreshProfile],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

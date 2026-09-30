@@ -1,8 +1,11 @@
-name: Deploy to GitHub Pages
+name: Redirect GitHub Pages to Render
+
+# The academy now runs on Render (app + API + database in one service).
+# This workflow replaces the old GitHub Pages site with a page that forwards visitors
+# to the Render address stored in the repository variable ACADEMY_URL.
+# Run it manually (Actions → this workflow → Run workflow) after the Render service is live.
 
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -17,21 +20,35 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACADEMY_URL: ${{ vars.ACADEMY_URL }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Check target address
+        run: |
+          if [ -z "$ACADEMY_URL" ]; then
+            echo "::error::Set the repository variable ACADEMY_URL (e.g. https://reception-academy.onrender.com)."
+            exit 1
+          fi
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
+      - name: Build redirect page
+        run: |
+          mkdir -p site
+          cat > site/index.html <<HTML
+          <!doctype html>
+          <html lang="ru">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>Hotel Academy</title>
+              <meta http-equiv="refresh" content="0; url=${ACADEMY_URL}/" />
+              <script>location.replace('${ACADEMY_URL}/' + location.hash)</script>
+            </head>
+            <body style="font-family: system-ui, sans-serif; padding: 2rem">
+              <p>Hotel Academy переехала: <a href="${ACADEMY_URL}/">${ACADEMY_URL}</a></p>
+            </body>
+          </html>
+          HTML
+          cp site/index.html site/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -39,7 +56,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./site
 
   deploy:
     needs: build

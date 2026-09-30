@@ -1,32 +1,78 @@
-# React + TypeScript + Vite
+# Hotel Academy — обучение и аттестация ресепшена
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Портал для сотрудников ресепшена: 15 обучающих модулей, тест знаний, тесты уровня английского и русского языка (A1–C1 с письменной частью), живой финальный тест, который владелец проводит очно, и админ-панель с эффективностью каждого сотрудника.
 
-Currently, two official plugins are available:
+## Как это устроено
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Один сервис на Render (тариф Starter) отдаёт и сайт, и API. Данные лежат в файле SQLite на постоянном диске Render.
 
-## React Compiler
+| Часть | Технология | Где лежит |
+|---|---|---|
+| Сайт | React 19 + Vite + Tailwind | `src/` |
+| Сервер и API | Node 24 + Express 5 + SQLite (better-sqlite3), запуск через `tsx` | `server/` |
+| Живой финал | Server-Sent Events: `/api/final/stream` | `server/realtime.ts`, `src/lib/finalApi.ts` |
+| Вопросы финала (с ключами) | читаются сервером прямо из банка | `src/data/final/` |
+| Сквозная проверка | 87 проверок по HTTP | `scripts/smoke-test.mjs` |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Роли: **владелец (admin)** открывает аккаунты, видит результаты всех, проводит финальный тест, оценивает письменные ответы. **Сотрудник** учится и сдаёт тесты. Регистрации с сайта нет: аккаунты создаёт только владелец. Вход по логину и паролю, сессия в httpOnly cookie. Отключённый сотрудник выходит из системы сразу.
 
-## Expanding the Oxlint configuration
+## Запуск на Render (один раз)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+1. **Сервис.** Web Service из этого репозитория, ветка `master`, регион Frankfurt, тариф Starter.
+   - Build Command: `npm ci --include=dev && npm run build`
+   - Start Command: `npm start`
+   - Health Check Path: `/api/health`
+2. **Переменные окружения:** `NODE_ENV=production`, `DATA_DIR=/var/data`, `SETUP_KEY=<длинный случайный ключ>`.
+3. **Диск.** Service → Disks → Add Disk: mount path `/var/data`, размер 1 GB. Без диска сервер не стартует: иначе каждое обновление стирало бы все результаты.
+4. **Аккаунт владельца.** Откройте сайт → «Первый запуск: создать аккаунт владельца» → введите `SETUP_KEY`, имя, логин и пароль. Ссылка исчезает, как только владелец создан.
+5. **Сотрудники.** Админ-панель → Аккаунты → «Создать аккаунт». Сайт покажет адрес, логин и пароль для сотрудника.
+6. **Старый адрес на GitHub Pages.** Задайте переменную репозитория `ACADEMY_URL` (адрес Render) и запустите Actions → «Redirect GitHub Pages to Render» — старые ссылки будут переадресовывать на новый сайт.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+Резервные копии: Render ежедневно делает снимки диска. Файл базы: `/var/data/academy.sqlite3`.
+
+## Как проводить финальный тест
+
+1. Соберите сотрудников. Каждый открывает сайт на телефоне и заходит в «Финальный тест».
+2. На своём компьютере или телевизоре: Админ-панель → Финальный тест → «Новая сессия». Выберите число вопросов и время.
+3. Откроется экран ведущего. Когда все в лобби, нажмите «Начать». Кнопки «Показать ответ» и «Следующий вопрос», либо пробел.
+4. После финала: Админ-панель → Финальный тест → Результаты → оцените открытые ответы по шкале 0–5.
+
+Итог сотрудника: 70 % вопросы с вариантами и 30 % открытые ответы. Очки за скорость влияют только на место в таблице. При равных очках выше тот, кто отвечал быстрее.
+
+## Правила тестов
+
+- **Тест знаний** — 36 вопросов по 15 модулям, без подсказок. Для сертификата нужно пройти все модули и набрать от 80 %.
+- **Модуль** засчитывается, когда пройдена его мини-проверка «Проверь себя» (от 2/3 правильных).
+- **Английский и русский** — лестница A1 → C1: по 8 вопросов на уровень, 5 минут на уровень, 6 из 8 открывают следующий. С уровня A2 — письменный ответ гостю (10 минут), его оценивает владелец. Первая попытка свободная, пересдача только с разрешения владельца (кнопка в карточке сотрудника, действует 24 часа).
+
+## Разработка
+
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+```bash
+npm run dev:server
+```
+
+```bash
+npm run dev
+```
+
+`dev:server` поднимает API на порту 8787 с базой `./data/academy.sqlite3`, `dev` — сайт на Vite, который проксирует `/api` на сервер. Локальный ключ первого запуска: `local-setup-key`.
+
+Демо-данные (владелец `owner/owner123`, сотрудники с паролем `demo123`):
+
+```bash
+npx tsx scripts/seed-demo.ts
+```
+
+Сквозная проверка сервера (при запущенном `dev:server`):
+
+```bash
+npm run smoke
+```
+
+Прочие команды: `npm run build`, `npm run lint`, `npm run typecheck`.
+
+Дизайн и решения: `docs/superpowers/specs/2026-09-30-assessment-platform-design.md`.

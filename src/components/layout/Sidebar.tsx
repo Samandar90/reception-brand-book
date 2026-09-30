@@ -2,17 +2,21 @@ import { NavLink } from 'react-router-dom'
 import { GraduationCap } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLanguage } from '@/i18n/LanguageContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { NAV_ITEMS } from './navConfig'
 
 export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useLanguage()
+  const { isAdmin } = useAuth()
+  const items = NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin)
 
   return (
     <nav className="flex flex-col gap-1 px-3">
-      {NAV_ITEMS.map((item) => (
+      {items.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
+          end={item.path === '/'}
           onClick={onNavigate}
           className={({ isActive }) =>
             cn(

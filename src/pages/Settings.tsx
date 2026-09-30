@@ -52,7 +52,7 @@ function SettingsRow({
 export default function Settings() {
   const { t, lang, setLang } = useLanguage()
   const { settings, updateSettings } = useSettings()
-  const { resetProgress } = useProgress()
+  const { resetModules } = useProgress()
   const [confirmOpen, setConfirmOpen] = useState(false)
 
   return (
@@ -147,7 +147,7 @@ export default function Settings() {
             <Button
               variant="destructive"
               onClick={() => {
-                resetProgress()
+                void resetModules()
                 setConfirmOpen(false)
               }}
             >

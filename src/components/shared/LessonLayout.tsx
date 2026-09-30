@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Clock, BarChart3, ChevronLeft, ChevronRight, CircleCheck, Sparkles, XCircle } from 'lucide-react'
@@ -7,12 +7,25 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { DialogueExample } from './DialogueExample'
 import { Callout } from './Callout'
+import { ModuleCheck } from './ModuleCheck'
 import { useLanguage } from '@/i18n/LanguageContext'
 import { useProgress } from '@/contexts/ProgressContext'
+import { useAuth } from '@/contexts/AuthContext'
+import { logActivityKeepalive } from '@/lib/api'
 import { getAdjacentModules } from '@/data/modules'
 import type { Module } from '@/types'
 import type { TranslationKey } from '@/i18n/translations'
 import { cn } from '@/lib/utils'
+
+/** Minimum reading time (seconds) worth logging as a lesson view. */
+const MIN_VIEW_SECONDS = 5
+
+interface LessonView {
+  startedAt: number
+  hiddenMs: number
+  hiddenSince: number | null
+  sent: boolean
+}
 
 const DIFFICULTY_KEY: Record<Module['difficulty'], TranslationKey> = {
   beginner: 'lesson.difficulty.beginner',
@@ -22,7 +35,10 @@ const DIFFICULTY_KEY: Record<Module['difficulty'], TranslationKey> = {
 
 export function LessonLayout({ module }: { module: Module }) {
   const { tx, t } = useLanguage()
-  const { isModuleComplete, markModuleComplete, markModuleIncomplete } = useProgress()
+  const { isModuleComplete } = useProgress()
+  const { user } = useAuth()
+  const userId = user?.id ?? null
+  const viewRef = useRef<LessonView | null>(null)
   const [activeSection, setActiveSection] = useState(module.sections[0]?.id)
   const complete = isModuleComplete(module.slug)
   const { prev, next } = getAdjacentModules(module.slug)
@@ -36,6 +52,7 @@ export function LessonLayout({ module }: { module: Module }) {
     ...module.sections.map((s) => ({ id: s.id, label: tx(s.heading) })),
     { id: 'common-mistakes', label: t('lesson.commonMistakes') },
     { id: 'golden-rules', label: t('lesson.goldenRules') },
+    { id: 'module-check', label: t('learn.check.title') },
   ]
 
   useEffect(() => {
@@ -56,6 +73,57 @@ export function LessonLayout({ module }: { module: Module }) {
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [module.slug])
+
+  // One 'lesson_view' event per visit, sent when the reader leaves (unmount / next module / pagehide).
+  // Time while the tab is hidden is not counted.
+  useEffect(() => {
+    if (!userId) return
+    const slug = module.slug
+    const now = Date.now()
+    const view: LessonView = {
+      startedAt: now,
+      hiddenMs: 0,
+      hiddenSince: document.visibilityState === 'hidden' ? now : null,
+      sent: false,
+    }
+    viewRef.current = view
+
+    const flush = () => {
+      if (view.sent) return
+      view.sent = true
+      const end = Date.now()
+      const hidden = view.hiddenMs + (view.hiddenSince !== null ? end - view.hiddenSince : 0)
+      const durationSec = Math.round(Math.max(0, end - view.startedAt - hidden) / 1000)
+      if (durationSec >= MIN_VIEW_SECONDS) logActivityKeepalive(userId, 'lesson_view', { module: slug, durationSec })
+    }
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') {
+        if (view.hiddenSince === null) view.hiddenSince = Date.now()
+      } else if (view.hiddenSince !== null) {
+        view.hiddenMs += Date.now() - view.hiddenSince
+        view.hiddenSince = null
+      }
+    }
+    const onPageShow = (e: PageTransitionEvent) => {
+      // Restored from the back/forward cache: start a fresh visit.
+      if (!e.persisted) return
+      view.startedAt = Date.now()
+      view.hiddenMs = 0
+      view.hiddenSince = null
+      view.sent = false
+    }
+
+    window.addEventListener('pagehide', flush)
+    window.addEventListener('pageshow', onPageShow)
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      window.removeEventListener('pagehide', flush)
+      window.removeEventListener('pageshow', onPageShow)
+      document.removeEventListener('visibilitychange', onVisibility)
+      flush()
+      if (viewRef.current === view) viewRef.current = null
+    }
+  }, [module.slug, userId])
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_220px]">
@@ -162,36 +230,30 @@ export function LessonLayout({ module }: { module: Module }) {
               ))}
             </ul>
           </motion.section>
+
+          <ModuleCheck key={module.slug} module={module} />
         </div>
 
-        <div className="mt-10 flex flex-col-reverse items-stretch gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex gap-2">
+        {(prev || next) && (
+          <nav className="mt-10 flex items-center justify-between gap-3 border-t border-border/60 pt-6">
             {prev && (
               <Button variant="outline" asChild className="gap-1.5">
                 <Link to={`/modules/${prev.slug}`}>
                   <ChevronLeft className="size-4" />
-                  <span className="hidden sm:inline">{t('lesson.prevModule')}</span>
+                  {t('lesson.prevModule')}
                 </Link>
               </Button>
             )}
             {next && (
-              <Button variant="outline" asChild className="gap-1.5">
+              <Button variant="outline" asChild className="ml-auto gap-1.5">
                 <Link to={`/modules/${next.slug}`}>
-                  <span className="hidden sm:inline">{t('lesson.nextModule')}</span>
+                  {t('lesson.nextModule')}
                   <ChevronRight className="size-4" />
                 </Link>
               </Button>
             )}
-          </div>
-          <Button
-            onClick={() => (complete ? markModuleIncomplete(module.slug) : markModuleComplete(module.slug))}
-            variant={complete ? 'secondary' : 'default'}
-            className="gap-2"
-          >
-            <CircleCheck className="size-4" />
-            {complete ? t('common.completed') : t('common.markComplete')}
-          </Button>
-        </div>
+          </nav>
+        )}
       </div>
 
       <aside className="hidden lg:block">

@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { ProgressProvider } from '@/contexts/ProgressContext'
 import { AppShell } from '@/components/layout/AppShell'
 import Login from '@/pages/Login'
+import Setup from '@/pages/Setup'
 import NotFound from '@/pages/NotFound'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -22,6 +23,17 @@ const ModuleLesson = lazy(() => import('@/pages/ModuleLesson'))
 const Quiz = lazy(() => import('@/pages/Quiz'))
 const Certificate = lazy(() => import('@/pages/Certificate'))
 const SettingsPage = lazy(() => import('@/pages/Settings'))
+const TestsHub = lazy(() => import('@/pages/Tests'))
+const LanguageTest = lazy(() => import('@/pages/LanguageTest'))
+const FinalTest = lazy(() => import('@/pages/FinalTest'))
+const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
+const AdminOverview = lazy(() => import('@/pages/admin/AdminOverview'))
+const AdminAccounts = lazy(() => import('@/pages/admin/AdminAccounts'))
+const EmployeeDetail = lazy(() => import('@/pages/admin/EmployeeDetail'))
+const QuestionStats = lazy(() => import('@/pages/admin/QuestionStats'))
+const AdminFinal = lazy(() => import('@/pages/admin/AdminFinal'))
+const FinalResults = lazy(() => import('@/pages/admin/FinalResults'))
+const FinalPresenter = lazy(() => import('@/pages/admin/FinalPresenter'))
 
 function PageFallback() {
   return (
@@ -36,8 +48,15 @@ function withSuspense(node: ReactNode) {
 }
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { unlocked } = useAuth()
-  if (!unlocked) return <Navigate to="/login" replace />
+  const { status } = useAuth()
+  if (status === 'loading') return <PageFallback />
+  if (status === 'signedOut') return <Navigate to="/login" replace />
+  return <>{children}</>
+}
+
+function AdminRoute({ children }: { children: ReactNode }) {
+  const { isAdmin } = useAuth()
+  if (!isAdmin) return <Navigate to="/" replace />
   return <>{children}</>
 }
 
@@ -45,6 +64,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/setup" element={<Setup />} />
       <Route
         element={
           <ProtectedRoute>
@@ -64,7 +84,33 @@ function AppRoutes() {
         <Route path="/quiz" element={withSuspense(<Quiz />)} />
         <Route path="/certificate" element={withSuspense(<Certificate />)} />
         <Route path="/settings" element={withSuspense(<SettingsPage />)} />
+        <Route path="/tests" element={withSuspense(<TestsHub />)} />
+        <Route path="/tests/:language" element={withSuspense(<LanguageTest />)} />
+        <Route path="/final" element={withSuspense(<FinalTest />)} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              {withSuspense(<AdminLayout />)}
+            </AdminRoute>
+          }
+        >
+          <Route index element={withSuspense(<AdminOverview />)} />
+          <Route path="accounts" element={withSuspense(<AdminAccounts />)} />
+          <Route path="employees/:id" element={withSuspense(<EmployeeDetail />)} />
+          <Route path="questions" element={withSuspense(<QuestionStats />)} />
+          <Route path="final" element={withSuspense(<AdminFinal />)} />
+          <Route path="final/:id/results" element={withSuspense(<FinalResults />)} />
+        </Route>
       </Route>
+      <Route
+        path="/present/:id"
+        element={
+          <ProtectedRoute>
+            <AdminRoute>{withSuspense(<FinalPresenter />)}</AdminRoute>
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

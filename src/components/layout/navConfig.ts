@@ -15,6 +15,9 @@ import {
   GraduationCap,
   Award,
   Settings as SettingsIcon,
+  ClipboardCheck,
+  Trophy,
+  ShieldCheck,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -22,6 +25,8 @@ export interface NavItem {
   labelKey: TranslationKey
   path: string
   icon: LucideIcon
+  /** Only shown to administrators. */
+  adminOnly?: boolean
 }
 
 export const NAV_ITEMS: NavItem[] = [
@@ -37,7 +42,10 @@ export const NAV_ITEMS: NavItem[] = [
   { labelKey: 'nav.checkIn', path: '/modules/check-in', icon: LogIn },
   { labelKey: 'nav.checkOut', path: '/modules/check-out', icon: LogOut },
   { labelKey: 'nav.emergency', path: '/modules/emergency-procedures', icon: Siren },
+  { labelKey: 'nav.tests', path: '/tests', icon: ClipboardCheck },
   { labelKey: 'nav.knowledgeTest', path: '/quiz', icon: GraduationCap },
+  { labelKey: 'nav.finalTest', path: '/final', icon: Trophy },
   { labelKey: 'nav.certificates', path: '/certificate', icon: Award },
+  { labelKey: 'nav.admin', path: '/admin', icon: ShieldCheck, adminOnly: true },
   { labelKey: 'nav.settings', path: '/settings', icon: SettingsIcon },
 ]
