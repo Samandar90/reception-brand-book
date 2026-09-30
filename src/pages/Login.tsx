@@ -1,5 +1,5 @@
-import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { GraduationCap, Moon, Sun, Lock, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -7,36 +7,61 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent } from '@/components/ui/card'
-import { useAuth } from '@/contexts/AuthContext'
+import { useAuth, type SignInFailure } from '@/contexts/AuthContext'
 import { useSettings } from '@/contexts/SettingsContext'
 import { useLanguage } from '@/i18n/LanguageContext'
-import { LANGUAGE_FLAGS, LANGUAGE_LABELS } from '@/i18n/translations'
+import { LANGUAGE_FLAGS, LANGUAGE_LABELS, type TranslationKey } from '@/i18n/translations'
 import type { Language } from '@/types'
+import { fetchSetupStatus } from '@/lib/setupApi'
 
 const LANGS: Language[] = ['en', 'ru', 'uz']
 
+const FAILURE_KEY: Record<SignInFailure, TranslationKey> = {
+  invalid: 'login.invalidCredentials',
+  disabled: 'login.accountDisabled',
+  network: 'login.networkError',
+  not_configured: 'login.notConfigured',
+}
+
 export default function Login() {
-  const [pin, setPin] = useState('')
-  const [name, setName] = useState('')
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const { login } = useAuth()
+  const [submitting, setSubmitting] = useState(false)
+  const { status, signIn, configured } = useAuth()
   const { settings, updateSettings } = useSettings()
   const { lang, setLang, t } = useLanguage()
   const navigate = useNavigate()
+  const [needsSetup, setNeedsSetup] = useState(false)
 
-  function handleSubmit(e: FormEvent) {
+  useEffect(() => {
+    if (!configured) return
+    fetchSetupStatus()
+      .then((s) => setNeedsSetup(!s.hasAdmin))
+      .catch(() => setNeedsSetup(false))
+  }, [configured])
+
+  if (status === 'signedIn') return <Navigate to="/" replace />
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (!name.trim()) {
-      setError(t('login.nameRequired'))
+    if (!login.trim() || !password) {
+      setError(t('login.required'))
       return
     }
-    const ok = login(pin, name, remember)
-    if (!ok) {
-      setError(t('login.invalidPin'))
-      return
+    setSubmitting(true)
+    setError(null)
+    try {
+      const result = await signIn(login, password, remember)
+      if (!result.ok) {
+        setError(t(FAILURE_KEY[result.reason]))
+        return
+      }
+      navigate('/', { replace: true })
+    } finally {
+      setSubmitting(false)
     }
-    navigate('/', { replace: true })
   }
 
   const isDark = settings.theme === 'dark'
@@ -97,45 +122,52 @@ export default function Login() {
               </div>
             </div>
 
+            {!configured && (
+              <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-700 dark:text-amber-300">
+                {t('login.notConfigured')}
+              </p>
+            )}
+
             <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="name" className="text-xs text-muted-foreground">
-                  {t('login.nameLabel')}
+                <Label htmlFor="login" className="text-xs text-muted-foreground">
+                  {t('login.loginLabel')}
                 </Label>
                 <div className="relative">
                   <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    id="name"
-                    value={name}
+                    id="login"
+                    value={login}
                     onChange={(e) => {
-                      setName(e.target.value)
+                      setLogin(e.target.value)
                       setError(null)
                     }}
-                    placeholder={t('login.namePlaceholder')}
+                    placeholder={t('login.loginPlaceholder')}
                     className="pl-9"
-                    autoComplete="name"
+                    autoComplete="username"
+                    autoCapitalize="none"
+                    spellCheck={false}
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="pin" className="text-xs text-muted-foreground">
-                  {t('login.pinLabel')}
+                <Label htmlFor="password" className="text-xs text-muted-foreground">
+                  {t('login.passwordLabel')}
                 </Label>
                 <div className="relative">
                   <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    id="pin"
+                    id="password"
                     type="password"
-                    inputMode="numeric"
-                    value={pin}
+                    value={password}
                     onChange={(e) => {
-                      setPin(e.target.value)
+                      setPassword(e.target.value)
                       setError(null)
                     }}
-                    placeholder={t('login.pinPlaceholder')}
-                    className="pl-9 tracking-[0.3em]"
-                    autoComplete="off"
+                    placeholder={t('login.passwordPlaceholder')}
+                    className="pl-9"
+                    autoComplete="current-password"
                   />
                 </div>
               </div>
@@ -145,6 +177,7 @@ export default function Login() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   className="text-sm text-destructive"
+                  role="alert"
                 >
                   {error}
                 </motion.p>
@@ -157,9 +190,23 @@ export default function Login() {
                 <Switch id="remember" checked={remember} onCheckedChange={setRemember} />
               </div>
 
-              <Button type="submit" className="mt-1 h-11 w-full text-[15px] font-medium" size="lg">
-                {t('login.unlock')}
+              <Button
+                type="submit"
+                className="mt-1 h-11 w-full text-[15px] font-medium"
+                size="lg"
+                disabled={submitting || !configured}
+              >
+                {submitting ? t('login.signingIn') : t('login.signIn')}
               </Button>
+              <p className="text-center text-xs text-muted-foreground">{t('login.hint')}</p>
+              {needsSetup && (
+                <Link
+                  to="/setup"
+                  className="rounded-xl border border-dashed border-primary/40 px-3 py-2.5 text-center text-sm font-medium text-primary hover:bg-primary/5"
+                >
+                  {t('login.firstLaunch')}
+                </Link>
+              )}
             </form>
           </CardContent>
         </Card>

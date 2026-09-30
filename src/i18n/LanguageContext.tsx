@@ -7,6 +7,8 @@ interface LanguageContextValue {
   lang: Language
   setLang: (lang: Language) => void
   t: (key: TranslationKey) => string
+  /** t() with {placeholder} interpolation. */
+  tf: (key: TranslationKey, vars: Record<string, string | number>) => string
   tx: (text: LocalizedText) => string
 }
 
@@ -21,6 +23,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       lang,
       setLang: (language: Language) => updateSettings({ language }),
       t: (key: TranslationKey) => translate(key, lang),
+      tf: (key: TranslationKey, vars: Record<string, string | number>) =>
+        translate(key, lang).replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name] ?? `{${name}}`)),
       tx: (text: LocalizedText) => text[lang],
     }),
     [lang, updateSettings],

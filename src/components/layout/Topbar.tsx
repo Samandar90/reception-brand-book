@@ -21,7 +21,8 @@ const LANGS: Language[] = ['en', 'ru', 'uz']
 export function Topbar() {
   const { lang, setLang, t } = useLanguage()
   const { settings, updateSettings } = useSettings()
-  const { employeeName, logout } = useAuth()
+  const { user, signOut } = useAuth()
+  const employeeName = user?.fullName ?? ''
 
   const isDark = settings.theme === 'dark'
   const initials = employeeName
@@ -79,9 +80,12 @@ export function Topbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel className="truncate">{employeeName}</DropdownMenuLabel>
+            <DropdownMenuLabel className="truncate">
+              {employeeName}
+              {user?.position && <span className="block text-xs font-normal text-muted-foreground">{user.position}</span>}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout} className="gap-2 text-destructive focus:text-destructive">
+            <DropdownMenuItem onClick={() => void signOut()} className="gap-2 text-destructive focus:text-destructive">
               <LogOut className="size-4" />
               {t('settings.logout')}
             </DropdownMenuItem>

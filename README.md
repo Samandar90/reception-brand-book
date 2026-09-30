@@ -1,32 +1,93 @@
-# React + TypeScript + Vite
+# Hotel Academy — обучение и аттестация ресепшена
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Портал для сотрудников ресепшена: 15 обучающих модулей, тест знаний, тесты уровня английского и русского языка (A1–C1 с письменной частью), живой финальный тест, который владелец проводит очно, и админ-панель с эффективностью каждого сотрудника.
 
-Currently, two official plugins are available:
+Сайт: https://samandar90.github.io/reception-brand-book/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Как это устроено
 
-## React Compiler
+| Часть | Технология | Где лежит |
+|---|---|---|
+| Сайт | React 19 + Vite + Tailwind, GitHub Pages | `src/` |
+| База данных, вход, живой тест | Supabase (Postgres, Auth, Realtime) | `supabase/migrations/` |
+| Создание аккаунтов сотрудникам | Supabase Edge Function `admin-users` | `supabase/functions/admin-users/` |
+| Проверка всего бэкенда | сквозной тест (63 проверки) | `scripts/smoke-test.mjs` |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Роли: **владелец (admin)** открывает аккаунты, видит результаты всех, проводит финальный тест, оценивает письменные ответы. **Сотрудник** учится и сдаёт тесты. Регистрации с сайта нет: аккаунты создаёт только владелец.
 
-## Expanding the Oxlint configuration
+## Первый запуск в интернете (один раз)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+1. **Проект Supabase.** Создайте проект на https://supabase.com (регион Frankfurt, `eu-central-1`).
+2. **Схема базы.** Supabase → SQL Editor → вставьте и выполните файл `supabase/migrations/20260930120000_academy_init.sql`. Либо через CLI:
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+   ```bash
+   npx supabase link --project-ref <REF>
+   ```
+
+   ```bash
+   npx supabase db push
+   ```
+
+3. **Запретить регистрацию.** Authentication → Sign In / Providers → выключите «Allow new users to sign up». Провайдер Email оставьте включённым, «Confirm email» выключите.
+4. **Функция аккаунтов.** Выложите функцию и задайте ключ установки (одноразовый, нужен только для создания владельца):
+
+   ```bash
+   npx supabase functions deploy admin-users --no-verify-jwt
+   ```
+
+   Ключ можно задать секретом `ADMIN_BOOTSTRAP_KEY` (Edge Functions → Secrets) или строкой в закрытой таблице через SQL Editor:
+
+   ```sql
+   insert into public.app_config (key, value) values ('bootstrap_key', '<длинный-случайный-ключ>');
+   ```
+
+5. **Сайт.** GitHub → репозиторий → Settings → Secrets and variables → Actions → вкладка **Variables** → добавьте `VITE_SUPABASE_URL` (Project URL) и `VITE_SUPABASE_ANON_KEY` (anon / publishable key) из Supabase → Settings → API. Затем запустите Actions → «Deploy to GitHub Pages» → Run workflow. Без этих переменных сборка останавливается и живой сайт не меняется.
+6. **Аккаунт владельца.** Откройте сайт → «Первый запуск: создать аккаунт владельца» → введите ключ из шага 4, имя, логин и пароль. Ссылка исчезает, как только владелец создан. После этого ключ можно удалить: `delete from public.app_config where key = 'bootstrap_key';`
+7. **Сотрудники.** Админ-панель → Аккаунты → «Создать аккаунт». Сайт покажет адрес, логин и пароль, которые нужно передать сотруднику.
+
+## Как проводить финальный тест
+
+1. Соберите сотрудников. Каждый открывает сайт на телефоне и заходит в «Финальный тест».
+2. На своём компьютере или телевизоре: Админ-панель → Финальный тест → «Новая сессия». Выберите число вопросов и время.
+3. Откроется экран ведущего. Когда все в лобби, нажмите «Начать». Кнопки «Показать ответ» и «Следующий вопрос», либо пробел.
+4. После финала: Админ-панель → Финальный тест → Результаты → оцените открытые ответы по шкале 0–5.
+
+Итог сотрудника: 70 % вопросы с выбором и 30 % открытые ответы. Очки за скорость влияют только на место в таблице.
+
+## Правила тестов
+
+- **Тест знаний** — 36 вопросов по 15 модулям, без подсказок. Для сертификата нужно пройти все модули и набрать от 80 %.
+- **Модуль** засчитывается, когда пройдена его мини-проверка «Проверь себя» (от 2/3 правильных).
+- **Английский и русский** — лестница A1 → C1: по 8 вопросов на уровень, 5 минут на уровень, 6 из 8 открывают следующий. С уровня A2 — письменный ответ гостю (10 минут), его оценивает владелец. Первая попытка свободная, пересдача только с разрешения владельца (кнопка в карточке сотрудника, действует 24 часа).
+
+## Разработка
+
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+```bash
+npx supabase start
+```
+
+```bash
+npm run dev
+```
+
+`npx supabase start` поднимает локальный Supabase в Docker (порты 553xx). Создайте `.env.local` по образцу `.env.example`, взяв `API_URL` и `ANON_KEY` из вывода команды. Локальный ключ установки лежит в `supabase/functions/.env`.
+
+Проверка бэкенда (на чистой локальной базе после `npx supabase db reset`):
+
+```bash
+SUPABASE_ANON_KEY=<local anon key> npm run smoke
+```
+
+Демо-данные для локального просмотра (5 сотрудников с результатами, пароль `demo123`):
+
+```bash
+SUPABASE_ANON_KEY=<local anon key> node scripts/seed-demo.mjs
+```
+
+Прочие команды: `npm run build`, `npm run lint`, `npm run typecheck`.
+
+Дизайн и решения: `docs/superpowers/specs/2026-09-30-assessment-platform-design.md`.
