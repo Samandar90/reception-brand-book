@@ -133,6 +133,11 @@ export const finalAdminDict = {
     uz: "Bekor qilingan «{title}» sessiyasi butunlay o'chiriladi va uni tiklab bo'lmaydi.",
     en: 'The cancelled session "{title}" will be permanently deleted.',
   },
+  'finalAdmin.history.deleteBodyFinished': {
+    ru: 'Сессия «{title}» будет удалена вместе со всеми ответами. Итоги этого финала пропадут из карточек сотрудников. Восстановить будет нельзя.',
+    uz: "«{title}» sessiyasi barcha javoblari bilan o'chiriladi. Ushbu yakuniy test natijalari xodimlar kartochkalaridan yo'qoladi. Uni tiklab bo'lmaydi.",
+    en: 'The session "{title}" will be deleted together with all its answers. Its results will disappear from the employee cards. This cannot be undone.',
+  },
   'finalAdmin.history.deleted': { ru: 'Сессия удалена', uz: "Sessiya o'chirildi", en: 'Session deleted' },
   'finalAdmin.history.refresh': { ru: 'Обновить', uz: 'Yangilash', en: 'Refresh' },
 

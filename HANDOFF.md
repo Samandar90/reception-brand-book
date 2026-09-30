@@ -1,21 +1,20 @@
 # HANDOFF
 
-**Дата:** 2026-09-30 · **ПК:** Камиловс · **Ветка:** `master` (слита из `feature/assessment-platform`)
+**Дата:** 2026-10-01 · **ПК:** Камиловс · **Ветка:** `master`
 
 ## Сделано
 
 - Платформа оценки: личные аккаунты (создаёт владелец), тесты английского и русского A1–C1 с письменной частью, тест знаний в режиме аттестации, «Проверь себя» в модулях, живой финальный тест (экран ведущего + телефоны), админ-панель с эффективностью сотрудников.
 - Бэкенд перенесён с Supabase на свой сервер (владелец выбрал Render Starter $7/мес вместо Supabase Pro): `server/` — Node 24 + Express 5 + SQLite на диске Render, вход через httpOnly cookie, живой финал через Server-Sent Events. Сквозная проверка `scripts/smoke-test.mjs` — 87/87 (и в режиме production).
 - Render: сервис `reception-academy` (srv-daujqlvavr4c739fd59g), Frankfurt, Starter, ветка `master`, автодеплой. Переменные: `NODE_ENV=production`, `DATA_DIR=/var/data`, `SETUP_KEY` (одноразовый ключ владельца — в Render → Environment).
+- 2026-10-01: диск подключён, сайт работает (`/api/health` ok), владелец создал аккаунт. Добавлено удаление завершённых сессий финала вместе с их результатами (идущую сессию удалить нельзя); проверка — 90/90.
 - GitHub Pages: старый сайт пока работает. Воркфлоу «Redirect GitHub Pages to Render» запускается вручную и заменит его переадресацией.
 
 ## Дальше
 
-1. **Владелец добавляет диск** в Render: reception-academy → Disks → Add Disk, mount path `/var/data`, 1 GB. Без диска сервер намеренно не стартует. После добавления Render сам перезапустит сервис.
-2. Проверить `https://reception-academy.onrender.com/api/health` → `{"ok":true}`; в Render задать Health Check Path `/api/health`.
-3. Владелец открывает сайт → «Первый запуск» → ключ `SETUP_KEY` → свой логин и пароль → создаёт аккаунты сотрудникам.
-4. `gh variable set ACADEMY_URL --body https://reception-academy.onrender.com` и `gh workflow run deploy.yml` — старый адрес GitHub Pages начнёт переадресовывать.
-5. Контент следующего этапа: расширить языковые банки до 4 вопросов на навык на уровень, тест знаний до 60 вопросов.
+1. Спросить владельца и, если согласен, включить переадресацию старого адреса: `gh variable set ACADEMY_URL --body https://reception-academy.onrender.com`, затем `gh workflow run deploy.yml`.
+2. В Render задать Health Check Path `/api/health` (через панель — MCP этого не умеет).
+3. Контент следующего этапа: расширить языковые банки до 4 вопросов на навык на уровень, тест знаний до 60 вопросов.
 
 ## Заметки
 

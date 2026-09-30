@@ -729,6 +729,7 @@ export default function AdminFinal() {
                       : s.questionIds.length}
                   </TableCell>
                   <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-1.5">
                     {s.status === 'finished' && (
                       <Button asChild variant="outline" size="sm" className="gap-1.5">
                         <Link to={`/admin/final/${s.id}/results`}>
@@ -745,17 +746,19 @@ export default function AdminFinal() {
                         </Link>
                       </Button>
                     )}
-                    {s.status === 'cancelled' && (
+                    {(s.status === 'cancelled' || s.status === 'finished') && (
                       <Button
                         variant="ghost"
                         size="icon-sm"
                         aria-label={t('common.delete')}
+                        title={t('common.delete')}
                         className="text-muted-foreground hover:text-destructive"
                         onClick={() => openConfirm({ kind: 'delete', session: s })}
                       >
                         <Trash2 />
                       </Button>
                     )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -774,7 +777,9 @@ export default function AdminFinal() {
         title={confirm?.kind === 'delete' ? t('finalAdmin.history.deleteTitle') : t('finalAdmin.live.cancelTitle')}
         description={
           confirm?.kind === 'delete'
-            ? tf('finalAdmin.history.deleteBody', { title: confirm.session.title || t('finalAdmin.untitled') })
+            ? tf(confirm.session.status === 'finished' ? 'finalAdmin.history.deleteBodyFinished' : 'finalAdmin.history.deleteBody', {
+                title: confirm.session.title || t('finalAdmin.untitled'),
+              })
             : t('finalAdmin.live.cancelBody')
         }
         confirmLabel={confirm?.kind === 'delete' ? t('common.delete') : t('finalAdmin.live.cancel')}

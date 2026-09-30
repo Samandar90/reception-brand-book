@@ -310,8 +310,6 @@ async function main() {
   check('employee cannot grade open answers', empGradeOpen.status === 403, empGradeOpen.status)
   const late = await emp2.post(`/final/sessions/${sid}/answers`, { questionId: 'final-open-01', answerText: 'late' })
   check('no answers after finish', late.error === 'not_accepting', late)
-  const delFinished = await admin.del(`/final/sessions/${sid}`)
-  check('finished sessions cannot be deleted', delFinished.error === 'only_cancelled', delFinished)
 
   // ── Overview ───────────────────────────────────────────────────────────────
   console.log('\nOverview')
@@ -321,6 +319,26 @@ async function main() {
   check('question statistics', stats.status === 200 && stats.data?.some((s) => s.questionId === 'q1'), stats.data?.length)
   const act = await admin.get(`/admin/users/${empId}/activity?limit=50`)
   check('login is recorded in the activity log', act.data?.some((a) => a.event === 'login'), act.data?.length)
+
+  // ── Deleting sessions ──────────────────────────────────────────────────────
+  console.log('\nDeleting sessions')
+  const liveAgain = await admin.post('/final/sessions', { title: `Live ${suffix}`, questionIds: ['final-mc-03'] })
+  const delLive = await admin.del(`/final/sessions/${liveAgain.data?.id}`)
+  check('a live session cannot be deleted', delLive.error === 'session_live', delLive)
+  await admin.post(`/final/sessions/${liveAgain.data?.id}/cancel`)
+  const delCancelled = await admin.del(`/final/sessions/${liveAgain.data?.id}`)
+  check('a cancelled session can be deleted', delCancelled.data?.ok === true, delCancelled)
+  const empDel = await emp.del(`/final/sessions/${sid}`)
+  check('employee cannot delete sessions', empDel.status === 403, empDel.status)
+  const delFinished = await admin.del(`/final/sessions/${sid}`)
+  const goneSession = await admin.get(`/final/sessions/${sid}`)
+  const goneResults = await admin.get(`/admin/final/${sid}/attempts`)
+  const ovAfter = (await admin.get('/admin/overview')).data?.find((o) => o.id === empId)
+  check(
+    'a finished session is deleted together with its results',
+    delFinished.data?.ok === true && goneSession.status === 404 && goneResults.data?.length === 0 && ovAfter?.finalPercent === null,
+    { delFinished, goneSession: goneSession.status, results: goneResults.data?.length, finalPercent: ovAfter?.finalPercent },
+  )
 
   // ── Deactivation & account management ─────────────────────────────────────
   console.log('\nDeactivation')

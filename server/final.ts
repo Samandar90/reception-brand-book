@@ -164,9 +164,14 @@ export function cancelSession(sessionId: string) {
   if (res.changes && s) emitSession('updated', s)
 }
 
+/**
+ * Deletes a finished or cancelled session together with its participants, answers and the
+ * employees' final-test results for it (foreign keys cascade). A live session must be
+ * finished or cancelled first.
+ */
 export function deleteSession(sessionId: string) {
   const s = mustSession(sessionId)
-  if (s.status !== 'cancelled') fail(409, 'only_cancelled')
+  if ((LIVE as readonly string[]).includes(s.status)) fail(409, 'session_live')
   db.prepare('DELETE FROM final_sessions WHERE id = ?').run(sessionId)
   emitSession('deleted', { id: sessionId })
 }
