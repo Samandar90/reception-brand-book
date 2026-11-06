@@ -6,7 +6,7 @@ import { languageBank, writingPrompts } from '../src/data/languageTests/index.ts
 import { quizQuestions } from '../src/data/quizQuestions.ts'
 import { finalChoiceQuestions, finalOpenQuestions } from '../src/data/final/index.ts'
 import { MODULE_ORDER } from '../src/lib/constants.ts'
-import { PER_SKILL, SKILLS } from '../src/lib/languageTest.ts'
+import { SKILLS } from '../src/lib/languageTest.ts'
 import { CEFR_LEVELS } from '../src/types/index.ts'
 import type { LocalizedText } from '../src/types/index.ts'
 
@@ -36,16 +36,34 @@ function distinctOptions(where: string, options: string[]) {
   if (options.length !== 4) bad(`${where}: expected 4 options, got ${options.length}`)
   if (options.some((o) => !o.trim())) bad(`${where}: empty option`)
 }
+/** The key must not sit at one position much more often than chance (25 %). */
 function keyBalance(where: string, keys: number[]) {
   if (keys.length < 8) return
   const counts = [0, 0, 0, 0]
   for (const k of keys) counts[k] = (counts[k] ?? 0) + 1
   const max = Math.max(...counts)
-  if (max > keys.length * 0.5) warn(`${where}: correct answer is at the same position in ${max}/${keys.length} items`)
+  if (max > Math.ceil(keys.length * 0.4)) bad(`${where}: correct answer is at the same position in ${max}/${keys.length} items (positions ${counts.join('/')})`)
+}
+
+/** The key must not be recognisable as the longest option (a classic giveaway of weak tests). */
+const longestKey: Record<string, { hits: number; total: number }> = {}
+function trackLongest(group: string, options: string[], key: number) {
+  const lens = options.map((o) => o.trim().length)
+  const max = Math.max(...lens)
+  const unique = lens.filter((l) => l === max).length === 1
+  const entry = (longestKey[group] ??= { hits: 0, total: 0 })
+  entry.total += 1
+  if (unique && lens[key] === max && max >= lens.filter((_, i) => i !== key).reduce((a, b) => Math.max(a, b), 0) * 1.15) entry.hits += 1
+}
+function checkLongest() {
+  for (const [group, { hits, total }] of Object.entries(longestKey)) {
+    if (total >= 12 && hits > total * 0.35) bad(`${group}: the key is clearly the longest option in ${hits}/${total} items`)
+  }
 }
 
 // ─── Language placement banks ────────────────────────────────────────────────
-const MIN_PER_SKILL = PER_SKILL + 1 // enough variety for a retake with unseen items
+/** The placement test draws 1 item per skill per level; 4 give variety for retakes with unseen items. */
+const MIN_PER_SKILL = 4
 for (const lang of ['en', 'ru'] as const) {
   const bank = languageBank[lang]
   uniqueIds(`lang ${lang}`, bank.map((q) => q.id))
@@ -59,11 +77,13 @@ for (const lang of ['en', 'ru'] as const) {
     distinctOptions(where, q.options)
     if (!Number.isInteger(q.correctIndex) || q.correctIndex < 0 || q.correctIndex > 3) bad(`${where}: bad correctIndex`)
     else keys.push(q.correctIndex)
+    trackLongest(`lang ${lang} ${q.level}`, q.options, q.correctIndex)
     localized(where + ' explanation', q.explanation, 20)
     if (q.skill === 'reading' && (q.context ?? '').length < 120) warn(`${where}: reading passage is short (${(q.context ?? '').length} chars)`)
   }
   keyBalance(`lang ${lang}`, keys)
   for (const level of CEFR_LEVELS) {
+    keyBalance(`lang ${lang} ${level}`, bank.filter((q) => q.level === level).map((q) => q.correctIndex))
     for (const skill of SKILLS) {
       const n = bank.filter((q) => q.level === level && q.skill === skill).length
       if (n < MIN_PER_SKILL) bad(`lang ${lang} ${level}/${skill}: ${n} items, need at least ${MIN_PER_SKILL}`)
@@ -97,6 +117,7 @@ uniqueIds('quiz', quizQuestions.map((q) => q.id))
     for (const l of LANGS) distinctOptions(`${where} (${l})`, q.options.map((o) => o[l]))
     if (!Number.isInteger(q.correctIndex) || q.correctIndex < 0 || q.correctIndex > 3) bad(`${where}: bad correctIndex`)
     else keys.push(q.correctIndex)
+    trackLongest('quiz (ru)', q.options.map((o) => o.ru), q.correctIndex)
     localized(where + ' explanation', q.explanation, 20)
   }
   keyBalance('quiz', keys)
@@ -121,6 +142,7 @@ uniqueIds('final', [...finalChoiceQuestions, ...finalOpenQuestions].map((q) => q
     for (const l of LANGS) distinctOptions(`${where} (${l})`, q.options.map((o) => o[l]))
     if (!Number.isInteger(q.correctIndex) || q.correctIndex < 0 || q.correctIndex > 3) bad(`${where}: bad correctIndex`)
     else keys.push(q.correctIndex)
+    trackLongest('final (ru)', q.options.map((o) => o.ru), q.correctIndex)
     localized(where + ' explanation', q.explanation, 20)
   }
   keyBalance('final', keys)
@@ -135,6 +157,8 @@ uniqueIds('final', [...finalChoiceQuestions, ...finalOpenQuestions].map((q) => q
   const covered = new Set(finalChoiceQuestions.flatMap((q) => q.moduleSlugs))
   for (const slug of MODULE_ORDER) if (!covered.has(slug)) bad(`final: module ${slug} has no choice question`)
 }
+
+checkLongest()
 
 // ─── Report ──────────────────────────────────────────────────────────────────
 const summary = {

@@ -49,6 +49,7 @@ import { TOTAL_MODULES } from '@/lib/constants'
 import { getModuleBySlug, modules } from '@/data/modules'
 import { getWritingPrompt } from '@/data/languageTests'
 import { quizQuestions } from '@/data/quizQuestions'
+import { isFinalGraded } from '@/lib/certificate'
 import { CEFR_LEVELS } from '@/types'
 import type { ActivityRow, ModuleProgressRow, Profile, TestAttempt, TestGrant, TestKind } from '@/types'
 import {
@@ -64,6 +65,12 @@ import {
   statusOf,
   useAdminFormat,
 } from './adminKit'
+
+/** Best final result whose open answers are all graded (null when none). */
+function bestGradedFinal(attempts: TestAttempt[]): number | null {
+  const graded = attempts.filter((a) => a.kind === 'final' && isFinalGraded(a))
+  return graded.length ? Math.max(...graded.map((a) => a.percent)) : null
+}
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -372,6 +379,7 @@ function EmployeeHeader({
         englishLevel: latest('english')?.level ?? null,
         russianLevel: latest('russian')?.level ?? null,
         finalPercent: final ? final.percent : null,
+        finalBestGraded: bestGradedFinal(attempts),
         hasAttempts: attempts.length > 0,
       }),
     }

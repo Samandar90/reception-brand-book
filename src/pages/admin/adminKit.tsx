@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { useLanguage } from '@/i18n/LanguageContext'
 import type { TranslationKey } from '@/i18n/translations'
 import { AdminUsersFailure, resetPassword, setAccountActive } from '@/lib/adminApi'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, TOTAL_MODULES } from '@/lib/constants'
+import { CERTIFICATE_MIN_FINAL_PERCENT, KNOWLEDGE_PASS_PERCENT, TOTAL_MODULES } from '@/lib/constants'
 import type { EmployeeOverview, Language } from '@/types'
 
 /**
@@ -61,18 +61,20 @@ export interface StatusInput {
   englishLevel: string | null
   russianLevel: string | null
   finalPercent: number | null
+  /** Best final result whose open answers are all graded (the certificate counts only these). */
+  finalBestGraded: number | null
   hasAttempts: boolean
 }
 
 /**
- * not started = no modules and no attempts; certified = all modules, knowledge best ≥ 80,
- * both language levels and a final result; tests done = modules + knowledge done but a language
- * level or the final is missing; learning = everything else.
+ * not started = no modules and no attempts; certified = a graded final result ≥ CERTIFICATE_MIN_FINAL_PERCENT
+ * (the certificate is issued for the final test); tests done = all modules + knowledge pass mark;
+ * learning = everything else.
  */
 export function statusOf(s: StatusInput): EmployeeStatus {
   const modulesDone = s.modulesCompleted >= TOTAL_MODULES
-  const knowledgeOk = s.knowledgeBest !== null && s.knowledgeBest >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
-  if (modulesDone && knowledgeOk && s.englishLevel && s.russianLevel && s.finalPercent !== null) return 'certified'
+  const knowledgeOk = s.knowledgeBest !== null && s.knowledgeBest >= KNOWLEDGE_PASS_PERCENT
+  if (s.finalBestGraded !== null && s.finalBestGraded >= CERTIFICATE_MIN_FINAL_PERCENT) return 'certified'
   if (modulesDone && knowledgeOk) return 'testsDone'
   if (s.modulesCompleted === 0 && !s.hasAttempts) return 'notStarted'
   return 'learning'
@@ -85,6 +87,7 @@ export function employeeStatus(r: EmployeeOverview): EmployeeStatus {
     englishLevel: r.englishLevel,
     russianLevel: r.russianLevel,
     finalPercent: r.finalPercent,
+    finalBestGraded: r.finalBestGraded,
     hasAttempts: r.knowledgeAt !== null || r.englishAttempts > 0 || r.russianAttempts > 0 || r.finalAt !== null,
   })
 }
@@ -124,7 +127,7 @@ export function LevelBadge({ level, empty = '—' }: { level: string | null; emp
 /** Text colour for a knowledge percentage. */
 export function percentTone(p: number | null): string {
   if (p === null) return 'text-muted-foreground'
-  if (p >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT) return 'text-emerald-600 dark:text-emerald-400'
+  if (p >= KNOWLEDGE_PASS_PERCENT) return 'text-emerald-600 dark:text-emerald-400'
   if (p < 60) return 'text-rose-600 dark:text-rose-400'
   return 'text-foreground'
 }

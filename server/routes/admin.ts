@@ -54,6 +54,7 @@ interface OverviewRow {
   russian_at: string | null
   russian_attempts: number
   final_percent: number | null
+  final_best_graded: number | null
   final_grading_status: 'pending' | 'graded' | null
   final_at: string | null
   last_active_at: string | null
@@ -74,6 +75,7 @@ SELECT u.id, u.login, u.full_name, u.role, u.position, u.is_active, u.created_at
   (SELECT t.finished_at FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'russian' ORDER BY t.finished_at DESC LIMIT 1) AS russian_at,
   (SELECT count(*) FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'russian') AS russian_attempts,
   (SELECT t.percent FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'final' ORDER BY t.finished_at DESC LIMIT 1) AS final_percent,
+  (SELECT max(t.percent) FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'final' AND coalesce(json_extract(t.details, '$.gradingStatus'), '') <> 'pending') AS final_best_graded,
   (SELECT json_extract(t.details, '$.gradingStatus') FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'final' ORDER BY t.finished_at DESC LIMIT 1) AS final_grading_status,
   (SELECT t.finished_at FROM test_attempts t WHERE t.user_id = u.id AND t.kind = 'final' ORDER BY t.finished_at DESC LIMIT 1) AS final_at,
   (SELECT max(a.created_at) FROM activity_log a WHERE a.user_id = u.id) AS last_active_at,
@@ -104,6 +106,7 @@ adminRouter.get('/admin/overview', (_req, res) => {
       russianAt: r.russian_at,
       russianAttempts: r.russian_attempts,
       finalPercent: r.final_percent,
+      finalBestGraded: r.final_best_graded,
       finalGradingStatus: r.final_grading_status,
       finalAt: r.final_at,
       lastActiveAt: r.last_active_at,

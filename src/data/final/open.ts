@@ -6,34 +6,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['complaints'],
     scenario: {
-      ru: 'Вечер, в лобби несколько гостей. К стойке подходит гость из номера 507 и громко говорит: «Это худший отель, в котором я останавливался! Кондиционер не работает со вчерашнего дня, я звонил дважды, и никто не пришёл!» Он говорит на повышенных тонах, другие гости оборачиваются.',
-      uz: 'Kech, lobbida bir nechta mehmon bor. Stoykaga 507-xonadagi mehmon kelib, baland ovozda: «Bu men to\'xtagan eng yomon mehmonxona! Konditsioner kechadan beri ishlamayapti, ikki marta qo\'ng\'iroq qildim, hech kim kelmadi!» deydi. U asabiylashgan, boshqa mehmonlar o\'girilib qarashmoqda.',
-      en: 'It is evening and there are several guests in the lobby. A guest from room 507 walks up to the desk and says loudly: "This is the worst hotel I have ever stayed at! The air conditioning hasn\'t worked since yesterday, I called twice and nobody came!" He is raising his voice and other guests are turning to look.',
+      ru: '20:15, в лобби несколько гостей. Гость из 507-го громко говорит у стойки: «Кондиционер не работает со вчерашнего дня, я звонил дважды — никто не пришёл! Это худший отель!» В PMS заявки в техслужбу нет; дежурный техник на смене, а такой же номер 509 свободен и убран.',
+      uz: 'Soat 20:15, lobbida bir nechta mehmon bor. 507-xonadagi mehmon stoykada baland ovozda gapiradi: «Konditsioner kechadan beri ishlamayapti, ikki marta qo\'ng\'iroq qildim — hech kim kelmadi! Bu eng yomon mehmonxona!» PMS\'da texnik xizmatga ariza yo\'q; navbatchi texnik smenada, xuddi shunday 509-xona esa bo\'sh va yig\'ishtirilgan.',
+      en: '20:15, several guests are in the lobby. The guest from 507 says loudly at the desk: "The air conditioning hasn\'t worked since yesterday, I called twice — nobody came! This is the worst hotel!" There is no maintenance request in the PMS; the duty technician is on shift, and an identical room, 509, is free and clean.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, что вы скажете гостю и какие шаги предпримете, чтобы снять напряжение и решить проблему.',
-      uz: '3–6 gapda mehmonga nima deyishingizni va taranglikni bartaraf etib, muammoni hal qilish uchun qanday qadamlar qo\'yishingizni yozing.',
-      en: 'In 3–6 sentences, write what you would say to the guest and what steps you would take to de-escalate the situation and solve the problem.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) ваши первые слова гостю; 2) где вы продолжите разговор; 3) какое решение предложите и в какой срок; 4) как проконтролируете результат.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) mehmonga birinchi so\'zlaringiz; 2) suhbatni qayerda davom ettirasiz; 3) qanday yechim va qaysi muddatda taklif qilasiz; 4) natijani qanday nazorat qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) your first words to the guest; 2) where you continue the conversation; 3) what solution you offer and by when; 4) how you check the result.',
     },
     rubric: {
       ru:
-        '• Даёт гостю выговориться до конца, не перебивает и не спорит; отвечает тише и спокойнее, чем гость\n' +
-        '• Искренне извиняется и благодарит за то, что гость сообщил лично («Мне очень жаль, спасибо, что сказали мне»), не оправдывается и не винит другие службы\n' +
-        '• Берёт ответственность отеля на себя и предлагает конкретное действие немедленно: техник в течение 10–15 минут или переселение в другой номер\n' +
-        '• Называет точные сроки и обещает лично проверить результат (перезвонить или зайти в номер)\n' +
-        '• Уводит разговор из зоны видимости других гостей и завершает благодарностью (LAST: Listen, Apologize, Solve, Thank)',
+        '• Даёт гостю договорить, не перебивает и не спорит; первые слова — искреннее извинение и благодарность за то, что сказал лично; говорит тише и медленнее гостя\n' +
+        '• Уводит разговор из лобби в спокойное место (лаунж, край стойки), а не решает конфликт на глазах у других гостей\n' +
+        '• Предлагает конкретное решение сразу: переезд в готовый 509-й прямо сейчас с помощью с вещами или техник в номер с точным временем (например, через 10 минут)\n' +
+        '• Берёт ответственность отеля на себя: не оправдывается и не винит техслужбу или «систему», сам оформляет заявку и звонит технику, не перекладывает это на гостя\n' +
+        '• Называет время обратной связи, сам перезванивает или заходит проверить, что всё работает, и благодарит гостя (Thank в модели LAST)',
       uz:
-        '• Mehmonga gapini bo\'lmasdan oxirigacha aytishga imkon beradi, bahslashmaydi; mehmondan pastroq va xotirjamroq ohangda javob beradi\n' +
-        '• Chin dildan uzr so\'raydi va shaxsan aytgani uchun rahmat aytadi («Juda afsusdaman, menga aytganingiz uchun rahmat»), oqlanmaydi va boshqa xizmatlarni ayblamaydi\n' +
-        '• Mehmonxona javobgarligini o\'z zimmasiga oladi va darhol aniq harakat taklif qiladi: 10–15 daqiqa ichida texnik yoki boshqa xonaga ko\'chirish\n' +
-        '• Aniq muddat aytadi va natijani shaxsan tekshirishga va\'da beradi (qayta qo\'ng\'iroq qilish yoki xonaga kirib chiqish)\n' +
-        '• Suhbatni boshqa mehmonlar ko\'z o\'ngidan olib chiqadi va rahmat bilan yakunlaydi (LAST: Listen, Apologize, Solve, Thank)',
+        '• Mehmonga gapini oxirigacha aytishga imkon beradi, gapini bo\'lmaydi va bahslashmaydi; birinchi so\'zlari — samimiy uzr va shaxsan aytgani uchun rahmat; mehmondan pastroq va sekinroq gapiradi\n' +
+        '• Suhbatni lobbidan tinch joyga (lounj, stoykaning cheti) olib o\'tadi, nizoni boshqa mehmonlar ko\'z o\'ngida hal qilmaydi\n' +
+        '• Darhol aniq yechim taklif qiladi: hoziroq buyumlarga yordam bilan tayyor 509-xonaga ko\'chish yoki aniq vaqtda (masalan, 10 daqiqada) xonaga texnik\n' +
+        '• Mehmonxona javobgarligini o\'z zimmasiga oladi: oqlanmaydi, texnik xizmat yoki «tizim»ni ayblamaydi, arizani o\'zi rasmiylashtiradi va texnikka o\'zi qo\'ng\'iroq qiladi, buni mehmonga yuklamaydi\n' +
+        '• Qayta aloqa vaqtini aytadi, hammasi ishlayotganini o\'zi qo\'ng\'iroq qilib yoki kirib tekshiradi va mehmonga rahmat aytadi (LAST modelidagi Thank)',
       en:
-        '• Lets the guest finish without interrupting or arguing; responds more quietly and calmly than the guest\n' +
-        '• Apologizes sincerely and thanks the guest for telling them directly ("I\'m truly sorry, thank you for letting me know"), without excuses or blaming other departments\n' +
-        '• Owns the hotel\'s responsibility and offers a concrete action immediately: a technician within 10–15 minutes or a move to another room\n' +
-        '• Gives a specific timeframe and promises to personally check the result (call back or visit the room)\n' +
-        '• Moves the conversation away from other guests and closes by thanking the guest (LAST: Listen, Apologize, Solve, Thank)',
+        '• Lets the guest finish, doesn\'t interrupt or argue; the first words are a sincere apology and thanks for telling staff in person; speaks more quietly and slowly than the guest\n' +
+        '• Moves the conversation out of the lobby to a calm spot (lounge, end of the desk) rather than handling the conflict in front of other guests\n' +
+        '• Offers a concrete solution at once: a move to the ready room 509 right now with help with belongings, or a technician in the room at an exact time (e.g. in 10 minutes)\n' +
+        '• Takes ownership for the hotel: no excuses, doesn\'t blame maintenance or "the system", logs the request and calls the technician personally rather than leaving it to the guest\n' +
+        '• Gives a time for follow-up, personally calls or visits to check that everything works, and thanks the guest (the Thank in LAST)',
     },
   },
   {
@@ -41,34 +41,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['upselling-rooms', 'check-in'],
     scenario: {
-      ru: 'На заезд прибывает пара, забронировавшая стандартный номер на три ночи. В разговоре они упоминают, что приехали отметить годовщину свадьбы и что перелёт был долгим. Сегодня свободен делюкс с видом на город — на 20 долларов дороже за ночь.',
-      uz: 'Uch kechaga standart xona bron qilgan juftlik kelib turibdi. Suhbatda ular to\'y yilligini nishonlash uchun kelganini va parvoz uzoq bo\'lganini aytishadi. Bugun shahar manzarali delyuks xona bo\'sh — u har kecha uchun 20 dollar qimmatroq.',
-      en: 'A couple arrives to check in; they booked a standard room for three nights. During the conversation they mention that they are here to celebrate their wedding anniversary and that the flight was long. A deluxe room with a city view is available tonight for $20 more per night.',
+      ru: '15:00. На заезд прибывает пара с бронью стандартного номера на три ночи без завтрака. Они упоминают, что отмечают годовщину свадьбы и устали после долгого перелёта. Сегодня свободен Deluxe с видом на город (+20 долларов за ночь); также можно добавить завтрак (10 долларов на человека) и платный поздний выезд.',
+      uz: 'Soat 15:00. Uch kechaga nonushtasiz standart xona bron qilgan juftlik keladi. Ular to\'y yilligini nishonlayotganlarini va uzoq parvozdan charchaganlarini aytishadi. Bugun shaharga qaraydigan Deluxe bo\'sh (kechasiga +20 dollar); shuningdek nonushta (kishi boshiga 10 dollar) va pullik kech chiqishni qo\'shish mumkin.',
+      en: '15:00. A couple arrives with a booking for a standard room for three nights without breakfast. They mention they are celebrating their wedding anniversary and are tired after a long flight. A city-view Deluxe is free today (+20 dollars a night); breakfast (10 dollars per person) and a paid late check-out can also be added.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, как вы предложите этой паре улучшенный номер: что именно скажете и как поступите, если они откажутся.',
-      uz: '3–6 gapda bu juftlikka yaxshiroq xonani qanday taklif qilishingizni yozing: aynan nima deysiz va ular rad etsa qanday yo\'l tutasiz.',
-      en: 'In 3–6 sentences, write how you would offer this couple the upgraded room: what exactly you would say, and what you would do if they decline.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) что именно вы предложите и почему; 2) точная фраза предложения; 3) что сделаете, если пара откажется; 4) как завершите заселение.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) aynan nimani va nega taklif qilasiz; 2) taklifning aniq iborasi; 3) juftlik rad etsa, nima qilasiz; 4) ro\'yxatdan o\'tkazishni qanday yakunlaysiz.',
+      en: 'Answer in points or 3–6 sentences: 1) what exactly you offer and why; 2) the exact wording of the offer; 3) what you do if the couple declines; 4) how you complete the check-in.',
     },
     rubric: {
       ru:
-        '• Опирается на сигналы гостей (годовщина, усталость после перелёта), а не предлагает апгрейд «вслепую»\n' +
-        '• Продаёт выгоду, а не номер: тише, просторнее, вид на город, подходит для особого случая — а не «стандарт маленький и шумный»\n' +
-        '• Называет конкретную разницу в цене (20 долларов за ночь) и предлагает показать фото или сам номер\n' +
-        '• Звучит как совет коллеги, а не как скрипт: предлагает только один вариант, без списка из завтрака, трансфера и позднего выезда\n' +
-        '• После одного вежливого отказа не повторяет предложение и тепло продолжает заселение',
+        '• Выбирает одно самое уместное предложение по сигналам гостей (годовщина, усталость) — Deluxe; не перечисляет завтрак, поздний выезд и номер одним списком\n' +
+        '• Продаёт выгоду, а не номер: тише, просторнее, вид на город, «для особого случая»; не говорит, что забронированный стандарт плохой или тесный\n' +
+        '• Называет точную цену и разницу (+20 долларов за ночь, 60 за три ночи) и предлагает показать фото или номер\n' +
+        '• После одного вежливого отказа не повторяет и не переформулирует предложение, тепло продолжает заселение без давления\n' +
+        '• Завершает заселение по стандарту: паспорт сверен с бронью, краткий инструктаж (завтрак, Wi-Fi, время выезда), предложение помочь с багажом и тёплое напутствие',
       uz:
-        '• Mehmonlarning belgilariga tayanadi (yillik, parvozdan charchaganlik), taklifni «ko\'r-ko\'rona» qilmaydi\n' +
-        '• Xonani emas, foydani sotadi: tinchroq, kengroq, shahar manzarasi, maxsus kun uchun mos — «standart kichkina va shovqinli» demaydi\n' +
-        '• Aniq narx farqini aytadi (har kecha 20 dollar) va rasm yoki xonaning o\'zini ko\'rsatishni taklif qiladi\n' +
-        '• Sotuv skripti emas, hamkasb maslahatidek yangraydi: faqat bitta variant taklif qiladi, nonushta, transfer va kech chiqish ro\'yxatisiz\n' +
-        '• Bir marta muloyim rad javobidan keyin taklifni takrorlamaydi va ro\'yxatga olishni iliq davom ettiradi',
+        '• Mehmonlar signallari (yillik, charchoq) bo\'yicha eng mos bitta taklifni tanlaydi — Deluxe; nonushta, kech chiqish va xonani bitta ro\'yxat qilib sanamaydi\n' +
+        '• Xonani emas, foydani sotadi: tinchroq, kengroq, shaharga manzara, «alohida kun uchun»; bron qilingan standart yomon yoki tor deb aytmaydi\n' +
+        '• Aniq narx va farqni aytadi (kechasiga +20 dollar, uch kechaga 60) va surat yoki xonani ko\'rsatishni taklif qiladi\n' +
+        '• Bitta muloyim rad javobidan keyin taklifni takrorlamaydi va boshqacha aytmaydi, bosimsiz, iliq tarzda ro\'yxatdan o\'tkazishni davom ettiradi\n' +
+        '• Ro\'yxatdan o\'tkazishni standart bo\'yicha yakunlaydi: pasport bron bilan solishtirilgan, qisqa yo\'l-yo\'riq (nonushta, Wi-Fi, chiqish vaqti), bagajga yordam taklifi va iliq tilak',
       en:
-        '• Builds on the guests\' cues (anniversary, tiredness after the flight) instead of offering the upgrade blindly\n' +
-        '• Sells the benefit, not the room: quieter, more spacious, city view, fitting for a special occasion — never "the standard is small and noisy"\n' +
-        '• States the exact price difference ($20 per night) and offers to show a photo or the room itself\n' +
-        '• Sounds like a colleague\'s advice, not a script: offers only one option, with no list of breakfast, transfer and late check-out\n' +
-        '• After one polite decline does not repeat the offer and continues the check-in warmly',
+        '• Chooses one most fitting offer based on the guests\' signals (anniversary, tiredness) — the Deluxe; doesn\'t list breakfast, late check-out and the room together\n' +
+        '• Sells the benefit, not the room: quieter, roomier, city view, "for a special occasion"; doesn\'t say the booked standard is bad or cramped\n' +
+        '• States the exact price and difference (+20 dollars a night, 60 for three nights) and offers to show photos or the room\n' +
+        '• After one polite refusal doesn\'t repeat or rephrase the offer, and warmly continues the check-in without pressure\n' +
+        '• Completes the check-in to standard: passport matched with the booking, short briefing (breakfast, Wi-Fi, check-out time), offer of luggage help and a warm send-off',
     },
   },
   {
@@ -76,34 +76,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['phone-communication', 'complaints'],
     scenario: {
-      ru: 'Вечер, 21:30. Звонит гость: он едет из аэропорта и хочет подтвердить, что его номер готов. Вы открываете PMS и видите, что у него подтверждённая бронь на сегодня, но все номера уже заняты — произошёл овербукинг. Гость будет у отеля через 30 минут.',
-      uz: 'Kech, soat 21:30. Mehmon qo\'ng\'iroq qilmoqda: u aeroportdan kelyapti va xonasi tayyorligini tasdiqlamoqchi. Siz PMS\'ni ochib, uning bugunga tasdiqlangan broni borligini, lekin barcha xonalar band ekanini ko\'rasiz — ortiqcha bronlash bo\'lgan. Mehmon 30 daqiqadan so\'ng mehmonxonaga yetib keladi.',
-      en: 'It is 9:30 pm. A guest calls: he is on his way from the airport and wants to confirm that his room is ready. You open the PMS and see that he has a confirmed booking for tonight, but every room is already occupied — the hotel is overbooked. The guest will reach the hotel in 30 minutes.',
+      ru: '21:30. Звонит гость: он едет из аэропорта и хочет подтвердить, что номер готов. В PMS у него подтверждённая бронь на две ночи, но отель овербукнут — свободных номеров нет. Партнёрский отель той же категории в 10 минутах подтверждает наличие; дежурный менеджер на телефоне. Гость будет у вас через 30 минут.',
+      uz: 'Soat 21:30. Mehmon qo\'ng\'iroq qiladi: u aeroportdan kelyapti va xonasi tayyorligini tasdiqlamoqchi. PMS\'da uning ikki kechaga tasdiqlangan broni bor, ammo mehmonxona ortiqcha band qilingan — bo\'sh xona yo\'q. 10 daqiqalik masofadagi xuddi shu toifadagi hamkor mehmonxona joy borligini tasdiqlaydi; navbatchi menejer telefonda. Mehmon 30 daqiqada sizda bo\'ladi.',
+      en: '21:30. A guest calls on his way from the airport to confirm his room is ready. The PMS shows a confirmed two-night booking, but the hotel is overbooked — no rooms are free. A partner hotel of the same category 10 minutes away confirms availability; the duty manager is on the phone. The guest will be with you in 30 minutes.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, как вы ответите на звонок, что скажете гостю и какие шаги предпримете до его приезда.',
-      uz: '3–6 gapda qo\'ng\'iroqqa qanday javob berishingizni, mehmonga nima deyishingizni va u kelguncha qanday qadamlar qo\'yishingizni yozing.',
-      en: 'In 3–6 sentences, write how you would answer the call, what you would say to the guest, and what steps you would take before he arrives.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) как вы отвечаете на звонок; 2) что и когда сообщаете гостю; 3) какое решение и компенсацию предлагаете; 4) что делаете за 30 минут до его приезда.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) qo\'ng\'iroqqa qanday javob berasiz; 2) mehmonga nimani va qachon aytasiz; 3) qanday yechim va kompensatsiya taklif qilasiz; 4) u kelguncha 30 daqiqada nima qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) how you answer the call; 2) what you tell the guest and when; 3) what solution and compensation you offer; 4) what you do in the 30 minutes before he arrives.',
     },
     rubric: {
       ru:
-        '• Отвечает по стандарту: название отеля, своё имя, спокойный тёплый тон; повторяет ключевые детали (фамилия, даты), чтобы подтвердить бронь\n' +
-        '• Честно сообщает о ситуации сразу, по телефону, а не когда гость уже стоит у стойки; искренне извиняется и берёт ответственность отеля на себя, не ссылаясь на «систему»\n' +
-        '• Предлагает конкретное решение: номер той же или более высокой категории в партнёрском отеле рядом, транспорт за счёт отеля, компенсацию (например, бесплатная ночь при следующем визите)\n' +
-        '• Действует до приезда гостя: уведомляет менеджера, бронирует партнёрский отель, организует такси, подтверждает договорённость сообщением\n' +
+        '• Отвечает по стандарту (название отеля, своё имя, тёплый тон) и повторяет ключевые детали брони — фамилию и даты\n' +
+        '• Сообщает об овербукинге сразу, в этом же разговоре, а не когда гость приедет; искренне извиняется и берёт ответственность на отель, не ссылаясь на «систему» или платформу\n' +
+        '• Называет решение по стандарту: номер того же или более высокого класса в партнёрском отеле, транспорт за счёт отеля и компенсация — первая ночь у вас на следующий день бесплатно, согласованная с менеджером\n' +
+        '• До приезда действует: уведомляет менеджера, бронирует номер в партнёрском отеле, организует такси и присылает гостю письменное подтверждение (адрес, время, контакт)\n' +
         '• Завершает звонок чётко: подытоживает договорённость, благодарит и ждёт, пока гость положит трубку первым',
       uz:
-        '• Standart bo\'yicha javob beradi: mehmonxona nomi, o\'z ismi, xotirjam va iliq ohang; bronni tasdiqlash uchun asosiy tafsilotlarni (familiya, sanalar) takrorlaydi\n' +
-        '• Vaziyatni darhol, telefonda halol aytadi, mehmon stoykaga kelganda emas; chin dildan uzr so\'raydi va «tizim»ni ayblamasdan mehmonxona javobgarligini o\'z zimmasiga oladi\n' +
-        '• Aniq yechim taklif qiladi: yaqin atrofdagi hamkor mehmonxonada shu yoki yuqoriroq toifadagi xona, mehmonxona hisobidan transport, kompensatsiya (masalan, keyingi tashrifda bepul kecha)\n' +
-        '• Mehmon kelguncha harakat qiladi: menejerga xabar beradi, hamkor mehmonxonani bron qiladi, taksi tashkil qiladi, kelishuvni xabar orqali tasdiqlaydi\n' +
-        '• Qo\'ng\'iroqni aniq yakunlaydi: kelishuvni xulosalaydi, rahmat aytadi va mehmon birinchi bo\'lib trubkani qo\'yishini kutadi',
+        '• Standart bo\'yicha javob beradi (mehmonxona nomi, o\'z ismi, iliq ohang) va bronning asosiy tafsilotlarini — familiya va sanalarni takrorlaydi\n' +
+        '• Overbooking haqida mehmon kelganda emas, darhol, shu suhbatning o\'zida aytadi; samimiy uzr so\'raydi va «tizim» yoki platformani ro\'kach qilmay, javobgarlikni mehmonxona zimmasiga oladi\n' +
+        '• Standart bo\'yicha yechimni aytadi: hamkor mehmonxonada xuddi shu yoki yuqoriroq toifadagi xona, mehmonxona hisobidan transport va kompensatsiya — menejer bilan kelishilgan, ertasi kuni sizdagi birinchi kecha bepul\n' +
+        '• Kelguncha harakat qiladi: menejerni xabardor qiladi, hamkor mehmonxonada xona bron qiladi, taksi tashkil qiladi va mehmonga yozma tasdiq (manzil, vaqt, aloqa) yuboradi\n' +
+        '• Qo\'ng\'iroqni aniq yakunlaydi: kelishuvni xulosa qiladi, rahmat aytadi va mehmon trubkani birinchi qo\'yishini kutadi',
       en:
-        '• Answers to standard: hotel name, own name, calm warm tone; repeats key details (last name, dates) to confirm the booking\n' +
-        '• Tells the guest honestly right away, on the phone, not when he is already standing at the desk; apologizes sincerely and owns the hotel\'s responsibility without blaming "the system"\n' +
-        '• Offers a concrete solution: an equal or higher category room at a partner hotel nearby, transport paid by the hotel, compensation (e.g. a free night on the next stay)\n' +
-        '• Acts before the guest arrives: informs the manager, books the partner hotel, arranges a taxi, confirms the arrangement by message\n' +
-        '• Closes the call clearly: summarizes what was agreed, thanks the guest and waits for him to hang up first',
+        '• Answers to standard (hotel name, own name, warm tone) and repeats the key booking details — surname and dates\n' +
+        '• Reports the overbooking at once, in this same call, not when the guest arrives; apologises sincerely and takes ownership for the hotel without blaming "the system" or the platform\n' +
+        '• States the standard solution: a room of the same or higher class at the partner hotel, transport paid by the hotel, and compensation — the first night back with you the next day free, agreed with the manager\n' +
+        '• Acts before arrival: informs the manager, books the partner-hotel room, arranges the taxi and sends the guest written confirmation (address, time, contact)\n' +
+        '• Ends the call clearly: summarises the agreement, thanks the guest and waits for him to hang up first',
     },
   },
   {
@@ -111,34 +111,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['whatsapp-communication', 'booking-com-guests'],
     scenario: {
-      ru: 'В WhatsApp отеля приходит сообщение от гостя, забронировавшего через Booking.com на следующую неделю: «Здравствуйте! Подскажите: 1) включён ли завтрак в мою бронь, 2) можно ли заехать в 10 утра, 3) есть ли трансфер из аэропорта и сколько стоит, 4) почему на вашем сайте цена ниже, чем я заплатил на Booking?» Вы открываете Extranet и PMS: тариф невозвратный, завтрак не включён, трансфер стоит 15 долларов.',
-      uz: 'Mehmonxona WhatsApp\'iga kelasi haftaga Booking.com orqali bron qilgan mehmondan xabar keladi: «Assalomu alaykum! Aytingchi: 1) bronimga nonushta kiritilganmi, 2) ertalab soat 10 da joylashsam bo\'ladimi, 3) aeroportdan transfer bormi va qancha turadi, 4) nega saytingizda narx men Booking\'da to\'laganimdan past?» Siz Extranet va PMS\'ni ochasiz: tarif qaytarilmaydigan, nonushta kiritilmagan, transfer 15 dollar turadi.',
-      en: 'A message arrives on the hotel\'s WhatsApp from a guest who booked through Booking.com for next week: "Hello! Could you tell me: 1) is breakfast included in my booking, 2) can I check in at 10 am, 3) do you have an airport transfer and how much is it, 4) why is the price on your website lower than what I paid on Booking?" You open the Extranet and the PMS: the rate is non-refundable, breakfast is not included, the transfer costs $15.',
+      ru: 'В WhatsApp отеля пишет гость с бронью Booking.com на следующую неделю: «1) Завтрак включён? 2) Можно заехать в 10 утра? 3) Есть трансфер из аэропорта и сколько стоит? 4) Почему на вашем сайте дешевле, чем я заплатил на Booking?» В Extranet и PMS: тариф невозвратный, завтрак не включён (можно добавить за 80 000 сум в день), трансфер — 15 долларов.',
+      uz: 'Mehmonxona WhatsApp\'iga keyingi haftaga Booking.com orqali bron qilgan mehmon yozadi: «1) Nonushta kiritilganmi? 2) Ertalab soat 10 da kelsam bo\'ladimi? 3) Aeroportdan transfer bormi va narxi qancha? 4) Nega saytingizda men Booking\'da to\'laganimdan arzonroq?» Extranet va PMS\'da: tarif qaytarilmaydi, nonushta kiritilmagan (kuniga 80 000 so\'mga qo\'shish mumkin), transfer — 15 dollar.',
+      en: 'A guest with a Booking.com reservation for next week writes on the hotel WhatsApp: "1) Is breakfast included? 2) Can I check in at 10 am? 3) Is there an airport transfer and how much? 4) Why is your website cheaper than what I paid on Booking?" Extranet and PMS: non-refundable rate, breakfast not included (can be added for 80,000 sum a day), transfer — 15 dollars.',
     },
     question: {
-      ru: 'Напишите ответ гостю в WhatsApp (3–6 предложений или несколько коротких сообщений): что вы ответите на каждый вопрос и что сделаете дальше.',
-      uz: 'Mehmonga WhatsApp\'da javob yozing (3–6 gap yoki bir nechta qisqa xabar): har bir savolga nima deb javob berasiz va keyin nima qilasiz.',
-      en: 'Write your WhatsApp reply to the guest (3–6 sentences or several short messages): what you would answer to each question and what you would do next.',
+      ru: 'Напишите ответ гостю в WhatsApp несколькими короткими сообщениями: ответьте на все четыре вопроса и укажите, что и когда вы сделаете дальше.',
+      uz: 'Mehmonga WhatsApp\'da bir nechta qisqa xabar bilan javob yozing: to\'rttala savolga javob bering va keyin nima va qachon qilishingizni ko\'rsating.',
+      en: 'Write your WhatsApp reply to the guest as several short messages: answer all four questions and say what you will do next and when.',
     },
     rubric: {
       ru:
-        '• Отвечает быстро, начинает с приветствия и благодарности за сообщение; тон тёплый, но профессиональный, максимум один-два эмодзи\n' +
-        '• Отвечает на все четыре вопроса по порядку, разбивая текст на короткие сообщения, а не одной «стеной»\n' +
-        '• Честно объясняет условия тарифа (невозвратный, без завтрака) спокойно и без критики Booking.com; предлагает добавить завтрак и называет цену трансфера (15 долларов)\n' +
-        '• Про ранний заезд не отвечает «нет»: обещает уточнить у горничных и написать в конкретный срок, предлагает оставить багаж на стойке\n' +
-        '• Про разницу в цене объясняет спокойно, не смущая гостя, и фиксирует договорённости письменно (даты, цену трансфера, условия)',
+        '• Отвечает быстро, с приветствием и благодарностью; тон тёплый, но профессиональный; короткие сообщения по 1–2 предложения, максимум один-два эмодзи\n' +
+        '• Завтрак: честно сообщает, что не включён, спокойно напоминает условия тарифа (невозвратный) и предлагает добавить завтрак за 80 000 сум в день\n' +
+        '• Ранний заезд: не отвечает «нет» и не обещает «постараемся» — объясняет, что статус номера проверят в день заезда, называет, когда сообщит ответ, и предлагает хранение багажа\n' +
+        '• Трансфер: называет цену 15 долларов и предлагает оформить, запросив номер рейса или время прилёта\n' +
+        '• Разница в цене: объясняет спокойно через условия тарифа и дату бронирования, не критикуя Booking.com и не смущая гостя; договорённости (завтрак, трансфер, время) подтверждает письменно',
       uz:
-        '• Tez javob beradi, salomlashish va xabar uchun rahmatdan boshlaydi; ohang iliq, lekin professional, ko\'pi bilan bir-ikkita emoji\n' +
-        '• Barcha to\'rt savolga tartib bilan javob beradi, matnni bitta «devor» emas, qisqa xabarlarga bo\'ladi\n' +
-        '• Tarif shartlarini (qaytarilmaydigan, nonushtasiz) xotirjam va Booking.com\'ni tanqid qilmasdan halol tushuntiradi; nonushta qo\'shishni taklif qiladi va transfer narxini (15 dollar) aytadi\n' +
-        '• Erta kirish haqida «yo\'q» demaydi: farroshlardan aniqlab, aniq muddatda yozishga va\'da beradi, yukni stoykada qoldirishni taklif qiladi\n' +
-        '• Narx farqini mehmonni noqulay ahvolga solmasdan xotirjam tushuntiradi va kelishuvlarni yozma mustahkamlaydi (sanalar, transfer narxi, shartlar)',
+        '• Tez, salom va rahmat bilan javob beradi; ohang iliq, ammo professional; 1–2 gaplik qisqa xabarlar, ko\'pi bilan bir-ikki emoji\n' +
+        '• Nonushta: kiritilmaganini halol aytadi, tarif shartlarini (qaytarilmaydi) xotirjam eslatadi va kuniga 80 000 so\'mga nonushta qo\'shishni taklif qiladi\n' +
+        '• Erta joylashish: «yo\'q» demaydi va «harakat qilamiz» deb va\'da bermaydi — xona holati kelish kuni tekshirilishini tushuntiradi, javobni qachon aytishini bildiradi va bagaj saqlashni taklif qiladi\n' +
+        '• Transfer: 15 dollar narxini aytadi va reys raqami yoki qo\'nish vaqtini so\'rab, rasmiylashtirishni taklif qiladi\n' +
+        '• Narx farqi: Booking.com\'ni tanqid qilmay va mehmonni xijolat qilmay, tarif shartlari va bron sanasi orqali xotirjam tushuntiradi; kelishuvlarni (nonushta, transfer, vaqt) yozma tasdiqlaydi',
       en:
-        '• Replies quickly, opens with a greeting and thanks for the message; tone is warm but professional, at most one or two emoji\n' +
-        '• Answers all four questions in order, splitting the text into short messages rather than one wall of text\n' +
-        '• Explains the rate conditions honestly (non-refundable, no breakfast) calmly and without criticizing Booking.com; offers to add breakfast and states the transfer price ($15)\n' +
-        '• Does not answer "no" to the early check-in: promises to check with housekeeping and reply by a specific time, offers to hold luggage at the desk\n' +
-        '• Explains the price difference calmly without embarrassing the guest and confirms agreements in writing (dates, transfer price, conditions)',
+        '• Replies quickly, with a greeting and thanks; warm but professional tone; short messages of 1–2 sentences, at most one or two emoji\n' +
+        '• Breakfast: says honestly it isn\'t included, calmly reminds the guest of the rate terms (non-refundable) and offers to add breakfast for 80,000 sum a day\n' +
+        '• Early check-in: doesn\'t say "no" or promise "we\'ll try" — explains the room status is checked on arrival day, says when the answer will come and offers luggage storage\n' +
+        '• Transfer: gives the price of 15 dollars and offers to book it, asking for the flight number or landing time\n' +
+        '• Price difference: explains calmly via the rate conditions and booking date, without criticising Booking.com or embarrassing the guest; confirms the agreements (breakfast, transfer, time) in writing',
     },
   },
   {
@@ -146,34 +146,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['emergency-procedures'],
     scenario: {
-      ru: '14:00, в лобби около десяти гостей, среди них пожилая пара с чемоданами. Внезапно срабатывает пожарная сигнализация. Гости растерянно смотрят на вас, одна женщина направляется к лифту, чтобы подняться за вещами. Вы на стойке одни, второй администратор на обеде.',
-      uz: 'Soat 14:00, lobbida o\'nga yaqin mehmon bor, ular orasida chamadonli keksa juftlik. To\'satdan yong\'in signalizatsiyasi ishga tushadi. Mehmonlar sarosimada sizga qarashadi, bir ayol narsalarini olish uchun liftga yo\'naladi. Siz stoykada yolg\'izsiz, ikkinchi administrator tushlikda.',
-      en: 'It is 2 pm and there are about ten guests in the lobby, including an elderly couple with suitcases. Suddenly the fire alarm goes off. The guests look at you in confusion, and one woman heads for the elevator to go up for her things. You are alone at the desk; the second receptionist is at lunch.',
+      ru: '14:00, в лобби около десяти гостей, среди них пожилая пара с чемоданами. Срабатывает пожарная сигнализация. Одна женщина направляется к лифту, чтобы подняться за вещами. Вы одни на стойке, коллега на обеде и доступен по рации, охранник у входа.',
+      uz: 'Soat 14:00, lobbida o\'nga yaqin mehmon bor, ular orasida chamadonli keksa juftlik. Yong\'in signalizatsiyasi ishlaydi. Bir ayol buyumlarini olish uchun yuqoriga chiqmoqchi bo\'lib liftga qarab ketadi. Stoykada yolg\'izsiz, hamkasbingiz tushlikda va ratsiya orqali aloqada, qo\'riqchi kirish eshigi oldida.',
+      en: '14:00, about ten guests are in the lobby, among them an elderly couple with suitcases. The fire alarm goes off. One woman heads for the lift to go up for her belongings. You are alone at the desk; your colleague is at lunch and reachable by radio, the guard is at the entrance.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, что вы скажете гостям и в каком порядке выполните действия по протоколу.',
-      uz: '3–6 gapda mehmonlarga nima deyishingizni va protokol bo\'yicha harakatlarni qanday tartibda bajarishingizni yozing.',
-      en: 'In 3–6 sentences, write what you would say to the guests and in what order you would carry out the protocol steps.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) ваши первые слова гостям; 2) что вы делаете с женщиной у лифта; 3) как помогаете пожилой паре; 4) как обеспечиваете стойку и связь с охраной и менеджером.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) mehmonlarga birinchi so\'zlaringiz; 2) lift oldidagi ayolga nima qilasiz; 3) keksa juftlikka qanday yordam berasiz; 4) stoyka va qo\'riqchi hamda menejer bilan aloqani qanday ta\'minlaysiz.',
+      en: 'Answer in points or 3–6 sentences: 1) your first words to the guests; 2) what you do about the woman at the lift; 3) how you help the elderly couple; 4) how you keep the desk covered and stay in contact with security and the manager.',
     },
     rubric: {
       ru:
-        '• Сохраняет спокойствие и говорит уверенно, громко и чётко — гости ориентируются на реакцию администратора\n' +
-        '• Немедленно останавливает женщину у лифта («Пожалуйста, не пользуйтесь лифтом») и направляет всех к ближайшему лестничному выходу, указывая конкретное направление\n' +
-        '• Помогает пожилой паре или просит другого гостя помочь; следует протоколу отеля: сообщение в пожарную службу, оповещение менеджера и охраны\n' +
-        '• Не бросает стойку без замены: вызывает второго администратора или охрану, передаёт пост по плану и берёт с собой список проживающих гостей\n' +
-        '• Не возвращается за вещами сам и не позволяет гостям; направляет к точке сбора и сообщает, что персонал будет на каждом этаже',
+        '• Говорит спокойно, уверенно и громко, с конкретным указанием: какой выход, куда идти («к лестнице справа, спускаемся к месту сбора»)\n' +
+        '• Немедленно останавливает женщину у лифта: лифтом не пользоваться и за вещами не возвращаться\n' +
+        '• Организует помощь пожилой паре (поручает охраннику или другому сотруднику проводить их), чемоданы оставить\n' +
+        '• Не оставляет стойку без передачи: по рации вызывает коллегу или охрану и передаёт пост по плану смены; сообщает менеджеру и следует протоколу вызова пожарной службы\n' +
+        '• Действует по протоколу, а не импровизирует: не выясняет, «настоящая ли тревога», прежде чем выводить людей, и направляет всех к точке сбора',
       uz:
-        '• Xotirjamlikni saqlaydi va ishonchli, baland va aniq gapiradi — mehmonlar administratorning reaksiyasiga qarab yo\'l tutadi\n' +
-        '• Liftdagi ayolni darhol to\'xtatadi («Iltimos, liftdan foydalanmang») va hammani eng yaqin zinapoya chiqishiga aniq yo\'nalish ko\'rsatib yo\'naltiradi\n' +
-        '• Keksa juftlikka yordam beradi yoki boshqa mehmondan yordam so\'raydi; mehmonxona protokoliga amal qiladi: yong\'in xizmatiga xabar, menejer va xavfsizlikni ogohlantirish\n' +
-        '• Stoykani almashtiruvchisiz tashlab ketmaydi: ikkinchi administrator yoki xavfsizlikni chaqiradi, postni reja bo\'yicha topshiradi va joylashgan mehmonlar ro\'yxatini o\'zi bilan oladi\n' +
-        '• Narsalar uchun o\'zi qaytmaydi va mehmonlarga ham ruxsat bermaydi; yig\'ilish nuqtasiga yo\'naltiradi va xodimlar har bir qavatda bo\'lishini aytadi',
+        '• Xotirjam, ishonchli va baland ovozda, aniq ko\'rsatma bilan gapiradi: qaysi chiqish, qayerga borish («o\'ngdagi zinaga, yig\'ilish joyiga tushamiz»)\n' +
+        '• Lift oldidagi ayolni darhol to\'xtatadi: liftdan foydalanmaslik va buyumlar uchun qaytmaslik\n' +
+        '• Keksa juftlikka yordamni tashkil qiladi (qo\'riqchi yoki boshqa xodimga ularni kuzatib qo\'yishni topshiradi), chamadonlarni qoldirishni aytadi\n' +
+        '• Stoykani topshirmay tashlab ketmaydi: ratsiya orqali hamkasbi yoki qo\'riqchini chaqiradi va postni smena rejasi bo\'yicha topshiradi; menejerga xabar beradi va o\'t o\'chirish xizmatini chaqirish protokoliga amal qiladi\n' +
+        '• Improvizatsiya emas, protokol bo\'yicha harakat qiladi: odamlarni olib chiqishdan oldin «signal haqiqiymi» deb aniqlamaydi va hammani yig\'ilish joyiga yo\'naltiradi',
       en:
-        '• Stays calm and speaks confidently, loudly and clearly — the guests take their cue from the receptionist\n' +
-        '• Immediately stops the woman at the elevator ("Please do not use the elevator") and directs everyone to the nearest stairwell exit, pointing out the specific direction\n' +
-        '• Helps the elderly couple or asks another guest to help; follows the hotel protocol: notifying the fire service, alerting the manager and security\n' +
-        '• Does not abandon the desk without coverage: calls the second receptionist or security, hands off the post per the plan and takes the in-house guest list along\n' +
-        '• Does not go back for belongings and does not let guests do so; directs them to the assembly point and tells them staff will be on every floor',
+        '• Speaks calmly, confidently and loudly, with a concrete instruction: which exit and where to go ("to the stairs on the right, down to the assembly point")\n' +
+        '• Stops the woman at the lift at once: no lift and no going back for belongings\n' +
+        '• Arranges help for the elderly couple (asks the guard or another staff member to escort them), suitcases left behind\n' +
+        '• Doesn\'t leave the desk without a handover: radios the colleague or guard and hands over the post per the shift plan; informs the manager and follows the protocol for calling the fire service\n' +
+        '• Follows the protocol instead of improvising: doesn\'t check "whether the alarm is real" before evacuating, and sends everyone to the assembly point',
     },
   },
   {
@@ -181,34 +181,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['lost-items', 'check-out'],
     scenario: {
-      ru: 'Гость выехал утром, а через три часа звонит из аэропорта: он забыл в номере 318 часы стоимостью около 2 000 долларов и через час улетает. Он взволнован и просит немедленно проверить. Горничная уже убрала номер, в журнале находок записи пока нет.',
-      uz: 'Mehmon ertalab chiqib ketdi, uch soatdan so\'ng aeroportdan qo\'ng\'iroq qiladi: u 318-xonada taxminan 2 000 dollarlik soatini unutib qoldirgan va bir soatdan keyin uchib ketadi. U xavotirda va darhol tekshirishni so\'raydi. Farrosh xonani allaqachon tozalagan, topilmalar jurnalida hozircha yozuv yo\'q.',
-      en: 'A guest checked out in the morning and calls from the airport three hours later: he left a watch worth about $2,000 in room 318 and his flight leaves in an hour. He is anxious and asks you to check immediately. Housekeeping has already cleaned the room; there is no entry in the lost-and-found register yet.',
+      ru: '11:00. Гость, выехавший в 08:00, звонит из аэропорта: он забыл в номере 318 часы стоимостью около 2 000 долларов, посадка через час. Номер уже убран, в журнале находок записи нет, горничная этого этажа на смене. Гость очень взволнован.',
+      uz: 'Soat 11:00. 08:00 da chiqib ketgan mehmon aeroportdan qo\'ng\'iroq qiladi: u 318-xonada taxminan 2 000 dollarlik soatini unutgan, samolyotga chiqishga bir soat qoldi. Xona allaqachon yig\'ishtirilgan, topilmalar jurnalida yozuv yo\'q, shu qavat xizmatchisi smenada. Mehmon juda hayajonda.',
+      en: '11:00. A guest who checked out at 08:00 calls from the airport: he left a watch worth about 2,000 dollars in room 318, and boarding is in an hour. The room has already been cleaned, there is no entry in the lost-and-found log, and the floor attendant is on shift. The guest is very anxious.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, что вы скажете гостю по телефону и какие шаги предпримете для поиска и возврата часов.',
-      uz: '3–6 gapda mehmonga telefonda nima deyishingizni va soatni topib qaytarish uchun qanday qadamlar qo\'yishingizni yozing.',
-      en: 'In 3–6 sentences, write what you would say to the guest on the phone and what steps you would take to find and return the watch.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) что говорите гостю по телефону; 2) что и в каком порядке проверяете; 3) когда и как связываетесь с ним снова; 4) что предлагаете, если часы найдутся.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) telefonda mehmonga nima deysiz; 2) nimani va qaysi tartibda tekshirasiz; 3) u bilan qachon va qanday qayta bog\'lanasiz; 4) soat topilsa, nimani taklif qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) what you tell the guest on the phone; 2) what you check and in what order; 3) when and how you contact him again; 4) what you offer if the watch is found.',
     },
     rubric: {
       ru:
-        '• Не говорит «не найдено», опираясь только на пустой журнал; успокаивает гостя и берёт ситуацию под личный контроль\n' +
-        '• Записывает описание часов, номер, дату выезда и контакты гостя (телефон, email, адрес), называет конкретный срок обратного звонка (например, 15–20 минут)\n' +
-        '• Проверяет всё: связывается с хозяйственной службой и горничной, убиравшей номер 318, осматривает номер, сейф, бельё и зоны общего пользования, подключает охрану или менеджера\n' +
-        '• Перезванивает первым в обещанный срок, даже если поиск ещё идёт; при находке сразу регистрирует часы в журнале\n' +
-        '• Предлагает безопасную отправку курьером со страховкой или хранение до возвращения гостя, заранее объясняя стоимость и сроки',
+        '• Не говорит «не найдено», опираясь на пустой журнал; успокаивает гостя и берёт поиск под личный контроль\n' +
+        '• Записывает описание часов, номер комнаты и контакты; называет конкретный срок обратного звонка, укладывающийся до посадки (например, 15 минут)\n' +
+        '• Проверяет всё, что требует модуль: журнал находок, номер 318 (сейф, тумбочки, бельё), хозяйственную службу и горничную, убиравшую номер, зоны общего пользования\n' +
+        '• Перезванивает в обещанный срок, даже если поиск не закончен; найденные часы сразу вносит в журнал (описание, место, время, кто нашёл) и убирает в сейф\n' +
+        '• Предлагает отправку курьером за счёт гостя, заранее назвав стоимость и сроки, или хранение до его возвращения; выдаёт только владельцу или по его указанию',
       uz:
-        '• Faqat bo\'sh jurnalga tayanib «topilmadi» demaydi; mehmonni tinchlantiradi va vaziyatni shaxsan nazoratga oladi\n' +
-        '• Soat tavsifini, xona raqamini, chiqish sanasini va mehmon kontaktlarini (telefon, email, manzil) yozib oladi, qayta qo\'ng\'iroq uchun aniq muddat aytadi (masalan, 15–20 daqiqa)\n' +
-        '• Hammasini tekshiradi: xo\'jalik xizmati va 318-xonani tozalagan farrosh bilan bog\'lanadi, xona, seyf, choyshab va umumiy zonalarni ko\'zdan kechiradi, xavfsizlik yoki menejerni jalb qiladi\n' +
-        '• Qidiruv davom etayotgan bo\'lsa ham, va\'da qilingan muddatda birinchi bo\'lib qayta qo\'ng\'iroq qiladi; topilganda soatni darhol jurnalga qayd etadi\n' +
-        '• Sug\'urtalangan kuryer orqali xavfsiz yuborishni yoki mehmon qaytguncha saqlashni taklif qiladi, narx va muddatni oldindan tushuntiradi',
+        '• Bo\'sh jurnalga tayanib «topilmadi» demaydi; mehmonni tinchlantiradi va qidiruvni shaxsiy nazoratiga oladi\n' +
+        '• Soat tavsifi, xona raqami va kontaktlarni yozib oladi; samolyotga chiqishgacha sig\'adigan aniq qayta qo\'ng\'iroq muddatini aytadi (masalan, 15 daqiqa)\n' +
+        '• Modul talab qilgan hamma narsani tekshiradi: topilmalar jurnali, 318-xona (seyf, tumbochkalar, choyshablar), xo\'jalik xizmati va xonani yig\'ishtirgan xizmatchi, umumiy foydalanish joylari\n' +
+        '• Qidiruv tugamagan bo\'lsa ham va\'da qilingan muddatda qayta qo\'ng\'iroq qiladi; topilgan soatni darhol jurnalga kiritadi (tavsif, joy, vaqt, kim topgan) va seyfga qo\'yadi\n' +
+        '• Narx va muddatni oldindan aytib, mehmon hisobidan kuryer orqali jo\'natishni yoki qaytib kelguncha saqlashni taklif qiladi; faqat egasiga yoki uning ko\'rsatmasi bilan beradi',
       en:
-        '• Does not say "not found" based only on the empty register; reassures the guest and takes personal ownership of the situation\n' +
-        '• Records the description of the watch, room number, check-out date and the guest\'s contacts (phone, email, address), gives a specific callback time (e.g. 15–20 minutes)\n' +
-        '• Checks everything: contacts housekeeping and the maid who cleaned room 318, inspects the room, safe, linen and common areas, involves security or the manager\n' +
-        '• Calls back first within the promised time even if the search is still ongoing; logs the watch in the register immediately once found\n' +
-        '• Offers safe insured courier delivery or storage until the guest returns, explaining the cost and timing in advance',
+        '• Doesn\'t say "not found" based on the empty log; reassures the guest and takes personal charge of the search\n' +
+        '• Records the watch description, room number and contacts; gives a concrete call-back time that fits before boarding (e.g. 15 minutes)\n' +
+        '• Checks everything the module requires: the lost-and-found log, room 318 (safe, drawers, linen), housekeeping and the attendant who cleaned the room, public areas\n' +
+        '• Calls back at the promised time even if the search isn\'t finished; logs the found watch at once (description, place, time, finder) and locks it in the safe\n' +
+        '• Offers courier delivery at the guest\'s cost with price and timing stated upfront, or storage until he returns; releases it only to the owner or on his instruction',
     },
   },
   {
@@ -216,34 +216,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['vip-guests', 'early-checkin'],
     scenario: {
-      ru: '10:30 утра. В отель приезжает госпожа Ортега — постоянная гостья, останавливается у вас в шестой раз; в её профиле отмечены угловой номер с видом на море и гипоаллергенные подушки. Заезд по стандарту в 14:00, её номер ещё не убран, а других свободных номеров этой категории нет. В лобби в это время несколько других гостей.',
-      uz: 'Ertalab soat 10:30. Mehmonxonaga Ortega xonim keladi — doimiy mehmon, sizda oltinchi marta to\'xtayapti; profilida dengiz manzarali burchak xona va gipoallergenik yostiqlar qayd etilgan. Standart kirish vaqti 14:00, uning xonasi hali tozalanmagan, bu toifadagi boshqa bo\'sh xona yo\'q. Lobbida shu paytda bir nechta boshqa mehmon bor.',
-      en: 'It is 10:30 am. Mrs. Ortega arrives at the hotel — a repeat guest on her sixth stay; her profile notes a corner sea-view room and hypoallergenic pillows. Standard check-in is at 2 pm, her room has not been cleaned yet, and there are no other free rooms of this category. Several other guests are in the lobby at the moment.',
+      ru: '10:30. Приезжает госпожа Ортега — постоянная гостья, шестое проживание; в профиле: угловой номер с видом на море, гипоаллергенные подушки. Заезд по брони с 14:00; её номер освобождён, но ещё не убран, других свободных номеров этой категории нет. В лобби несколько гостей.',
+      uz: 'Soat 10:30. Ortega xonim keladi — doimiy mehmon, oltinchi tashrifi; profilida: dengizga qaraydigan burchak xona, gipoallergen yostiqlar. Bron bo\'yicha joylashish 14:00 dan; uning xonasi bo\'shagan, ammo hali yig\'ishtirilmagan, bu toifadagi boshqa bo\'sh xona yo\'q. Lobbida bir nechta mehmon bor.',
+      en: '10:30. Ms Ortega arrives — a regular guest on her sixth stay; her profile: corner room with a sea view, hypoallergenic pillows. Her booking starts at 14:00; her room has been vacated but not yet cleaned, and no other room in that category is free. Several guests are in the lobby.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, как вы встретите гостью, что скажете и какие шаги предпримете, пока номер не готов.',
-      uz: '3–6 gapda mehmonni qanday kutib olishingizni, nima deyishingizni va xona tayyor bo\'lguncha qanday qadamlar qo\'yishingizni yozing.',
-      en: 'In 3–6 sentences, write how you would welcome the guest, what you would say, and what steps you would take while the room is not ready.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) как вы её приветствуете; 2) что говорите о номере; 3) что предлагаете на время ожидания; 4) что делаете «за кулисами», пока она ждёт.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) uni qanday kutib olasiz; 2) xona haqida nima deysiz; 3) kutish vaqtida nimani taklif qilasiz; 4) u kutayotganda «parda ortida» nima qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) how you greet her; 2) what you say about the room; 3) what you offer while she waits; 4) what you do "behind the scenes" while she waits.',
     },
     rubric: {
       ru:
-        '• Узнаёт гостью и приветствует по имени тепло и лично («Госпожа Ортега, добро пожаловать обратно!»), упоминает детали из профиля (угловой номер, подушки), не оформляет её как новую\n' +
-        '• Извиняется за ожидание и называет конкретное время готовности номера (например, «около 45 минут»), а не «подождите где-нибудь»\n' +
-        '• Предлагает альтернативу на время ожидания: кофе или завтрак в лаунже за счёт отеля, хранение багажа, спа или бизнес-зону\n' +
-        '• Действует: связывается с хозяйственной службой, чтобы её номер убрали в приоритетном порядке, и обещает лично сообщить, как только он готов\n' +
-        '• Соблюдает дискретность: не объявляет VIP-статус вслух при других гостях, обсуждает детали тихо; уместен небольшой персональный жест (записка, любимый напиток в номере)',
+        '• Приветствует в первые 10 секунд по имени, узнаёт как постоянную гостью и упоминает её предпочтения (угловой номер с видом на море, подушки), а не оформляет как новую\n' +
+        '• Проверяет реальный статус уборки и называет конкретное время готовности номера — без «постараемся» и «подождите где-нибудь»\n' +
+        '• Предлагает комфортное ожидание: хранение багажа, кофе или завтрак в лаунже, и обещает лично позвонить, как только номер будет готов\n' +
+        '• Ставит её номер в приоритет у хозяйственной службы и проверяет подготовку по профилю (гипоаллергенные подушки), а затем действительно звонит\n' +
+        '• Соблюдает дискретность: не объявляет VIP-статус при других гостях, говорит тихо; добавляет уместный небольшой личный жест (записка, любимый напиток)',
       uz:
-        '• Mehmonni taniydi va ismi bilan iliq, shaxsiy kutib oladi («Ortega xonim, xush kelibsiz!»), profildagi detallarni (burchak xona, yostiqlar) eslatadi, uni yangi mehmondek rasmiylashtirmaydi\n' +
-        '• Kutish uchun uzr so\'raydi va xona tayyor bo\'lishining aniq vaqtini aytadi (masalan, «taxminan 45 daqiqa»), «boshqa joyda kuting» demaydi\n' +
-        '• Kutish vaqti uchun muqobil taklif qiladi: mehmonxona hisobidan lounjda qahva yoki nonushta, yukni saqlash, spa yoki biznes-zona\n' +
-        '• Harakat qiladi: xo\'jalik xizmati bilan bog\'lanib, uning xonasini birinchi navbatda tozalatadi va tayyor bo\'lishi bilanoq shaxsan xabar berishga va\'da beradi\n' +
-        '• Diskretlikni saqlaydi: boshqa mehmonlar oldida VIP maqomini ovoz chiqarib aytmaydi, detallarni sekin muhokama qiladi; kichik shaxsiy jest o\'rinli (xat, xonada sevimli ichimlik)',
+        '• Birinchi 10 soniyada ismi bilan salomlashadi, doimiy mehmon sifatida taniydi va afzalliklarini (dengizga qaraydigan burchak xona, yostiqlar) eslatadi, yangi mehmondek rasmiylashtirmaydi\n' +
+        '• Yig\'ishtirishning haqiqiy holatini tekshiradi va xona tayyor bo\'ladigan aniq vaqtni aytadi — «harakat qilamiz» va «biror joyda kutib turing»siz\n' +
+        '• Qulay kutishni taklif qiladi: bagaj saqlash, lounjda qahva yoki nonushta, va xona tayyor bo\'lishi bilan shaxsan qo\'ng\'iroq qilishga va\'da beradi\n' +
+        '• Xo\'jalik xizmatida uning xonasini birinchi navbatga qo\'yadi va tayyorgarlikni profil bo\'yicha (gipoallergen yostiqlar) tekshiradi, so\'ng haqiqatan qo\'ng\'iroq qiladi\n' +
+        '• Maxfiylikni saqlaydi: boshqa mehmonlar oldida VIP maqomini e\'lon qilmaydi, past ovozda gapiradi; o\'rinli kichik shaxsiy e\'tibor belgisini qo\'shadi (yozma tabrik, sevimli ichimlik)',
       en:
-        '• Recognizes the guest and greets her warmly and personally by name ("Mrs. Ortega, welcome back!"), mentions details from her profile (corner room, pillows), does not process her like a first-timer\n' +
-        '• Apologizes for the wait and gives a specific time for the room to be ready (e.g. "about 45 minutes"), never "wait somewhere"\n' +
-        '• Offers an alternative for the waiting time: coffee or breakfast in the lounge on the house, luggage storage, the spa or business area\n' +
-        '• Takes action: contacts housekeeping to have her room cleaned as a priority and promises to personally let her know the moment it is ready\n' +
-        '• Keeps discretion: does not announce VIP status aloud in front of other guests, discusses details quietly; a small personal touch is appropriate (a note, her favorite drink in the room)',
+        '• Greets her by name within 10 seconds, recognises her as a regular and mentions her preferences (corner sea-view room, pillows) rather than processing her like a new guest\n' +
+        '• Checks the real cleaning status and gives a concrete time the room will be ready — no "we\'ll try" or "wait somewhere"\n' +
+        '• Offers a comfortable wait: luggage storage, coffee or breakfast in the lounge, and promises to call her personally as soon as the room is ready\n' +
+        '• Has housekeeping prioritise her room and checks the set-up against the profile (hypoallergenic pillows), then actually makes the call\n' +
+        '• Stays discreet: doesn\'t announce VIP status in front of other guests, speaks quietly; adds a fitting small personal gesture (a note, a favourite drink)',
     },
   },
   {
@@ -251,34 +251,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['foreign-guests', 'greeting-guests'],
     scenario: {
-      ru: 'К стойке подходит гость из Китая, который почти не говорит ни по-русски, ни по-английски. Он показывает телефон с бронью на английском, повторяет «taxi… airport… tomorrow» и показывает на часы, явно волнуясь. Из его жестов непонятно, во сколько ему нужно уехать и нужен ли ему трансфер отеля или просто вызов такси.',
-      uz: 'Stoykaga Xitoydan kelgan mehmon yaqinlashadi, u rus va ingliz tillarida deyarli gapirmaydi. U telefonida inglizcha bronni ko\'rsatadi, «taxi… airport… tomorrow» deb takrorlaydi va soatga ishora qilib, aniq xavotirlanadi. Uning imo-ishoralaridan qachon ketishi kerakligi va unga mehmonxona transferi kerakmi yoki shunchaki taksi chaqirish kerakmi — tushunarsiz.',
-      en: 'A guest from China approaches the desk; he speaks almost no Russian or English. He shows a booking on his phone in English, repeats "taxi… airport… tomorrow" and points at his watch, clearly worried. From his gestures it is unclear what time he needs to leave and whether he needs the hotel transfer or simply a taxi called.',
+      ru: '18:00. К стойке подходит гость из Китая, который почти не говорит ни по-русски, ни по-английски. Он показывает бронь на телефоне, повторяет «taxi… airport… tomorrow» и показывает на часы, явно волнуясь. Непонятно, во сколько ему нужно выехать, сколько будет пассажиров и нужен ли трансфер отеля или обычное такси.',
+      uz: 'Soat 18:00. Stoykaga ruscha ham, inglizcha ham deyarli gapirmaydigan Xitoylik mehmon keladi. U telefonda bronni ko\'rsatadi, «taxi… airport… tomorrow» deb takrorlaydi va hayajon bilan soatga ishora qiladi. Unga qachon jo\'nash kerakligi, necha yo\'lovchi bo\'lishi va mehmonxona transferi yoki oddiy taksi kerakligi tushunarsiz.',
+      en: '18:00. A guest from China who speaks almost no Russian or English comes to the desk. He shows his booking on his phone, repeats "taxi… airport… tomorrow" and points at his watch, clearly anxious. It is unclear what time he needs to leave, how many passengers there will be, and whether he wants the hotel transfer or an ordinary taxi.',
     },
     question: {
-      ru: 'Напишите в 3–6 предложениях, что вы скажете гостю и какими способами будете выяснять и подтверждать его запрос.',
-      uz: '3–6 gapda mehmonga nima deyishingizni va uning so\'rovini qanday usullar bilan aniqlab, tasdiqlashingizni yozing.',
-      en: 'In 3–6 sentences, write what you would say to the guest and what methods you would use to clarify and confirm his request.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) ваши первые слова и поведение; 2) какими способами вы выясняете время, число пассажиров и вид услуги; 3) как подтверждаете договорённость.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) birinchi so\'zlaringiz va xatti-harakatingiz; 2) vaqt, yo\'lovchilar soni va xizmat turini qanday usullar bilan aniqlaysiz; 3) kelishuvni qanday tasdiqlaysiz.',
+      en: 'Answer in points or 3–6 sentences: 1) your first words and manner; 2) how you find out the time, number of passengers and type of service; 3) how you confirm the agreement.',
     },
     rubric: {
       ru:
-        '• Начинает с улыбки и спокойного тона, снимает напряжение («Не переживайте, я помогу»); говорит медленно, короткими простыми фразами без сленга и не повышает голос\n' +
-        '• Использует визуальные средства: пишет время и цену на бумаге, показывает часы или календарь, использует жесты\n' +
-        '• Применяет приложение-переводчик (в том числе на китайский) как инструмент, но продолжает общаться напрямую, не «прячась» за телефон\n' +
-        '• Подтверждает понимание, повторяя детали: дата, время выезда, аэропорт, тип услуги (трансфер отеля или такси), стоимость — и получает чёткое «да» от гостя\n' +
-        '• Фиксирует договорённость письменно (записка или сообщение в WhatsApp с временем и ценой) и не передразнивает акцент или произношение гостя',
+        '• Встречает в первые 10 секунд с улыбкой и успокаивает («Не волнуйтесь, я помогу»); говорит медленно, короткими простыми фразами, не повышая голос\n' +
+        '• Использует визуальные средства: пишет время и цену цифрами, показывает часы, календарь или карту, использует жесты\n' +
+        '• Применяет переводчик как опору, но продолжает общаться напрямую, а не «прячется» за телефон\n' +
+        '• Уточняет и повторяет каждую деталь — дата, время выезда из отеля, аэропорт, число пассажиров, трансфер или такси, цена — и добивается чёткого «да»\n' +
+        '• Фиксирует договорённость письменно (записка или WhatsApp со временем и ценой цифрами) и ни при каких условиях не передразнивает акцент или произношение',
       uz:
-        '• Tabassum va xotirjam ohangdan boshlaydi, taranglikni yumshatadi («Xavotir olmang, yordam beraman»); sekin, qisqa va oddiy iboralar bilan, slengsiz gapiradi, ovozini ko\'tarmaydi\n' +
-        '• Ko\'rgazmali vositalardan foydalanadi: vaqt va narxni qog\'ozga yozadi, soat yoki kalendar ko\'rsatadi, imo-ishoralardan foydalanadi\n' +
-        '• Tarjimon ilovasini (shu jumladan xitoy tiliga) vosita sifatida ishlatadi, lekin telefon orqasiga «yashirinmasdan» to\'g\'ridan-to\'g\'ri muloqotni davom ettiradi\n' +
-        '• Tushunganini tafsilotlarni takrorlab tasdiqlaydi: sana, ketish vaqti, aeroport, xizmat turi (mehmonxona transferi yoki taksi), narx — va mehmondan aniq «ha» oladi\n' +
-        '• Kelishuvni yozma mustahkamlaydi (vaqt va narx yozilgan qog\'oz yoki WhatsApp xabari) va mehmonning urg\'usi yoki talaffuziga taqlid qilmaydi',
+        '• Birinchi 10 soniyada tabassum bilan kutib oladi va tinchlantiradi («Xavotir olmang, yordam beraman»); ovozini ko\'tarmay, sekin, qisqa sodda iboralar bilan gapiradi\n' +
+        '• Ko\'rgazmali vositalardan foydalanadi: vaqt va narxni raqamlar bilan yozadi, soat, kalendar yoki xaritani ko\'rsatadi, imo-ishoradan foydalanadi\n' +
+        '• Tarjimondan tayanch sifatida foydalanadi, ammo telefon ortiga «yashirinmay», to\'g\'ridan-to\'g\'ri muloqotni davom ettiradi\n' +
+        '• Har bir tafsilotni — sana, mehmonxonadan jo\'nash vaqti, aeroport, yo\'lovchilar soni, transfer yoki taksi, narx — aniqlaydi va takrorlaydi hamda aniq «ha» javobiga erishadi\n' +
+        '• Kelishuvni yozma qayd etadi (vaqt va narx raqamlar bilan yozilgan xat yoki WhatsApp) va hech qanday holatda talaffuz yoki aksentni masxara qilmaydi',
       en:
-        '• Starts with a smile and a calm tone, eases the tension ("Don\'t worry, I will help you"); speaks slowly in short simple phrases without slang and never raises the voice\n' +
-        '• Uses visual aids: writes the time and price on paper, shows a clock or calendar, uses gestures\n' +
-        '• Uses a translation app (including into Chinese) as a tool but keeps communicating directly, without hiding behind the phone\n' +
-        '• Confirms understanding by repeating the details: date, departure time, airport, type of service (hotel transfer or taxi), price — and gets a clear "yes" from the guest\n' +
-        '• Confirms the agreement in writing (a note or WhatsApp message with the time and price) and never mimics the guest\'s accent or pronunciation',
+        '• Greets him within 10 seconds with a smile and reassures him ("Don\'t worry, I\'ll help"); speaks slowly in short, simple phrases without raising the voice\n' +
+        '• Uses visual aids: writes the time and price in figures, shows a clock, calendar or map, uses gestures\n' +
+        '• Uses a translator as a support but keeps communicating directly rather than "hiding" behind the phone\n' +
+        '• Clarifies and repeats each detail — date, departure time from the hotel, airport, number of passengers, transfer or taxi, price — and gets a clear "yes"\n' +
+        '• Puts the agreement in writing (a note or WhatsApp with time and price in figures) and never mimics his accent or pronunciation',
     },
   },
   {
@@ -286,34 +286,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['emergency-procedures', 'vip-guests'],
     scenario: {
-      ru: '19:10, субботний вечер, лобби полное. К стойке подбегает супруга VIP-гостя (восьмое проживание; в профиле отмечено: гипертония, аллергия на пенициллин): «Муж упал в ресторане, он бледный и почти не отвечает!» Вы на стойке одни, охранник у входа и доступен по рации, дежурный менеджер ужинает с группой на третьем этаже. Рядом со стойкой другие гости, кто-то уже достаёт телефон, чтобы снимать.',
-      uz: '19:10, shanba oqshomi, lobbi to\'la. Stoykaga VIP mehmonning rafiqasi yugurib keladi (sakkizinchi tashrif; profilida: gipertoniya, penitsillinga allergiya): «Erim restoranda yiqildi, rangi oqarib ketgan va deyarli javob bermayapti!» Stoykada yolg\'izsiz, qo\'riqchi kiraverishda, ratsiya orqali bog\'lanish mumkin, navbatchi menejer uchinchi qavatda guruh bilan kechki ovqatda. Stoyka yonida boshqa mehmonlar bor, kimdir allaqachon suratga olish uchun telefonini chiqarmoqda.',
-      en: '19:10, Saturday evening, the lobby is full. The wife of a VIP guest (eighth stay; profile notes: hypertension, penicillin allergy) runs up to the desk: "My husband collapsed in the restaurant, he is pale and barely responding!" You are alone at the desk, the security guard is at the entrance and reachable by radio, the duty manager is at dinner with a group on the third floor. Other guests are next to the desk and someone is already taking out a phone to film.',
+      ru: '22:40. Звонит VIP-гость (известный певец, в профиле — «конфиденциальность»): у его двери уже 10 минут стоит незнакомец, стучит и требует автограф; гость напуган. У стойки ждут двое заезжающих. Охранник на обходе парковки и доступен по рации, дежурный менеджер — на телефоне.',
+      uz: 'Soat 22:40. VIP-mehmon (taniqli xonanda, profilida — «maxfiylik») qo\'ng\'iroq qiladi: eshigi oldida 10 daqiqadan beri notanish odam turibdi, taqillatib, avtograf talab qilyapti; mehmon qo\'rqib ketgan. Stoykada ikki kelgan mehmon kutmoqda. Qo\'riqchi avtoturargohni aylanib yuribdi va ratsiya orqali aloqada, navbatchi menejer telefonda.',
+      en: '22:40. A VIP guest (a well-known singer, profile: "confidentiality") calls: a stranger has been standing at his door for 10 minutes, knocking and demanding an autograph; the guest is frightened. Two arriving guests are waiting at the desk. The guard is patrolling the car park and reachable by radio; the duty manager is on the phone.',
     },
     question: {
-      ru: 'Опишите в 5–8 предложениях вашу последовательность действий в первые пять минут: кому и в каком порядке вы звоните, что говорите супруге, как обеспечиваете стойку и что передаёте медикам.',
-      uz: '5–8 gapda dastlabki besh daqiqadagi harakatlar ketma-ketligingizni yozing: kimga va qanday tartibda qo\'ng\'iroq qilasiz, rafiqasiga nima deysiz, stoykani qanday ta\'minlaysiz va tibbiyot xodimlariga nimani yetkazasiz.',
-      en: 'In 5–8 sentences, describe your sequence of actions in the first five minutes: whom you call and in what order, what you say to the wife, how you keep the desk covered and what you pass on to the paramedics.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) что вы говорите VIP-гостю; 2) кого и в каком порядке вызываете; 3) что делаете сами и чего не делаете; 4) как поступаете с ожидающими гостями и что делаете после инцидента.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) VIP-mehmonga nima deysiz; 2) kimni va qaysi tartibda chaqirasiz; 3) o\'zingiz nima qilasiz va nima qilmaysiz; 4) kutayotgan mehmonlar bilan qanday yo\'l tutasiz va hodisadan keyin nima qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) what you tell the VIP guest; 2) whom you call and in what order; 3) what you do yourself and what you don\'t; 4) how you handle the waiting guests and what you do after the incident.',
     },
     rubric: {
       ru:
-        '• Немедленно вызывает скорую (103), называет точный адрес, место (ресторан, этаж) и состояние гостя; не тратит время на выяснение подробностей до звонка\n' +
-        '• Передаёт стойку по плану покрытия (по рации вызывает охранника или менеджера), а не оставляет её пустой и не остаётся за ней, пока гость без помощи\n' +
-        '• Берёт аптечку, идёт к гостю и остаётся с ним до приезда медиков; говорит спокойно и уверенно — гости берут пример с ресепшен\n' +
-        '• Использует профиль гостя: передаёт медикам сведения о гипертонии и аллергии на пенициллин, уточняет у супруги принимаемые лекарства\n' +
-        '• Соблюдает дискретность VIP: не объявляет имя и статус на лобби, просит не снимать и отвести зевак, даёт супруге короткие чёткие фразы («скорая вызвана, я иду с вами»), после — информирует менеджера и фиксирует инцидент',
+        '• Говорит гостю спокойно и уверенно: дверь не открывать, охрана уже идёт; обещает перезвонить через несколько минут\n' +
+        '• Немедленно вызывает охрану по рации на этаж; если незнакомец не уходит или ведёт себя агрессивно — полиция (102) по протоколу; сообщает дежурному менеджеру\n' +
+        '• Сам не вступает в физическую конфронтацию и не оставляет стойку без замены; никому не называет номер гостя и не подтверждает его проживание\n' +
+        '• Ожидающих гостей коротко и вежливо просит подождать минуту и обслуживает после; не обсуждает ситуацию и VIP-статус вслух при них\n' +
+        '• После инцидента перезванивает гостю, фиксирует случай в журнале смены и вместе с менеджером решает о мерах (смена номера, усиление охраны этажа)',
       uz:
-        '• Darhol tez yordam (103) chaqiradi, aniq manzil, joy (restoran, qavat) va mehmon holatini aytadi; qo\'ng\'iroqdan oldin tafsilotlarni aniqlashga vaqt sarflamaydi\n' +
-        '• Stoykani qoplash rejasi bo\'yicha topshiradi (ratsiya orqali qo\'riqchi yoki menejerni chaqiradi), uni bo\'sh qoldirmaydi va mehmon yordamsiz turganda stoyka ortida qolmaydi\n' +
-        '• Aptechkani olib, mehmon oldiga boradi va tibbiyot xodimlari kelguncha u bilan qoladi; xotirjam va ishonchli gapiradi — mehmonlar resepshendan o\'rnak oladi\n' +
-        '• Mehmon profilidan foydalanadi: tibbiyot xodimlariga gipertoniya va penitsillinga allergiya haqida ma\'lumot beradi, rafiqasidan qabul qilayotgan dorilarini so\'raydi\n' +
-        '• VIP maxfiyligiga rioya qiladi: lobbida ism va maqomni e\'lon qilmaydi, suratga olmaslikni va tomoshabinlarni chetlatishni so\'raydi, rafiqasiga qisqa aniq iboralar aytadi («tez yordam chaqirildi, men siz bilan boraman»), keyin menejerga xabar beradi va hodisani qayd etadi',
+        '• Mehmonga xotirjam va ishonch bilan aytadi: eshikni ochmang, qo\'riqchi yo\'lda; bir necha daqiqada qayta qo\'ng\'iroq qilishga va\'da beradi\n' +
+        '• Darhol ratsiya orqali qo\'riqchini qavatga chaqiradi; notanish odam ketmasa yoki tajovuzkor bo\'lsa — protokol bo\'yicha politsiya (102); navbatchi menejerga xabar beradi\n' +
+        '• O\'zi jismoniy to\'qnashuvga kirmaydi va stoykani o\'rinbosarsiz qoldirmaydi; hech kimga mehmonning xona raqamini aytmaydi va yashashini tasdiqlamaydi\n' +
+        '• Kutayotgan mehmonlardan qisqa va muloyim bir daqiqa kutishni so\'raydi va keyin xizmat qiladi; ular oldida vaziyat va VIP maqomini ovoz chiqarib muhokama qilmaydi\n' +
+        '• Hodisadan keyin mehmonga qayta qo\'ng\'iroq qiladi, holatni smena jurnaliga yozadi va menejer bilan birga choralar haqida qaror qiladi (xonani almashtirish, qavat qo\'riqlovini kuchaytirish)',
       en:
-        '• Calls an ambulance (103) immediately, giving the exact address, location (restaurant, floor) and the guest\'s condition; does not spend time establishing details before the call\n' +
-        '• Hands the desk over per the coverage plan (radios the guard or the manager) instead of leaving it empty or staying behind it while the guest is without help\n' +
-        '• Takes the first-aid kit, goes to the guest and stays with him until the paramedics arrive; speaks calmly and confidently — guests take their cue from reception\n' +
-        '• Uses the guest profile: passes the hypertension and penicillin allergy on to the paramedics and asks the wife about current medication\n' +
-        '• Keeps VIP discretion: does not announce the name or status to the lobby, asks people not to film and moves onlookers away, gives the wife short clear phrases ("the ambulance is called, I am coming with you"), then informs the manager and logs the incident',
+        '• Tells the guest calmly and confidently: don\'t open the door, security is on the way; promises to call back in a few minutes\n' +
+        '• Radios the guard to the floor at once; if the stranger won\'t leave or turns aggressive — police (102) per protocol; informs the duty manager\n' +
+        '• Doesn\'t get into a physical confrontation and doesn\'t leave the desk without cover; gives nobody the guest\'s room number and doesn\'t confirm he is staying\n' +
+        '• Briefly and politely asks the waiting guests for a minute and serves them afterwards; doesn\'t discuss the situation or the VIP\'s status aloud in front of them\n' +
+        '• After the incident calls the guest back, logs the case in the shift log and decides on measures with the manager (room change, extra security on the floor)',
     },
   },
   {
@@ -321,34 +321,34 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['booking-com-guests', 'complaints'],
     scenario: {
-      ru: '23:00. К стойке подходит уставшая пара с ваучером Booking.com: предоплаченный невозвратный тариф, две ночи. Отель овербукнут, свободных номеров нет. Муж говорит: «Мы заплатили заранее, без возврата, и вы хотите сказать, что номера нет? Я прямо сейчас напишу отзыв с единицей». Партнёрский отель той же категории в десяти минутах езды подтверждает наличие номеров; дежурный менеджер доступен по телефону. Рядом в лобби ещё двое гостей.',
-      uz: '23:00. Stoykaga Booking.com vaucherli charchagan juftlik keladi: oldindan to\'langan qaytarilmaydigan tarif, ikki kecha. Mehmonxonada ortiqcha bron, bo\'sh xona yo\'q. Er: «Biz oldindan, qaytarilmaydigan qilib to\'laganmiz, siz esa xona yo\'q demoqchimisiz? Hozirning o\'zida bir ballik sharh yozaman» deydi. O\'n daqiqalik masofadagi shu toifadagi hamkor mehmonxona xonalar borligini tasdiqlaydi; navbatchi menejer telefon orqali mavjud. Lobbida yana ikki mehmon bor.',
-      en: '23:00. A tired couple comes to the desk with a Booking.com voucher: prepaid non-refundable rate, two nights. The hotel is overbooked and no rooms are free. The husband says: "We paid in advance, non-refundable, and you are telling me there is no room? I am writing a one-star review right now." A partner hotel of the same category ten minutes away confirms it has rooms; the duty manager is reachable by phone. Two other guests are nearby in the lobby.',
+      ru: '23:00. Пара показывает ваучер Booking.com: «Deluxe с видом на море, две ночи, предоплата». В PMS бронь импортирована как Deluxe с видом на город; номера с видом на море сегодня заняты, завтра один освобождается. Муж говорит: «Вы нас обманули, сейчас же поставлю вам единицу!» Рядом другие гости; дежурный менеджер на телефоне.',
+      uz: 'Soat 23:00. Juftlik Booking.com vaucherini ko\'rsatadi: «Dengiz manzarali Deluxe, ikki kecha, oldindan to\'lov». PMS\'da bron shahar manzarali Deluxe deb import qilingan; dengiz manzarali xonalar bugun band, ertaga bittasi bo\'shaydi. Er aytadi: «Bizni aldadingiz, hoziroq sizga bir ball qo\'yaman!» Yonida boshqa mehmonlar bor; navbatchi menejer telefonda.',
+      en: '23:00. A couple shows a Booking.com voucher: "Sea-view Deluxe, two nights, prepaid". The PMS imported the booking as a city-view Deluxe; sea-view rooms are all taken tonight, one becomes free tomorrow. The husband says: "You cheated us — I\'m giving you a one right now!" Other guests are nearby; the duty manager is on the phone.',
     },
     question: {
-      ru: 'Напишите в 5–8 предложениях, что именно вы скажете гостям и какие шаги предпримете до того, как они уедут из отеля, и на следующее утро.',
-      uz: '5–8 gapda mehmonlarga aynan nima deyishingizni hamda ular mehmonxonadan ketgunga qadar va ertasi kuni ertalab qanday qadamlar qo\'yishingizni yozing.',
-      en: 'In 5–8 sentences, write exactly what you would say to the guests and what steps you would take before they leave the hotel and the next morning.',
+      ru: 'Ответьте пунктами или 3–6 предложениями: 1) ваши первые слова; 2) что проверяете и как говорите о расхождении; 3) какое решение предлагаете на сегодня и на завтра; 4) что делаете после разговора.',
+      uz: 'Bandma-band yoki 3–6 gapda javob bering: 1) birinchi so\'zlaringiz; 2) nimani tekshirasiz va farq haqida qanday gapirasiz; 3) bugun va ertaga uchun qanday yechim taklif qilasiz; 4) suhbatdan keyin nima qilasiz.',
+      en: 'Answer in points or 3–6 sentences: 1) your first words; 2) what you check and how you talk about the mismatch; 3) what solution you offer for tonight and tomorrow; 4) what you do after the conversation.',
     },
     rubric: {
       ru:
-        '• Слушает до конца, искренне извиняется и берёт ответственность отеля на себя: не ссылается на Booking.com, «систему» и невозвратный тариф как на оправдание\n' +
-        '• Предлагает конкретное решение сразу и организует его, а не описывает: номер той же или более высокой категории в партнёрском отеле, транспорт за счёт отеля, компенсация — согласованная с менеджером\n' +
-        '• Уводит разговор от других гостей, говорит спокойно и тише гостя; не спорит об отзыве и не торгуется за оценку — после решения приглашает оставить честный отзыв\n' +
-        '• Сразу информирует дежурного менеджера и фиксирует случай в PMS/Extranet; подтверждает договорённость письменно (WhatsApp или сообщение Booking.com): адрес, время, условия, контакт\n' +
-        '• Планирует follow-up: утром связывается с гостями, уточняет, всё ли в порядке, и организует возвращение в отель или компенсацию за оставшуюся ночь',
+        '• Даёт договорить, искренне извиняется и говорит тише гостя; уводит разговор от других гостей и не спорит об отзыве\n' +
+        '• Сверяет ваучер с бронью в Extranet при гостях; не говорит «вы ошиблись» и не винит Booking.com — берёт ответственность на отель\n' +
+        '• Предлагает решение сразу: на сегодня — лучший доступный номер, на завтра — переезд в номер с видом на море с помощью с багажом\n' +
+        '• Компенсацию за неудобство согласует с дежурным менеджером, а не обещает сам, и называет гостям конкретные условия\n' +
+        '• Исправляет бронь в PMS, подтверждает договорённость письменно (WhatsApp или сообщение через Booking.com), предупреждает хозяйственную службу о переезде; на выезде приглашает к честному отзыву, не торгуясь за оценку',
       uz:
-        '• Oxirigacha tinglaydi, chin dildan uzr so\'raydi va mehmonxona javobgarligini o\'z zimmasiga oladi: Booking.com, «tizim» va qaytarilmaydigan tarifni bahona qilmaydi\n' +
-        '• Aniq yechimni darhol taklif qiladi va tasvirlab emas, tashkil qiladi: hamkor mehmonxonada shu yoki yuqoriroq toifadagi xona, mehmonxona hisobidan transport, menejer bilan kelishilgan kompensatsiya\n' +
-        '• Suhbatni boshqa mehmonlardan olib chiqadi, xotirjam va mehmondan pastroq ovozda gapiradi; sharh haqida bahslashmaydi va baho uchun savdolashmaydi — yechimdan keyin halol sharh qoldirishga taklif qiladi\n' +
-        '• Darhol navbatchi menejerga xabar beradi va holatni PMS/Extranet\'da qayd etadi; kelishuvni yozma tasdiqlaydi (WhatsApp yoki Booking.com xabari): manzil, vaqt, shartlar, kontakt\n' +
-        '• Follow-up rejalashtiradi: ertalab mehmonlar bilan bog\'lanib, hammasi joyidami, so\'raydi va mehmonxonaga qaytishni yoki qolgan kecha uchun kompensatsiyani tashkil qiladi',
+        '• Gapini oxirigacha aytishga qo\'yadi, samimiy uzr so\'raydi va mehmondan pastroq gapiradi; suhbatni boshqa mehmonlardan uzoqlashtiradi va sharh haqida bahslashmaydi\n' +
+        '• Mehmonlar oldida vaucherni Extranet\'dagi bron bilan solishtiradi; «siz xato qildingiz» demaydi va Booking.com\'ni ayblamaydi — javobgarlikni mehmonxona zimmasiga oladi\n' +
+        '• Darhol yechim taklif qiladi: bugunga — mavjud eng yaxshi xona, ertaga — bagajga yordam bilan dengiz manzarali xonaga ko\'chish\n' +
+        '• Noqulaylik uchun kompensatsiyani o\'zi va\'da qilmaydi, navbatchi menejer bilan kelishadi va mehmonlarga aniq shartlarni aytadi\n' +
+        '• PMS\'da bronni tuzatadi, kelishuvni yozma tasdiqlaydi (WhatsApp yoki Booking.com orqali xabar), xo\'jalik xizmatini ko\'chish haqida ogohlantiradi; chiqishda baho uchun savdolashmay, halol sharhga taklif qiladi',
       en:
-        '• Listens to the end, apologizes sincerely and owns the hotel\'s responsibility: does not use Booking.com, "the system" or the non-refundable rate as an excuse\n' +
-        '• Offers a concrete solution at once and arranges it rather than describing it: an equal or higher category room at the partner hotel, transport paid by the hotel, compensation agreed with the manager\n' +
-        '• Moves the conversation away from other guests, speaks calmly and more quietly than the guest; does not argue about the review or bargain for a score — invites an honest review after the solution\n' +
-        '• Informs the duty manager immediately and records the case in the PMS/Extranet; confirms the arrangement in writing (WhatsApp or Booking.com message): address, time, conditions, contact\n' +
-        '• Plans a follow-up: contacts the guests in the morning, checks that everything is fine and arranges their return to the hotel or compensation for the remaining night',
+        '• Lets them finish, apologises sincerely and speaks more quietly than the guest; moves the conversation away from other guests and doesn\'t argue about the review\n' +
+        '• Checks the voucher against the Extranet booking in front of them; doesn\'t say "you made a mistake" or blame Booking.com — takes ownership for the hotel\n' +
+        '• Offers a solution at once: the best available room tonight and a move to a sea-view room tomorrow with luggage help\n' +
+        '• Agrees compensation for the inconvenience with the duty manager instead of promising it alone, and tells the guests the concrete terms\n' +
+        '• Corrects the booking in the PMS, confirms the agreement in writing (WhatsApp or a Booking.com message), tells housekeeping about the move; at check-out invites an honest review without bargaining over the score',
     },
   },
   {
@@ -356,69 +356,69 @@ export const finalOpen: FinalOpenQuestion[] = [
     type: 'open',
     moduleSlugs: ['check-in', 'late-checkout'],
     scenario: {
-      ru: '15:40. Заселяется гость из Великобритании и говорит: «Hi there! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm — my flight is late. My colleague arrives tonight, his name should be on the booking too. And could I print my boarding pass somewhere?» В PMS: номер забронирован как double (одна большая кровать), поздний выезд не отмечен, второго имени в брони нет. На воскресенье отель заполнен на 100%; сегодня в той же категории есть свободный twin.',
-      uz: '15:40. Buyuk Britaniyadan kelgan mehmon joylashmoqda va shunday deydi: «Hi there! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm — my flight is late. My colleague arrives tonight, his name should be on the booking too. And could I print my boarding pass somewhere?» PMS\'da: xona double (bitta katta karavot) sifatida bron qilingan, kech chiqish belgilanmagan, bronda ikkinchi ism yo\'q. Yakshanbaga mehmonxona 100% band; bugun shu toifada bo\'sh twin xona bor.',
-      en: '15:40. A guest from the UK is checking in and says: "Hi there! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm — my flight is late. My colleague arrives tonight, his name should be on the booking too. And could I print my boarding pass somewhere?" The PMS shows: the room is booked as a double (one large bed), no late check-out is noted, there is no second name on the booking. The hotel is 100% full on Sunday; a twin of the same category is free tonight.',
+      ru: '15:40. Заселяется гость из Великобритании: «Hi! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm. My colleague arrives tonight — his name should be on the booking too. And could I print my boarding pass somewhere?» В PMS: бронь на double, поздний выезд не отмечен, второго имени нет. На воскресенье отель заполнен на 100 %; сегодня в той же категории свободен twin.',
+      uz: 'Soat 15:40. Buyuk Britaniyadan kelgan mehmon joylashmoqda: «Hi! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm. My colleague arrives tonight — his name should be on the booking too. And could I print my boarding pass somewhere?» PMS\'da: bron double xonaga, kech chiqish belgilanmagan, ikkinchi ism yo\'q. Yakshanbaga mehmonxona 100 % band; bugun xuddi shu toifada twin bo\'sh.',
+      en: '15:40. A guest from the UK is checking in: "Hi! I booked a twin room for two nights and asked for a late check-out on Sunday, around 3 pm. My colleague arrives tonight — his name should be on the booking too. And could I print my boarding pass somewhere?" The PMS shows a double, no late check-out noted and no second name. Sunday is 100% booked; a twin in the same category is free today.',
     },
     question: {
-      ru: 'ОТВЕТ НАПИШИТЕ НА АНГЛИЙСКОМ ЯЗЫКЕ. В 5–8 предложениях напишите, что вы скажете гостю: как решите вопрос с типом номера, вторым гостем и поздним выездом и что сделаете дальше. Ответ на другом языке не оценивается.',
-      uz: 'JAVOBNI INGLIZ TILIDA YOZING. 5–8 gapda mehmonga nima deyishingizni yozing: xona turi, ikkinchi mehmon va kech chiqish masalasini qanday hal qilasiz va keyin nima qilasiz. Boshqa tildagi javob baholanmaydi.',
-      en: 'WRITE YOUR ANSWER IN ENGLISH. In 5–8 sentences, write what you would say to the guest: how you resolve the room type, the second guest and the late check-out, and what you do next. An answer in any other language is not graded.',
+      ru: 'ОТВЕТ НАПИШИТЕ НА АНГЛИЙСКОМ ЯЗЫКЕ, 4–6 предложений: что вы скажете гостю о 1) типе номера, 2) коллеге, 3) позднем выезде, 4) посадочном талоне. Ответ на другом языке не оценивается.',
+      uz: 'JAVOBNI INGLIZ TILIDA YOZING, 4–6 gap: mehmonga 1) xona turi, 2) hamkasbi, 3) kech chiqish, 4) bortga chiqish taloni haqida nima deysiz. Boshqa tildagi javob baholanmaydi.',
+      en: 'WRITE YOUR ANSWER IN ENGLISH, 4–6 sentences: what you tell the guest about 1) the room type, 2) his colleague, 3) the late check-out, 4) the boarding pass. An answer in any other language is not graded.',
     },
     rubric: {
       ru:
-        '• Ответ написан по-английски: понятный и вежливый, без ошибок, мешающих пониманию; тон тёплый и профессиональный — приветствие, обращение по имени, «let me check»\n' +
-        '• Тип номера: не спорит и не говорит «в системе double, значит вы ошиблись» — проверяет бронь и сразу предлагает решение: переселение в свободный twin той же категории сегодня\n' +
-        '• Второй гость: объясняет, что имя коллеги добавят в регистрацию, а его паспорт сверят с бронью при его заезде до выдачи ему ключа\n' +
-        '• Поздний выезд: не обещает «we\'ll try» — честно говорит, что на воскресенье отель полон, предлагает проверить ещё раз в субботу вечером и в любом случае бесплатное хранение багажа и лаунж до рейса\n' +
-        '• Завершает инструктажем (завтрак, Wi-Fi, время выезда), предлагает распечатать посадочный талон на ресепшен и помочь с багажом',
+        '• Ответ на английском: понятный и вежливый, ошибки не мешают пониманию; приветствие, обращение по имени, фразы вроде «let me check»\n' +
+        '• Тип номера: не спорит и не говорит «you booked a double»; сразу предлагает переселение в свободный twin той же категории сегодня\n' +
+        '• Коллега: его имя добавят в бронь, а при заезде его паспорт сверят с бронью до выдачи ему ключа\n' +
+        '• Поздний выезд: не обещает «we\'ll try» — честно говорит, что в воскресенье отель полон и 15:00 подтвердить нельзя; предлагает бесплатное хранение багажа и лаунж до рейса\n' +
+        '• Завершает по стандарту: краткий инструктаж (завтрак, Wi-Fi, время выезда), предлагает распечатать посадочный талон на ресепшен и помочь с багажом',
       uz:
-        '• Javob ingliz tilida yozilgan: tushunarli va muloyim, tushunishga xalaqit beradigan xatolarsiz; ohang iliq va professional — salomlashish, ism bilan murojaat, «let me check»\n' +
-        '• Xona turi: bahslashmaydi va «tizimda double, demak siz adashgansiz» demaydi — bronni tekshiradi va darhol yechim taklif qiladi: bugun shu toifadagi bo\'sh twin xonaga ko\'chirish\n' +
-        '• Ikkinchi mehmon: hamkasbining ismi ro\'yxatga qo\'shilishini, u kelganda pasporti kalit berishdan oldin bron bilan solishtirilishini tushuntiradi\n' +
-        '• Kech chiqish: «we\'ll try» deb va\'da bermaydi — yakshanbaga mehmonxona to\'la ekanini halol aytadi, shanba kechqurun yana tekshirishni va har qanday holatda parvozgacha bepul yuk saqlash hamda lounge zonasini taklif qiladi\n' +
-        '• Yo\'riqnoma bilan yakunlaydi (nonushta, Wi-Fi, chiqish vaqti), bort talonini resepshenda chop etishni va yukka yordam berishni taklif qiladi',
+        '• Javob ingliz tilida: tushunarli va muloyim, xatolar tushunishga xalaqit bermaydi; salomlashish, ism bilan murojaat, «let me check» kabi iboralar\n' +
+        '• Xona turi: bahslashmaydi va «you booked a double» demaydi; darhol bugun xuddi shu toifadagi bo\'sh twin\'ga ko\'chishni taklif qiladi\n' +
+        '• Hamkasbi: uning ismi bronga qo\'shiladi, kelganida esa kalit berishdan oldin pasporti bron bilan solishtiriladi\n' +
+        '• Kech chiqish: «we\'ll try» deb va\'da bermaydi — yakshanba kuni mehmonxona to\'la va 15:00 ni tasdiqlab bo\'lmasligini halol aytadi; reysgacha bepul bagaj saqlash va lounjni taklif qiladi\n' +
+        '• Standart bo\'yicha yakunlaydi: qisqa yo\'l-yo\'riq (nonushta, Wi-Fi, chiqish vaqti), bortga chiqish talonini resepshenda chop etib berishni va bagajga yordamni taklif qiladi',
       en:
-        '• Written in English: clear and polite, with no errors that block understanding; tone warm and professional — greeting, addressing the guest by name, "let me check"\n' +
-        '• Room type: does not argue or say "the system shows a double, so you must be mistaken" — checks the booking and offers a solution at once: a move to the free twin of the same category tonight\n' +
-        '• Second guest: explains that the colleague\'s name will be added to the registration and his passport matched against the booking when he arrives, before he gets a key\n' +
-        '• Late check-out: does not promise "we\'ll try" — says honestly that the hotel is full on Sunday, offers to check again on Saturday evening and in any case free luggage storage and the lounge until the flight\n' +
-        '• Closes with the briefing (breakfast, Wi-Fi, check-out time), offers to print the boarding pass at reception and to help with the luggage',
+        '• The answer is in English: clear and polite, errors don\'t block understanding; a greeting, use of the guest\'s name, phrases like "let me check"\n' +
+        '• Room type: doesn\'t argue or say "you booked a double"; offers a move to the free twin in the same category today\n' +
+        '• Colleague: his name will be added to the booking, and on arrival his passport will be checked against it before he gets a key\n' +
+        '• Late check-out: no "we\'ll try" promise — says honestly that Sunday is full and 15:00 can\'t be confirmed; offers free luggage storage and the lounge until the flight\n' +
+        '• Finishes to standard: short briefing (breakfast, Wi-Fi, check-out time), offers to print the boarding pass at reception and help with luggage',
     },
   },
   {
     id: 'final-open-12',
     type: 'open',
-    moduleSlugs: ['whatsapp-communication', 'late-checkout'],
+    moduleSlugs: ['whatsapp-communication', 'late-checkout', 'lost-items'],
     scenario: {
-      ru: '09:30. В WhatsApp отеля пишет гость из номера 702: «Здравствуйте! У нас завтра поезд в 19:40 — можно выехать часа в четыре? И ещё: вчера в ресторане мы забыли синюю детскую куртку, официант сказал, что передаст на ресепшен. Она у вас?» В PMS: номер 702 на завтра забронирован под заезд в 15:00; по правилам выезд до 14:00 бесплатный, позже — 50% стоимости ночи; уборка занимает около часа. В журнале находок записи о куртке нет, ресторан открывается в 12:00.',
-      uz: '09:30. Mehmonxona WhatsApp\'iga 702-xona mehmoni yozadi: «Здравствуйте! У нас завтра поезд в 19:40 — можно выехать часа в четыре? И ещё: вчера в ресторане мы забыли синюю детскую куртку, официант сказал, что передаст на ресепшен. Она у вас?» PMS\'da: 702-xona ertaga 15:00 dagi kelish uchun bron qilingan; qoidalarga ko\'ra 14:00 gacha chiqish bepul, keyin — kecha narxining 50 foizi; tozalash taxminan bir soat oladi. Topilmalar jurnalida kurtka haqida yozuv yo\'q, restoran 12:00 da ochiladi.',
-      en: '09:30. The guest from room 702 writes on the hotel\'s WhatsApp: "Здравствуйте! У нас завтра поезд в 19:40 — можно выехать часа в четыре? И ещё: вчера в ресторане мы забыли синюю детскую куртку, официант сказал, что передаст на ресепшен. Она у вас?" The PMS shows room 702 is booked tomorrow for a 15:00 arrival; by policy check-out until 14:00 is free, later costs 50% of the nightly rate; cleaning takes about an hour. There is no entry about the jacket in the lost-and-found register, and the restaurant opens at 12:00.',
+      ru: '09:30. Гость из 702-го пишет в WhatsApp: «Здравствуйте! Завтра у нас поезд в 19:40 — можно выехать часа в четыре? И вчера в ресторане мы забыли синюю детскую куртку, официант обещал передать на ресепшен. Она у вас?» В PMS: 702-й на завтра забронирован под заезд в 15:00, уборка занимает около часа; выезд до 14:00 бесплатный, позже — 50 % стоимости ночи. В журнале находок куртки нет, ресторан открывается в 12:00.',
+      uz: 'Soat 09:30. 702-xonadagi mehmon WhatsApp\'da yozadi: «Здравствуйте! Завтра у нас поезд в 19:40 — можно выехать часа в четыре? И вчера в ресторане мы забыли синюю детскую куртку, официант обещал передать на ресепшен. Она у вас?» PMS\'da: 702-xona ertaga 15:00 dagi kelishga bron qilingan, yig\'ishtirish bir soatcha oladi; 14:00 gacha chiqish bepul, keyin — kecha narxining 50 % i. Topilmalar jurnalida kurtka yo\'q, restoran 12:00 da ochiladi.',
+      en: '09:30. The guest in 702 writes on WhatsApp: "Здравствуйте! Завтра у нас поезд в 19:40 — можно выехать часа в четыре? И вчера в ресторане мы забыли синюю детскую куртку, официант обещал передать на ресепшен. Она у вас?" The PMS shows 702 booked tomorrow for a 15:00 arrival, with cleaning taking about an hour; check-out until 14:00 is free, later costs 50% of the night. The jacket is not in the lost-and-found log, and the restaurant opens at 12:00.',
     },
     question: {
-      ru: 'ОТВЕТ НАПИШИТЕ НА РУССКОМ ЯЗЫКЕ. Напишите ваш ответ гостю в WhatsApp (несколько коротких сообщений, всего 5–8 предложений): что вы ответите по позднему выезду и по куртке и что сделаете дальше. Ответ на другом языке не оценивается.',
-      uz: 'JAVOBNI RUS TILIDA YOZING. Mehmonga WhatsApp\'dagi javobingizni yozing (bir nechta qisqa xabar, jami 5–8 gap): kech chiqish va kurtka bo\'yicha nima deb javob berasiz va keyin nima qilasiz. Boshqa tildagi javob baholanmaydi.',
-      en: 'WRITE YOUR ANSWER IN RUSSIAN. Write your WhatsApp reply to the guest (several short messages, 5–8 sentences in total): what you answer about the late check-out and the jacket, and what you do next. An answer in any other language is not graded.',
+      ru: 'ОТВЕТ НАПИШИТЕ НА РУССКОМ ЯЗЫКЕ: ответ гостю в WhatsApp несколькими короткими сообщениями (4–6 предложений) — о позднем выезде, о куртке и о том, что и когда вы сделаете дальше. Ответ на другом языке не оценивается.',
+      uz: 'JAVOBNI RUS TILIDA YOZING: mehmonga WhatsApp\'da bir nechta qisqa xabar bilan javob (4–6 gap) — kech chiqish, kurtka va keyin nima va qachon qilishingiz haqida. Boshqa tildagi javob baholanmaydi.',
+      en: 'WRITE YOUR ANSWER IN RUSSIAN: a WhatsApp reply to the guest in several short messages (4–6 sentences) — about the late check-out, the jacket, and what you will do next and when. An answer in any other language is not graded.',
     },
     rubric: {
       ru:
-        '• Ответ написан по-русски, грамотно и вежливо, короткими сообщениями по 1–2 предложения; тон тёплый, без канцелярита и без избытка эмодзи; отвечает сразу, а не «после проверки»\n' +
-        '• Поздний выезд: честно объясняет, что до 16:00 нельзя — номер нужен к заезду в 15:00, — и предлагает выезд до 14:00 бесплатно, а затем бесплатное хранение багажа и лаунж до поезда\n' +
-        '• Куртка: не пишет «не находили» — говорит, что проверит журнал находок, свяжется с рестораном и хозяйственной службой, и называет конкретное время ответа (например, до 12:30)\n' +
-        '• Подтверждает договорённости письменно: новое время выезда 14:00, хранение багажа, обещание вернуться с ответом по куртке\n' +
-        '• Действует после сообщения: отмечает выезд в PMS, уведомляет хозяйственную службу, после проверки присылает результат по куртке и благодарит',
+        '• Ответ на русском, грамотный и вежливый, короткими сообщениями по 1–2 предложения; тон тёплый, без канцелярита и без избытка эмодзи\n' +
+        '• Поздний выезд: честно объясняет, что до 16:00 нельзя — номер нужен к заезду в 15:00, — и предлагает бесплатный выезд до 14:00, а затем бесплатное хранение багажа и лаунж до поезда\n' +
+        '• Куртка: не пишет «не находили» по пустому журналу — обещает проверить ресторан, хозяйственную службу и журнал и называет конкретное время ответа (например, до 12:30)\n' +
+        '• Подтверждает договорённости письменно: новое время выезда 14:00, хранение багажа, срок ответа по куртке\n' +
+        '• Действует после сообщения: отмечает выезд в PMS и уведомляет хозяйственную службу, проверяет куртку и в обещанный срок присылает результат; найденную вещь регистрирует в журнале',
       uz:
-        '• Javob rus tilida, savodli va muloyim yozilgan, 1–2 gaplik qisqa xabarlar bilan; ohang iliq, rasmiyatchiliksiz va ortiqcha emojilarsiz; «tekshirgandan keyin» emas, darhol javob beradi\n' +
-        '• Kech chiqish: 16:00 gacha mumkin emasligini halol tushuntiradi — xona 15:00 dagi kelishga kerak, — 14:00 gacha bepul chiqishni, so\'ng poyezdgacha bepul yuk saqlash va lounge zonasini taklif qiladi\n' +
-        '• Kurtka: «topilmadi» deb yozmaydi — topilmalar jurnalini tekshirishini, restoran va xo\'jalik xizmati bilan bog\'lanishini aytadi va javobning aniq vaqtini belgilaydi (masalan, 12:30 gacha)\n' +
-        '• Kelishuvlarni yozma tasdiqlaydi: yangi chiqish vaqti 14:00, yuk saqlash, kurtka bo\'yicha javob bilan qaytish va\'dasi\n' +
-        '• Xabardan keyin harakat qiladi: chiqishni PMS\'da belgilaydi, xo\'jalik xizmatini xabardor qiladi, tekshiruvdan keyin kurtka bo\'yicha natijani yuboradi va rahmat aytadi',
+        '• Javob rus tilida, savodli va muloyim, 1–2 gaplik qisqa xabarlar bilan; ohang iliq, rasmiyatchiliksiz va ortiqcha emojisiz\n' +
+        '• Kech chiqish: 16:00 gacha mumkin emasligini halol tushuntiradi — xona 15:00 dagi kelishga kerak — va 14:00 gacha bepul chiqishni, so\'ng poyezdgacha bepul bagaj saqlash va lounjni taklif qiladi\n' +
+        '• Kurtka: bo\'sh jurnal bo\'yicha «topilmadi» deb yozmaydi — restoran, xo\'jalik xizmati va jurnalni tekshirishga va\'da beradi va aniq javob vaqtini aytadi (masalan, 12:30 gacha)\n' +
+        '• Kelishuvlarni yozma tasdiqlaydi: yangi chiqish vaqti 14:00, bagaj saqlash, kurtka bo\'yicha javob muddati\n' +
+        '• Xabardan keyin harakat qiladi: PMS\'da chiqishni belgilaydi va xo\'jalik xizmatini xabardor qiladi, kurtkani tekshiradi va va\'da qilingan muddatda natijani yuboradi; topilgan buyumni jurnalga qayd etadi',
       en:
-        '• Written in Russian, correct and polite, in short messages of 1–2 sentences; tone warm, without officialese or excessive emoji; replies at once rather than "after checking"\n' +
-        '• Late check-out: explains honestly that 16:00 is not possible — the room is needed for a 15:00 arrival — and offers check-out until 14:00 free of charge, then free luggage storage and the lounge until the train\n' +
-        '• Jacket: does not write "not found" — says they will check the lost-and-found register and contact the restaurant and housekeeping, and gives a specific time for an answer (e.g. by 12:30)\n' +
-        '• Confirms the arrangements in writing: new check-out time 14:00, luggage storage, promise to come back with an answer about the jacket\n' +
-        '• Acts after the message: records the check-out in the PMS, notifies housekeeping, sends the result about the jacket after checking and thanks the guest',
+        '• The answer is in Russian, correct and polite, in short messages of 1–2 sentences; warm tone, no bureaucratic language and no excess of emoji\n' +
+        '• Late check-out: explains honestly that 16:00 isn\'t possible — the room is needed for a 15:00 arrival — and offers free check-out until 14:00, then free luggage storage and the lounge until the train\n' +
+        '• Jacket: doesn\'t write "not found" based on the empty log — promises to check the restaurant, housekeeping and the log, and gives a concrete time for an answer (e.g. by 12:30)\n' +
+        '• Confirms the agreements in writing: new check-out time 14:00, luggage storage, the deadline for the jacket answer\n' +
+        '• Acts after the message: sets the check-out in the PMS and informs housekeeping, checks for the jacket and sends the result by the promised time; logs the item if found',
     },
   },
 ]

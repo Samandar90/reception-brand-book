@@ -2,8 +2,14 @@ export const HOTEL_NAME = 'Hotel Academy'
 
 export const TOTAL_MODULES = 15
 
-/** Best knowledge-test result required (with all modules complete) to unlock the certificate. */
-export const CERTIFICATE_MIN_KNOWLEDGE_PERCENT = 90
+/** Pass mark of the knowledge test. */
+export const KNOWLEDGE_PASS_PERCENT = 90
+
+/**
+ * The certificate is issued for the live final test: a result of at least this percent, counted only once the
+ * administrator has graded every open answer of that session.
+ */
+export const CERTIFICATE_MIN_FINAL_PERCENT = 80
 
 /** Seconds per question in the knowledge test; a question not confirmed in time counts as wrong. */
 export const QUIZ_QUESTION_SECONDS = 45

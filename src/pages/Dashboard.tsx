@@ -23,7 +23,8 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
 import { modules } from '@/data/modules'
 import { cn } from '@/lib/utils'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, TOTAL_MODULES } from '@/lib/constants'
+import { CERTIFICATE_MIN_FINAL_PERCENT, KNOWLEDGE_PASS_PERCENT } from '@/lib/constants'
+import { certificateAttempt } from '@/lib/certificate'
 import type { TestAttempt } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -104,12 +105,11 @@ export default function Dashboard() {
   // Only assessment-mode attempts count (same rule as the admin overview).
   const knowledgeAttempts = attemptsOf('knowledge').filter((a) => a.details.mode === 'assessment')
   const knowledgeBest = knowledgeAttempts.length ? Math.max(...knowledgeAttempts.map((a) => a.percent)) : null
-  const knowledgeOk = knowledgeBest !== null && knowledgeBest >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
-  const modulesOk = completedCount >= TOTAL_MODULES
-  const certificateReady = modulesOk && knowledgeOk
+  const knowledgeOk = knowledgeBest !== null && knowledgeBest >= KNOWLEDGE_PASS_PERCENT
+  // The certificate is earned in the live final test (graded result ≥ CERTIFICATE_MIN_FINAL_PERCENT).
+  const certificateReady = certificateAttempt(attemptsOf('final')) !== null
   const missing: string[] = []
-  if (!modulesOk) missing.push(tf('learn.dash.certModules', { done: completedCount, total: TOTAL_MODULES }))
-  if (!knowledgeOk) missing.push(tf('learn.dash.certKnowledge', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT }))
+  if (!certificateReady) missing.push(tf('learn.dash.certFinal', { min: CERTIFICATE_MIN_FINAL_PERCENT }))
 
   const languageCard = (to: string, label: string, attempt: TestAttempt | null): TestCardData => {
     if (!attempt) return { to, icon: Languages, label, value: '—', note: t('learn.dash.notTaken'), tone: 'muted' }
@@ -139,7 +139,7 @@ export default function Dashboard() {
           ? t('learn.dash.notTaken')
           : knowledgeOk
             ? t('learn.dash.passed')
-            : tf('learn.dash.needMin', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT }),
+            : tf('learn.dash.needMin', { min: KNOWLEDGE_PASS_PERCENT }),
       tone: knowledgeBest === null ? 'muted' : knowledgeOk ? 'good' : 'warn',
     },
     languageCard('/tests/english', t('test.english'), latestAttempt('english')),

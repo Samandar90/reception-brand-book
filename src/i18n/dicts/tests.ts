@@ -26,9 +26,9 @@ export const testsDict = {
   'tests.startTest': { ru: 'Начать тест', uz: 'Testni boshlash', en: 'Start test' },
   'tests.takeAgain': { ru: 'Пройти ещё раз', uz: 'Yana topshirish', en: 'Take again' },
   'tests.langDesc': {
-    ru: 'Тест-лестница от A1 до C1 и короткий письменный ответ гостю.',
-    uz: 'A1 dan C1 gacha bosqichma-bosqich test va mehmonga qisqa yozma javob.',
-    en: 'A step-by-step test from A1 to C1 plus a short written reply to a guest.',
+    ru: '20 вопросов от A1 до C1 определяют уровень, затем письменный ответ гостю.',
+    uz: "A1 dan C1 gacha 20 ta savol darajani aniqlaydi, so'ng mehmonga yozma javob.",
+    en: '20 questions from A1 to C1 determine your level, then a written reply to a guest.',
   },
   'tests.currentLevel': { ru: 'Текущий уровень', uz: 'Joriy daraja', en: 'Current level' },
   'tests.belowA1': { ru: 'ниже A1', uz: 'A1 dan past', en: 'below A1' },
@@ -125,25 +125,26 @@ export const testsDict = {
   'lang.signOut': { ru: 'Выйти', uz: 'Chiqish', en: 'Sign out' },
   'lang.rulesTitle': { ru: 'Как проходит тест', uz: "Test qanday o'tadi", en: 'How the test works' },
   'lang.ruleStairs': {
-    ru: 'Уровни идут по лестнице: A1 → A2 → B1 → B2 → C1.',
-    uz: "Darajalar zinapoya bo'ylab boradi: A1 → A2 → B1 → B2 → C1.",
-    en: 'Levels go up step by step: A1 → A2 → B1 → B2 → C1.',
+    ru: 'Один тест из {n} вопросов: сначала простые (A1), затем всё сложнее — до C1.',
+    uz: "{n} ta savoldan iborat bitta test: avval osonlari (A1), so'ng tobora qiyinroq — C1 gacha.",
+    en: 'One test of {n} questions: easy ones first (A1), then harder and harder up to C1.',
   },
   'lang.ruleQuestions': {
-    ru: 'На каждом уровне {n} вопросов: 3 по грамматике, 3 по лексике, 3 по диалогам и 3 на понимание текста.',
-    uz: "Har bir darajada {n} ta savol: 3 tadan grammatika, lug'at, dialog va matnni tushunish bo'yicha.",
-    en: 'Each level has {n} questions: 3 grammar, 3 vocabulary, 3 dialogue and 3 reading.',
+    ru: 'На каждый уровень по {n} вопроса: грамматика, лексика, диалог и понимание текста.',
+    uz: "Har bir darajaga {n} tadan savol: grammatika, lug'at, dialog va matnni tushunish.",
+    en: '{n} questions per level: grammar, vocabulary, dialogue and reading.',
   },
   'lang.ruleTime': {
-    ru: 'На каждый уровень даётся {min} минут на все {n} вопросов — около 25 секунд на вопрос. Неотвеченные вопросы считаются неверными.',
-    uz: "Har bir darajaga barcha {n} savol uchun {min} daqiqa beriladi — har savolga taxminan 25 soniya. Javobsiz qolgan savollar noto'g'ri deb hisoblanadi.",
-    en: 'You have {min} minutes per level for all {n} questions — about 25 seconds each. Unanswered questions count as wrong.',
+    ru: 'На весь тест — {min} минут на {n} вопросов. Когда время выйдет, неотвеченные вопросы считаются неверными.',
+    uz: "Butun testga — {n} ta savol uchun {min} daqiqa. Vaqt tugaganda javobsiz savollar noto'g'ri deb hisoblanadi.",
+    en: '{min} minutes for all {n} questions. When time runs out, unanswered questions count as wrong.',
   },
   'lang.rulePass': {
-    ru: '{pass} правильных ответов из {n} открывают следующий уровень.',
-    uz: "{n} tadan {pass} ta to'g'ri javob keyingi darajani ochadi.",
-    en: '{pass} correct answers out of {n} unlock the next level.',
+    ru: 'Уровень засчитывается, если на нём верно {pass} из {n} и засчитаны все уровни ниже. Угаданный сложный вопрос уровень не поднимет.',
+    uz: "Daraja hisoblanadi, agar unda {n} tadan {pass} tasi to'g'ri bo'lsa va undan pastdagi barcha darajalar hisoblangan bo'lsa. Taxmin qilingan qiyin savol darajani oshirmaydi.",
+    en: 'A level counts when {pass} of its {n} answers are correct and every lower level counts too. A lucky guess on a hard item will not raise your level.',
   },
+
   'lang.ruleNoBack': {
     ru: 'Вернуться к предыдущему вопросу нельзя.',
     uz: "Oldingi savolga qaytib bo'lmaydi.",
@@ -237,6 +238,11 @@ export const testsDict = {
     ru: 'Следующий уровень — {level}: {n} вопросов, {min} минут. Таймер запустится, когда вы нажмёте «Продолжить».',
     uz: 'Keyingi daraja — {level}: {n} ta savol, {min} daqiqa. «Davom etish» tugmasini bosganingizda taymer ishga tushadi.',
     en: 'Next level: {level} — {n} questions, {min} minutes. The timer starts when you tap "Continue".',
+  },
+  'lang.testTimedOut': {
+    ru: 'Время теста истекло',
+    uz: 'Test vaqti tugadi',
+    en: 'Time is up for the test',
   },
   'lang.levelTimedOut': {
     ru: 'Время уровня {level} истекло',

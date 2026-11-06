@@ -33,7 +33,7 @@ import { shuffle } from '@/lib/shuffle'
 import { clientSignals } from '@/lib/api'
 import { ApiError } from '@/lib/http'
 import { useTestGuard } from '@/lib/useTestGuard'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, KNOWLEDGE_RETAKE_HOURS, QUIZ_QUESTION_SECONDS, TOTAL_MODULES } from '@/lib/constants'
+import { KNOWLEDGE_PASS_PERCENT, KNOWLEDGE_RETAKE_HOURS, QUIZ_QUESTION_SECONDS, TOTAL_MODULES } from '@/lib/constants'
 import type { Language, Module, NewAttemptInput, QuizQuestion } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -376,7 +376,7 @@ export default function Quiz() {
       { icon: Volume2, text: t('learn.quiz.ruleAlarm') },
       { icon: RotateCcw, text: tf('learn.quiz.ruleCooldown', { hours: KNOWLEDGE_RETAKE_HOURS }) },
       { icon: ShieldCheck, text: t('learn.quiz.ruleRecorded') },
-      { icon: Award, text: tf('learn.quiz.ruleCertificate', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT }) },
+      { icon: Award, text: tf('learn.quiz.ruleCertificate', { min: KNOWLEDGE_PASS_PERCENT }) },
     ]
     const initials =
       (user?.fullName ?? '')
@@ -591,7 +591,7 @@ export default function Quiz() {
       </motion.div>
     )
   } else if (phase === 'result' && result) {
-    const passed = result.percent >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
+    const passed = result.percent >= KNOWLEDGE_PASS_PERCENT
     const ResultIcon = passed ? Trophy : Target
     content = (
       <motion.div
@@ -639,7 +639,7 @@ export default function Quiz() {
             <p className="max-w-md text-[15px] leading-relaxed text-muted-foreground">
               {passed
                 ? t('learn.quiz.passedBody')
-                : tf('learn.quiz.failedBody', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT })}
+                : tf('learn.quiz.failedBody', { min: KNOWLEDGE_PASS_PERCENT })}
             </p>
             {onCooldown && (
               <p className="max-w-md text-sm text-muted-foreground">

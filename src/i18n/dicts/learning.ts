@@ -73,9 +73,9 @@ export const learningDict = {
     en: 'Leave the test? Your answers will not be saved.',
   },
   'learn.quiz.ruleCertificate': {
-    ru: 'Для сертификата нужно пройти все модули и набрать не менее {min} %',
-    uz: "Sertifikat uchun barcha modullarni yakunlash va kamida {min} % to'plash kerak",
-    en: 'The certificate requires all modules completed and at least {min} %',
+    ru: 'Проходной балл — {min} %. Сертификат выдаётся отдельно, за финальный тест',
+    uz: "O'tish bali — {min} %. Sertifikat alohida, yakuniy test uchun beriladi",
+    en: 'Pass mark: {min} %. The certificate is awarded separately, for the final test',
   },
   'learn.quiz.start': { ru: 'Начать тест', uz: 'Testni boshlash', en: 'Start the test' },
   'learn.quiz.bestSoFar': {
@@ -94,19 +94,19 @@ export const learningDict = {
   },
   'learn.quiz.passed': { ru: 'Тест сдан', uz: 'Test topshirildi', en: 'Passed' },
   'learn.quiz.notPassed': {
-    ru: 'Недостаточно для сертификата',
-    uz: 'Sertifikat uchun yetarli emas',
-    en: 'Not enough for the certificate',
+    ru: 'Тест не сдан',
+    uz: 'Test topshirilmadi',
+    en: 'Not passed',
   },
   'learn.quiz.passedBody': {
-    ru: 'Отличный результат — он засчитывается для сертификата.',
-    uz: 'Ajoyib natija — u sertifikat uchun hisobga olinadi.',
-    en: 'Great result — it counts toward your certificate.',
+    ru: 'Отличный результат. Следующий шаг — финальный тест, за который выдаётся сертификат.',
+    uz: 'Ajoyib natija. Keyingi qadam — sertifikat beriladigan yakuniy test.',
+    en: 'Great result. Next step: the final test, which awards the certificate.',
   },
   'learn.quiz.failedBody': {
-    ru: 'Для сертификата нужно не менее {min} %. Повторите самые слабые модули ниже и попробуйте снова.',
-    uz: "Sertifikat uchun kamida {min} % kerak. Quyidagi eng zaif modullarni takrorlang va qaytadan urinib ko'ring.",
-    en: 'The certificate needs at least {min} %. Review the weakest modules below and try again.',
+    ru: 'Проходной балл — {min} %. Повторите самые слабые модули ниже и попробуйте снова.',
+    uz: "O'tish bali — {min} %. Quyidagi eng zaif modullarni takrorlang va qaytadan urinib ko'ring.",
+    en: 'The pass mark is {min} %. Review the weakest modules below and try again.',
   },
   'learn.quiz.byModule': { ru: 'Результат по модулям', uz: "Modullar bo'yicha natija", en: 'Results by module' },
   'learn.quiz.byModuleHint': {
@@ -200,6 +200,11 @@ export const learningDict = {
     en: 'Still needed for the certificate: {items}',
   },
   'learn.dash.certModules': { ru: 'модули {done}/{total}', uz: 'modullar {done}/{total}', en: 'modules {done}/{total}' },
+  'learn.dash.certFinal': {
+    ru: 'финальный тест от {min} % (с проверенными открытыми ответами)',
+    uz: 'yakuniy test kamida {min} % (ochiq javoblar tekshirilgan holda)',
+    en: 'final test ≥ {min} % (with open answers graded)',
+  },
   'learn.dash.certKnowledge': {
     ru: 'тест знаний от {min} %',
     uz: 'bilim testi kamida {min} %',

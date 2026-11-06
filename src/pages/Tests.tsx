@@ -26,7 +26,7 @@ import { useLanguage } from '@/i18n/LanguageContext'
 import type { TranslationKey } from '@/i18n/translations'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT } from '@/lib/constants'
+import { KNOWLEDGE_PASS_PERCENT } from '@/lib/constants'
 import { loadAttemptState, type LanguageAttemptState } from '@/lib/languageTest'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -290,7 +290,7 @@ function KnowledgeCard({ index }: { index: number }) {
   const attempts = attemptsOf('knowledge')
   const best = bestPercent('knowledge')
   const last = attempts[0] ?? null
-  const passed = best !== null && best >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
+  const passed = best !== null && best >= KNOWLEDGE_PASS_PERCENT
 
   return (
     <HubCard
@@ -325,7 +325,7 @@ function KnowledgeCard({ index }: { index: number }) {
           />
         </div>
       )}
-      <p className="text-xs text-muted-foreground">{tf('tests.passMark', { pct: CERTIFICATE_MIN_KNOWLEDGE_PERCENT })}</p>
+      <p className="text-xs text-muted-foreground">{tf('tests.passMark', { pct: KNOWLEDGE_PASS_PERCENT })}</p>
     </HubCard>
   )
 }

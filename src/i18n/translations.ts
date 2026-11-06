@@ -126,10 +126,18 @@ const base = {
   // certificate
   'certificate.title': { ru: 'Сертификат', uz: 'Sertifikat', en: 'Certificate' },
   'certificate.subtitle': {
-    ru: 'Завершите все модули, чтобы получить сертификат',
-    uz: 'Sertifikat olish uchun barcha modullarni yakunlang',
-    en: 'Complete all modules to earn your certificate',
+    ru: 'Сертификат выдаётся за финальный тест с результатом от {min} %',
+    uz: 'Sertifikat yakuniy testni kamida {min} % natija bilan topshirgani uchun beriladi',
+    en: 'The certificate is awarded for a final test result of at least {min} %',
   },
+  'certificate.finalResult': { ru: 'Финальный тест', uz: 'Yakuniy test', en: 'Final test' },
+  'certificate.finalNone': { ru: 'ещё не сдан', uz: 'hali topshirilmagan', en: 'not taken yet' },
+  'certificate.finalPending': {
+    ru: 'открытые ответы ещё проверяются',
+    uz: 'ochiq javoblar hali tekshirilmoqda',
+    en: 'open answers are still being graded',
+  },
+  'certificate.toFinal': { ru: 'К финальному тесту', uz: 'Yakuniy testga', en: 'Go to the final test' },
   'certificate.employeeName': { ru: 'Имя сотрудника', uz: 'Xodim ismi', en: 'Employee name' },
   'certificate.generate': { ru: 'Создать сертификат', uz: 'Sertifikat yaratish', en: 'Generate certificate' },
   'certificate.downloadPdf': { ru: 'Скачать PDF', uz: 'PDF yuklab olish', en: 'Download PDF' },
@@ -146,9 +154,9 @@ const base = {
   },
   'certificate.date': { ru: 'Дата', uz: 'Sana', en: 'Date' },
   'certificate.locked': {
-    ru: 'Пройдите все 15 модулей и сдайте тест знаний минимум на 80 %, чтобы получить сертификат',
-    uz: 'Sertifikat olish uchun barcha 15 modulni yakunlang va bilim testini kamida 80 % ga topshiring',
-    en: 'Complete all 15 modules and score at least 80% on the knowledge test to unlock your certificate',
+    ru: 'Сертификат выдаётся после финального теста: нужен результат не ниже {min} %, причём открытые ответы должны быть проверены администратором',
+    uz: "Sertifikat yakuniy testdan so'ng beriladi: natija kamida {min} % bo'lishi va ochiq javoblar administrator tomonidan tekshirilgan bo'lishi kerak",
+    en: 'The certificate is awarded after the final test: you need at least {min} %, with all open answers graded by the administrator',
   },
   'certificate.levels': { ru: 'Уровень языка', uz: 'Til darajasi', en: 'Language level' },
 

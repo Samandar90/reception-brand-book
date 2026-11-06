@@ -333,6 +333,8 @@ export interface EmployeeOverview {
   russianAt: string | null
   russianAttempts: number
   finalPercent: number | null
+  /** Best final result with every open answer graded (what the certificate counts). */
+  finalBestGraded: number | null
   finalGradingStatus: 'pending' | 'graded' | null
   finalAt: string | null
   lastActiveAt: string | null

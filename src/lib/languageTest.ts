@@ -4,13 +4,19 @@ import { shuffle } from '@/lib/shuffle'
 
 // ─── Rules ───────────────────────────────────────────────────────────────────
 
-/** Questions asked per level: 3 of each skill. */
-export const QUESTIONS_PER_LEVEL = 12
-export const PER_SKILL = 3
-/** Correct answers needed (out of 12) to unlock the next level. */
-export const LEVEL_PASS_SCORE = 10
-/** Seconds allowed per level section (25 s per question on average). */
-export const LEVEL_SECONDS = 300
+/**
+ * One placement test of TOTAL_QUESTIONS items: from every level A1–C1 one grammar, one vocabulary, one dialogue
+ * and one reading item, shown from the easiest level to the hardest. A level counts as reached when at least
+ * LEVEL_PASS_SCORE of its QUESTIONS_PER_LEVEL items are correct AND every lower level is reached too, so a lucky
+ * guess on a hard item cannot lift the result.
+ */
+export const QUESTIONS_PER_LEVEL = 4
+export const PER_SKILL = 1
+export const TOTAL_QUESTIONS = 20
+/** Correct answers needed (out of 4) for a level to count. */
+export const LEVEL_PASS_SCORE = 3
+/** Seconds for the whole 20-question test (45 s per question on average). */
+export const TEST_SECONDS = 900
 /** Seconds allowed for the writing task. */
 export const WRITING_SECONDS = 480
 /** Writing is offered once this level has been reached. */
@@ -33,7 +39,7 @@ export function levelAtLeast(level: ReachedLevel, min: CefrLevel): boolean {
 // ─── Question selection ──────────────────────────────────────────────────────
 
 /**
- * Picks 12 questions for a level: 3 per skill, preferring ones the employee has not seen in
+ * Picks the questions of one level: PER_SKILL per skill, preferring ones the employee has not seen in
  * previous attempts. Falls back to seen ones (and to other skills) if the bank is short.
  */
 export function buildLevelSet(bank: LanguageQuestion[], level: CefrLevel, seen: ReadonlySet<string>): LanguageQuestion[] {
@@ -59,6 +65,11 @@ export function buildLevelSet(bank: LanguageQuestion[], level: CefrLevel, seen: 
     }
   }
   return shuffle(picked)
+}
+
+/** The whole placement test: every level's set, from A1 to C1 (shuffled inside a level only). */
+export function buildPlacementSet(bank: LanguageQuestion[], seen: ReadonlySet<string>): LanguageQuestion[] {
+  return CEFR_LEVELS.flatMap((level) => buildLevelSet(bank, level, seen))
 }
 
 /** Returns the option order for display: indexes into `question.options`, shuffled. */
@@ -98,7 +109,8 @@ export interface LanguageAnswerRecord {
 }
 
 export interface LanguageAttemptState {
-  version: 1
+  /** 2 = single 20-question placement test (1 was the old level-by-level staircase). */
+  version: 2
   language: TestLanguage
   userId: string
   startedAt: string
@@ -132,7 +144,8 @@ export function loadAttemptState(language: TestLanguage, userId: string): Langua
     const raw = localStorage.getItem(attemptStorageKey(language, userId))
     if (!raw) return null
     const parsed = JSON.parse(raw) as LanguageAttemptState
-    if (parsed.version !== 1 || parsed.userId !== userId || parsed.language !== language) return null
+    // Runs saved by the old level-by-level format (version 1) are dropped; nothing of them reached the server.
+    if (parsed.version !== 2 || parsed.userId !== userId || parsed.language !== language) return null
     return parsed
   } catch {
     return null
@@ -155,11 +168,29 @@ export function clearAttemptState(language: TestLanguage, userId: string): void 
   }
 }
 
-/** The level reached so far: the highest passed level, or 'A0' if A1 was failed. */
+/** The level reached: the highest level passed with every lower level passed too, or 'A0' if A1 was failed. */
 export function reachedLevel(results: LevelResult[]): ReachedLevel {
-  const passed = results.filter((r) => r.passed).map((r) => r.level)
-  if (!passed.length) return 'A0'
-  return passed.reduce((best, l) => (CEFR_LEVELS.indexOf(l) > CEFR_LEVELS.indexOf(best) ? l : best), passed[0])
+  let reached: ReachedLevel = 'A0'
+  for (const level of CEFR_LEVELS) {
+    if (!results.some((r) => r.level === level && r.passed)) break
+    reached = level
+  }
+  return reached
+}
+
+/** Per-level results computed from the answers of a finished placement test. */
+export function levelResultsOf(answers: LanguageAnswerRecord[], timedOut: boolean): LevelResult[] {
+  return CEFR_LEVELS.map((level) => {
+    const ofLevel = answers.filter((a) => a.level === level)
+    const score = ofLevel.filter((a) => a.correct).length
+    return {
+      level,
+      score,
+      total: ofLevel.length,
+      passed: ofLevel.length > 0 && score >= LEVEL_PASS_SCORE,
+      timedOut: timedOut && ofLevel.some((a) => a.selected === null),
+    }
+  })
 }
 
 export function perLevelScores(results: LevelResult[]): Record<string, number> {

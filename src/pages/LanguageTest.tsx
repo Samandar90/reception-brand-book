@@ -47,16 +47,17 @@ import { useTestGuard } from '@/lib/useTestGuard'
 import { getLanguageQuestion, getWritingPrompt, languageBank, writingPrompts } from '@/data/languageTests'
 import {
   LEVEL_PASS_SCORE,
-  LEVEL_SECONDS,
   QUESTIONS_PER_LEVEL,
+  TEST_SECONDS,
+  TOTAL_QUESTIONS,
   WRITING_MIN_LEVEL,
   WRITING_SECONDS,
-  buildLevelSet,
+  buildPlacementSet,
+  levelResultsOf,
   clearAttemptState,
   countWords,
   levelAtLeast,
   loadAttemptState,
-  nextLevel,
   optionOrder,
   perLevelScores,
   pickWritingPrompt,
@@ -152,15 +153,15 @@ function isOutdatedRun(s: RunState, attemptCount: number, validGrants: TestGrant
   return attemptCount > 0 && validGrants.length > 0 && !validGrants.some((g) => g.id === s.grantId)
 }
 
-/** Picks the 8 questions of a level; the level clock is started separately. */
-function prepareLevel(s: RunState, level: CefrLevel, bank: LanguageQuestion[]): RunState {
-  const questions = buildLevelSet(bank, level, new Set(s.seenIds ?? []))
+/** Picks the 20 questions of the placement test (A1 → C1); the clock is started separately. */
+function prepareTest(s: RunState, bank: LanguageQuestion[]): RunState {
+  const questions = buildPlacementSet(bank, new Set(s.seenIds ?? []))
   const orders: Record<string, number[]> = { ...s.optionOrders }
   for (const q of questions) orders[q.id] = optionOrder(q)
   return {
     ...s,
     phase: 'level',
-    currentLevel: level,
+    currentLevel: 'A1',
     levelQuestionIds: questions.map((q) => q.id),
     optionOrders: orders,
     position: 0,
@@ -175,38 +176,28 @@ function startLevelClock(s: RunState, now: number): RunState {
     ...s,
     interstitialFrom: null,
     levelStartedAt: now,
-    levelDeadlineAt: now + LEVEL_SECONDS * 1000,
+    levelDeadlineAt: now + TEST_SECONDS * 1000,
     questionStartedAt: now,
   }
 }
 
-/** Closes the current level (unanswered questions count as wrong) and moves to the next step. */
-function closeLevel(s: RunState, timedOut: boolean, now: number, testLang: TestLanguage): RunState {
+/** Closes the test (unanswered questions count as wrong), scores every level and moves to the next step. */
+function closeTest(s: RunState, timedOut: boolean, now: number, testLang: TestLanguage): RunState {
   const answers: LanguageAnswerRecord[] = [...s.answers]
   for (let i = s.position; i < s.levelQuestionIds.length; i++) {
     const id = s.levelQuestionIds[i]
     const q = getLanguageQuestion(id)
     answers.push({
       id,
-      level: s.currentLevel,
+      level: q?.level ?? s.currentLevel,
       skill: q?.skill ?? 'grammar',
       selected: null,
       correct: false,
       ms: i === s.position ? Math.max(0, now - (s.questionStartedAt ?? s.levelStartedAt)) : 0,
     })
   }
-  const result: LevelResult = {
-    level: s.currentLevel,
-    score: s.levelCorrect,
-    total: QUESTIONS_PER_LEVEL,
-    passed: s.levelCorrect >= LEVEL_PASS_SCORE,
-    timedOut,
-  }
-  const levelResults = [...s.levelResults, result]
+  const levelResults = levelResultsOf(answers, timedOut)
   const base: RunState = { ...s, answers, levelResults, position: s.levelQuestionIds.length, interstitialFrom: null }
-
-  const next = result.passed ? nextLevel(s.currentLevel) : null
-  if (next) return { ...prepareLevel(base, next, languageBank[testLang]), interstitialFrom: s.currentLevel }
 
   const reached = reachedLevel(levelResults)
   if (reached !== 'A0' && levelAtLeast(reached, WRITING_MIN_LEVEL)) {
@@ -413,8 +404,8 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
       if (!s) return
       if (s.phase === 'level' && !s.interstitialFrom && s.levelDeadlineAt > 0 && n >= s.levelDeadlineAt) {
         setSelection(null)
-        toast.info(tf('lang.levelTimedOut', { level: s.currentLevel }))
-        advance(closeLevel(s, true, n, testLang))
+        toast.info(t('lang.testTimedOut'))
+        advance(closeTest(s, true, n, testLang))
       } else if (s.phase === 'writing' && s.writingDeadlineAt !== null && n >= s.writingDeadlineAt) {
         const current = textRef.current
         setSkipOpen(false)
@@ -422,7 +413,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
         advance(finishWriting(s, current, current.trim().length === 0, n))
       }
     },
-    [advance, testLang, t, tf],
+    [advance, testLang, t],
   )
 
   // Countdown clock: runs while a deadline is set (also on the intro screen, to show the time left).
@@ -540,7 +531,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
     }
     const n = Date.now()
     const base: RunState = {
-      version: 1,
+      version: 2,
       language: testLang,
       userId,
       startedAt: new Date(n).toISOString(),
@@ -569,7 +560,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
       writingSubmittedAt: null,
       grantId: grant?.id ?? null,
     }
-    commit(startLevelClock(prepareLevel(base, 'A1', languageBank[testLang]), n))
+    commit(startLevelClock(prepareTest(base, languageBank[testLang]), n))
     textRef.current = ''
     setText('')
     setSelection(null)
@@ -611,7 +602,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
     const correct = q !== undefined && picked !== null && picked === q.correctIndex
     const record: LanguageAnswerRecord = {
       id: questionId,
-      level: s.currentLevel,
+      level: q?.level ?? s.currentLevel,
       skill: q?.skill ?? 'grammar',
       selected: q ? picked : null,
       correct,
@@ -624,7 +615,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
       levelCorrect: s.levelCorrect + (correct ? 1 : 0),
       questionStartedAt: n,
     }
-    if (next.position >= next.levelQuestionIds.length) next = closeLevel(next, false, n, testLang)
+    if (next.position >= next.levelQuestionIds.length) next = closeTest(next, false, n, testLang)
     setSelection(null)
     advance(next)
     if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -805,9 +796,9 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
     }
 
     const rules: string[] = [
-      t('lang.ruleStairs'),
+      tf('lang.ruleStairs', { n: TOTAL_QUESTIONS }),
       tf('lang.ruleQuestions', { n: QUESTIONS_PER_LEVEL }),
-      tf('lang.ruleTime', { min: Math.round(LEVEL_SECONDS / 60), n: QUESTIONS_PER_LEVEL }),
+      tf('lang.ruleTime', { min: Math.round(TEST_SECONDS / 60), n: TOTAL_QUESTIONS }),
       tf('lang.rulePass', { pass: LEVEL_PASS_SCORE, n: QUESTIONS_PER_LEVEL }),
       t('lang.ruleNoBack'),
       tf('lang.ruleWriting', { min: Math.round(WRITING_SECONDS / 60), level: WRITING_MIN_LEVEL }),
@@ -1087,7 +1078,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
         body={tf('lang.nextLevelIntro', {
           level: run.currentLevel,
           n: QUESTIONS_PER_LEVEL,
-          min: Math.round(LEVEL_SECONDS / 60),
+          min: Math.round(TEST_SECONDS / 60),
         })}
       >
         <Button size="lg" onClick={handleNextLevel} className="h-11 w-full gap-2 px-6 sm:w-auto">
@@ -1101,7 +1092,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
   const questionId = run.levelQuestionIds[run.position] ?? ''
   const question = getLanguageQuestion(questionId)
   const order = question ? (run.optionOrders[question.id] ?? question.options.map((_, i) => i)) : []
-  const total = run.levelQuestionIds.length || QUESTIONS_PER_LEVEL
+  const total = run.levelQuestionIds.length || TOTAL_QUESTIONS
   const remaining = run.levelDeadlineAt - now
   const isLast = run.position >= total - 1
   const selected = selection && selection.qid === questionId ? selection.idx : null
@@ -1112,7 +1103,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="rounded-xl px-3 py-1.5 text-sm font-semibold text-white shadow-premium gradient-accent">
-            {run.currentLevel}
+            {testLang.toUpperCase()}
           </span>
           <span className="truncate text-sm text-muted-foreground">
             {tf('lang.questionOf', { i: Math.min(run.position + 1, total), n: total })}

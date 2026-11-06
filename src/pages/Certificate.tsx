@@ -1,33 +1,35 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Award, Download, GraduationCap, Printer } from 'lucide-react'
+import { Award, Download, GraduationCap, Printer, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { ProgressRing } from '@/components/shared/ProgressRing'
 import { useLanguage } from '@/i18n/LanguageContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
 import { generateCertificatePdf } from '@/lib/pdf'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, HOTEL_NAME } from '@/lib/constants'
+import { bestFinalAttempt, certificateAttempt, isFinalGraded } from '@/lib/certificate'
+import { CERTIFICATE_MIN_FINAL_PERCENT, HOTEL_NAME } from '@/lib/constants'
 
 export default function Certificate() {
-  const { t, lang } = useLanguage()
+  const { t, tf, lang } = useLanguage()
   const { user } = useAuth()
-  const { progressPercent, completedCount, bestPercent, latestAttempt } = useProgress()
-  const [name, setName] = useState(user?.fullName ?? '')
+  const { attemptsOf, latestAttempt } = useProgress()
+  // The certificate is always issued to the account holder; the name cannot be edited.
+  const name = user?.fullName ?? ''
   const [generating, setGenerating] = useState(false)
   const certRef = useRef<HTMLDivElement>(null)
 
-  const knowledgeBest = bestPercent('knowledge') ?? 0
-  const unlocked = progressPercent >= 100 && knowledgeBest >= CERTIFICATE_MIN_KNOWLEDGE_PERCENT
+  const finals = attemptsOf('final')
+  const earned = certificateAttempt(finals)
+  const best = bestFinalAttempt(finals)
+  const unlocked = earned !== null
   const englishLevel = latestAttempt('english')?.level ?? null
   const russianLevel = latestAttempt('russian')?.level ?? null
-  const today = new Date().toLocaleDateString(lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  const issuedOn = new Date(earned?.finishedAt ?? Date.now()).toLocaleDateString(
+    lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US',
+    { year: 'numeric', month: 'long', day: 'numeric' },
+  )
 
   async function handleDownload() {
     if (!certRef.current) return
@@ -40,16 +42,32 @@ export default function Certificate() {
   }
 
   if (!unlocked) {
+    const bestPct = best ? Math.round(best.percent) : 0
+    const pending = best !== null && !isFinalGraded(best)
     return (
       <div className="mx-auto flex max-w-md flex-col items-center gap-6 py-16 text-center">
-        <ProgressRing percent={progressPercent} size={140} label={`${completedCount}/15`} />
+        <ProgressRing
+          percent={Math.min(100, (bestPct / CERTIFICATE_MIN_FINAL_PERCENT) * 100)}
+          size={140}
+          label={best ? `${bestPct}%` : '—'}
+        />
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t('certificate.title')}</h1>
-          <p className="mt-2 text-[15px] text-muted-foreground">{t('certificate.locked')}</p>
+          <p className="mt-2 text-[15px] text-muted-foreground">
+            {tf('certificate.locked', { min: CERTIFICATE_MIN_FINAL_PERCENT })}
+          </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            {t('test.knowledge')}: {knowledgeBest > 0 ? `${Math.round(knowledgeBest)}%` : t('common.notPassed')}
+            {t('certificate.finalResult')}:{' '}
+            {best ? `${bestPct}%` : t('certificate.finalNone')}
+            {pending && ` · ${t('certificate.finalPending')}`}
           </p>
         </div>
+        <Button asChild variant="outline" className="gap-2">
+          <Link to="/final">
+            <Trophy className="size-4" />
+            {t('certificate.toFinal')}
+          </Link>
+        </Button>
       </div>
     )
   }
@@ -58,15 +76,10 @@ export default function Certificate() {
     <div className="flex flex-col gap-8">
       <header>
         <h1 className="text-3xl font-semibold tracking-tight">{t('certificate.title')}</h1>
-        <p className="mt-2 max-w-2xl text-[15px] text-muted-foreground">{t('certificate.subtitle')}</p>
+        <p className="mt-2 max-w-2xl text-[15px] text-muted-foreground">
+          {tf('certificate.subtitle', { min: CERTIFICATE_MIN_FINAL_PERCENT })}
+        </p>
       </header>
-
-      <div className="flex flex-col gap-2 sm:max-w-sm">
-        <Label htmlFor="cert-name" className="text-xs text-muted-foreground">
-          {t('certificate.employeeName')}
-        </Label>
-        <Input id="cert-name" value={name} onChange={(e) => setName(e.target.value)} />
-      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -119,6 +132,10 @@ export default function Certificate() {
             {bookingSuffix(lang)}
           </p>
 
+          <p style={{ color: '#4a4438' }} className="text-sm font-semibold">
+            {t('certificate.finalResult')}: {Math.round(earned.percent)}%
+          </p>
+
           {(englishLevel || russianLevel) && (
             <p style={{ color: '#7a7263' }} className="text-sm">
               {t('certificate.levels')}:{' '}
@@ -129,7 +146,7 @@ export default function Certificate() {
           <div className="mt-2 flex items-center gap-3">
             <Award style={{ color: '#c9a94d' }} className="size-5" />
             <span style={{ color: '#7a7263' }} className="text-sm">
-              {t('certificate.date')}: {today}
+              {t('certificate.date')}: {issuedOn}
             </span>
           </div>
         </div>

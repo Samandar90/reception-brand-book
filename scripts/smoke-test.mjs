@@ -318,7 +318,7 @@ async function main() {
   // ── Overview ───────────────────────────────────────────────────────────────
   console.log('\nOverview')
   const ov = (await admin.get('/admin/overview')).data?.find((o) => o.id === empId)
-  check('overview aggregates the employee', ov?.modulesCompleted === 1 && ov?.knowledgeBest === 83.33 && ov?.englishLevel === 'A2' && ov?.englishAttempts === 2 && ov?.finalPercent === 88, ov)
+  check('overview aggregates the employee', ov?.modulesCompleted === 1 && ov?.knowledgeBest === 83.33 && ov?.englishLevel === 'A2' && ov?.englishAttempts === 2 && ov?.finalPercent === 88 && ov?.finalBestGraded === 88, ov)
   const stats = await admin.get('/admin/question-stats')
   check('question statistics', stats.status === 200 && stats.data?.some((s) => s.questionId === 'q1'), stats.data?.length)
   const act = await admin.get(`/admin/users/${empId}/activity?limit=50`)
