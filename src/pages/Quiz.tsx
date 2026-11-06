@@ -33,7 +33,15 @@ import { shuffle } from '@/lib/shuffle'
 import { clientSignals } from '@/lib/api'
 import { ApiError } from '@/lib/http'
 import { useTestGuard } from '@/lib/useTestGuard'
-import { KNOWLEDGE_PASS_PERCENT, KNOWLEDGE_RETAKE_HOURS, QUIZ_QUESTION_SECONDS, TOTAL_MODULES } from '@/lib/constants'
+import {
+  KNOWLEDGE_PASS_PERCENT,
+  KNOWLEDGE_QUESTIONS_PER_MODULE,
+  KNOWLEDGE_RETAKE_HOURS,
+  KNOWLEDGE_TEST_QUESTIONS,
+  MODULE_ORDER,
+  QUIZ_QUESTION_SECONDS,
+  TOTAL_MODULES,
+} from '@/lib/constants'
 import type { Language, Module, NewAttemptInput, QuizQuestion } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -85,8 +93,31 @@ interface ModuleScore {
 
 type Phase = 'intro' | 'running' | 'submitting' | 'failed' | 'result'
 
-function buildItems(): TestItem[] {
-  return shuffle(quizQuestions).map((question) => ({ question, order: shuffle(question.options.map((_, i) => i)) }))
+/**
+ * Picks KNOWLEDGE_QUESTIONS_PER_MODULE questions from every module (30 in total) and shuffles them. Questions the
+ * employee has seen least often in earlier attempts come first, so retakes rotate through the whole bank of 60.
+ */
+function buildItems(seenCount: ReadonlyMap<string, number>): TestItem[] {
+  const picked = MODULE_ORDER.flatMap((slug) =>
+    shuffle(quizQuestions.filter((q) => q.moduleSlug === slug))
+      .sort((a, b) => (seenCount.get(a.id) ?? 0) - (seenCount.get(b.id) ?? 0))
+      .slice(0, KNOWLEDGE_QUESTIONS_PER_MODULE),
+  )
+  return shuffle(picked).map((question) => ({ question, order: shuffle(question.options.map((_, i) => i)) }))
+}
+
+/** How many times each question id appeared in the given knowledge-test attempts. */
+function seenCounts(attempts: { details: Record<string, unknown> }[]): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const a of attempts) {
+    const answers = a.details.answers
+    if (!Array.isArray(answers)) continue
+    for (const ans of answers) {
+      const id = ans && typeof ans === 'object' ? (ans as { id?: unknown }).id : undefined
+      if (typeof id === 'string') counts.set(id, (counts.get(id) ?? 0) + 1)
+    }
+  }
+  return counts
 }
 
 function toneOf(ratio: number): { bar: string; text: string } {
@@ -233,7 +264,7 @@ export default function Quiz() {
       toast.error(tf('learn.quiz.cooldownNotice', { date: formatDateTime(cooldownUntil, lang) }))
       return
     }
-    const nextItems = buildItems()
+    const nextItems = buildItems(seenCounts(knowledgeAttempts))
     itemsRef.current = nextItems
     indexRef.current = 0
     setItems(nextItems)
@@ -369,7 +400,14 @@ export default function Quiz() {
 
   if (phase === 'intro') {
     const rules: { icon: LucideIcon; text: string }[] = [
-      { icon: ListChecks, text: tf('learn.quiz.ruleQuestions', { count: quizQuestions.length, modules: TOTAL_MODULES }) },
+      {
+        icon: ListChecks,
+        text: tf('learn.quiz.ruleQuestions', {
+          count: KNOWLEDGE_TEST_QUESTIONS,
+          modules: TOTAL_MODULES,
+          per: KNOWLEDGE_QUESTIONS_PER_MODULE,
+        }),
+      },
       { icon: Timer, text: tf('learn.quiz.ruleTimer', { sec: QUIZ_QUESTION_SECONDS }) },
       { icon: EyeOff, text: t('learn.quiz.ruleNoHints') },
       { icon: AppWindow, text: t('learn.quiz.ruleFocus') },

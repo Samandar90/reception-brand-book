@@ -26,7 +26,7 @@ import { useLanguage } from '@/i18n/LanguageContext'
 import type { TranslationKey } from '@/i18n/translations'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
-import { KNOWLEDGE_PASS_PERCENT } from '@/lib/constants'
+import { KNOWLEDGE_PASS_PERCENT, KNOWLEDGE_RETAKE_HOURS, KNOWLEDGE_TEST_QUESTIONS, TOTAL_MODULES } from '@/lib/constants'
 import { loadAttemptState, type LanguageAttemptState } from '@/lib/languageTest'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -297,7 +297,12 @@ function KnowledgeCard({ index }: { index: number }) {
       index={index}
       icon={BookOpenCheck}
       title={t('test.knowledge')}
-      description={t('tests.knowledgeDesc')}
+      description={tf('tests.knowledgeDesc', {
+        count: KNOWLEDGE_TEST_QUESTIONS,
+        modules: TOTAL_MODULES,
+        hours: KNOWLEDGE_RETAKE_HOURS,
+        pct: KNOWLEDGE_PASS_PERCENT,
+      })}
       badge={
         attempts.length > 0 ? (
           <StatusPill tone={passed ? 'good' : 'warn'}>{passed ? t('tests.passed') : t('tests.notPassedYet')}</StatusPill>

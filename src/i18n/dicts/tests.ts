@@ -9,9 +9,9 @@ export const testsDict = {
     en: 'Knowledge of our standards, your English and Russian level, and the final test.',
   },
   'tests.knowledgeDesc': {
-    ru: 'Вопросы по всем 15 модулям обучения. Проходить можно сколько угодно раз.',
-    uz: "O'quv dasturining barcha 15 moduli bo'yicha savollar. Istalgancha topshirish mumkin.",
-    en: 'Questions on all 15 training modules. You can take it as many times as you like.',
+    ru: '{count} вопросов по всем {modules} модулям обучения. Одна попытка в {hours} ч, проходной балл — {pct} %.',
+    uz: "O'quv dasturining barcha {modules} moduli bo'yicha {count} ta savol. {hours} soatda bitta urinish, o'tish bali — {pct} %.",
+    en: '{count} questions on all {modules} training modules. One attempt per {hours} h, pass mark {pct} %.',
   },
   'tests.best': { ru: 'Лучший', uz: 'Eng yaxshi', en: 'Best' },
   'tests.last': { ru: 'Последний', uz: 'Oxirgi', en: 'Last' },

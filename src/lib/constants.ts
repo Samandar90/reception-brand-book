@@ -11,6 +11,10 @@ export const KNOWLEDGE_PASS_PERCENT = 90
  */
 export const CERTIFICATE_MIN_FINAL_PERCENT = 80
 
+/** Knowledge test: questions drawn from each module's bank of 4 (2 × 15 modules = 30 questions per attempt). */
+export const KNOWLEDGE_QUESTIONS_PER_MODULE = 2
+export const KNOWLEDGE_TEST_QUESTIONS = KNOWLEDGE_QUESTIONS_PER_MODULE * TOTAL_MODULES
+
 /** Seconds per question in the knowledge test; a question not confirmed in time counts as wrong. */
 export const QUIZ_QUESTION_SECONDS = 45
 

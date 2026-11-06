@@ -15,8 +15,8 @@ export const PER_SKILL = 1
 export const TOTAL_QUESTIONS = 20
 /** Correct answers needed (out of 4) for a level to count. */
 export const LEVEL_PASS_SCORE = 3
-/** Seconds for the whole 20-question test (45 s per question on average). */
-export const TEST_SECONDS = 900
+/** Seconds for the whole 20-question test (90 s per question on average). */
+export const TEST_SECONDS = 1800
 /** Seconds allowed for the writing task. */
 export const WRITING_SECONDS = 480
 /** Writing is offered once this level has been reached. */

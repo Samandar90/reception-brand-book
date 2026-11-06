@@ -13,9 +13,9 @@ export const learningDict = {
   'learn.quiz.signOut': { ru: 'Выйти', uz: 'Chiqish', en: 'Sign out' },
   'learn.quiz.rulesTitle': { ru: 'Правила', uz: 'Qoidalar', en: 'Rules' },
   'learn.quiz.ruleQuestions': {
-    ru: '{count} вопросов по всем {modules} модулям, порядок вопросов и ответов перемешан',
-    uz: "Barcha {modules} modul bo'yicha {count} ta savol, savollar va javoblar tartibi aralashtirilgan",
-    en: '{count} questions from all {modules} modules, in a shuffled order with shuffled answers',
+    ru: '{count} вопросов — по {per} из каждого из {modules} модулей, порядок вопросов и ответов перемешан. При пересдаче в первую очередь попадаются вопросы, которых у вас ещё не было',
+    uz: "{count} ta savol — {modules} ta modulning har biridan {per} tadan, savollar va javoblar tartibi aralashtirilgan. Qayta topshirishda birinchi navbatda sizda hali bo'lmagan savollar tushadi",
+    en: '{count} questions — {per} from each of the {modules} modules, in a shuffled order with shuffled answers. On a retake, questions you have not had yet come first',
   },
   'learn.quiz.ruleTimer': {
     ru: 'На каждый вопрос {sec} секунд. Не успели подтвердить ответ — вопрос засчитывается как неверный, вернуться к нему нельзя',
