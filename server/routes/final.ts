@@ -26,8 +26,8 @@ finalRouter.post('/final/sessions', requireAdmin, (req, res) => {
   if (new Set(questionIds).size !== questionIds.length) fail(400, 'invalid_input')
   const s = (b.settings ?? {}) as Record<string, unknown>
   const settings = {
-    choiceSeconds: int(s.choiceSeconds ?? 30, 10, 600),
-    openSeconds: int(s.openSeconds ?? 120, 30, 900),
+    choiceSeconds: int(s.choiceSeconds ?? 20, 10, 600),
+    openSeconds: int(s.openSeconds ?? 90, 30, 900),
   }
   res.json(live.createSession({ title, questionIds, settings, createdBy: req.user!.id }))
 })

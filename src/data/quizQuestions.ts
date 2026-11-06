@@ -65,6 +65,27 @@ export const quizQuestions: QuizQuestion[] = [
       en: "Using the guest's name 2-3 times during a conversation creates a sense of personal attention and increases guest satisfaction with the service.",
     },
   },
+  {
+    id: 'quiz-greeting-guests-4',
+    moduleSlug: 'greeting-guests',
+    question: {
+      ru: 'Вы на ресепшене одна и принимаете по телефону бронирование: записываете даты и тип номера. В этот момент к стойке подходит пара с чемоданами. Какой вариант — ЕДИНСТВЕННЫЙ, который соблюдает и правило 10 секунд, и золотые правила приветствия?',
+      uz: 'Siz resepshenda yolg\'izsiz va telefon orqali bron qabul qilyapsiz: sanalar va xona turini yozyapsiz. Shu payt stoykaga chamadonli er-xotin yaqinlashadi. Qaysi variant 10 soniya qoidasiga ham, kutib olishning oltin qoidalariga ham rioya qiladigan YAGONA variant?',
+      en: 'You are alone at the desk, taking a reservation by phone and writing down the dates and room type. At that moment a couple with suitcases walks up to the desk. Which option is the ONLY one that respects both the 10-second rule and the golden rules of greeting?',
+    },
+    options: [
+      { ru: 'Спокойно закончить звонок (около минуты), затем повернуться к паре, улыбнуться и представиться по имени', uz: 'Qo\'ng\'iroqni xotirjam tugatish (taxminan bir daqiqa), so\'ng er-xotinga o\'girilib, jilmayib, ismingizni aytib tanishish', en: 'Calmly finish the call (about a minute), then turn to the couple, smile and introduce yourself by name' },
+      { ru: 'Не отрывая глаз от экрана, бросить «минуту» и продолжить записывать бронь', uz: 'Ekrandan ko\'z uzmasdan «bir daqiqa» deb, bronni yozishni davom ettirish', en: 'Without looking up from the screen, say "one minute" and keep writing down the booking' },
+      { ru: 'Встретиться взглядом, улыбнуться, сказать «я сейчас к вам подойду», а после звонка: «Добрый день, добро пожаловать в Grand Hotel, меня зовут Алина, чем могу помочь?»', uz: 'Ko\'z bilan uchrashib, jilmayib, «hozir sizga qarayman» deyish, qo\'ng\'iroqdan so\'ng esa: «Xayrli kun, Grand Hotelga xush kelibsiz, mening ismim Alina, sizga qanday yordam bera olaman?»', en: 'Make eye contact, smile, say "I\'ll be right with you", and after the call: "Good afternoon, welcome to the Grand Hotel, my name is Alina — how may I help you?"' },
+      { ru: 'Сразу поставить звонящего на удержание, полностью оформить заезд пары и только потом вернуться к телефону', uz: 'Qo\'ng\'iroq qiluvchini darhol kutish rejimiga qo\'yib, er-xotinni to\'liq ro\'yxatdan o\'tkazish va shundan keyingina telefonga qaytish', en: 'Put the caller on hold at once, complete the couple\'s check-in in full, and only then return to the phone' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Урок требует поприветствовать гостя в первые 10 секунд, даже если вы заняты: достаточно зрительного контакта и фразы «я сейчас к вам подойду», а полное приветствие с именем следует после. Вариант «закончить звонок, потом поздороваться» — это и есть ошибка «заставлять гостя ждать, не замечая его».',
+      uz: 'Dars band bo\'lsangiz ham mehmonni dastlabki 10 soniyada kutib olishni talab qiladi: ko\'z aloqasi va «hozir sizga qarayman» iborasi yetarli, ism bilan to\'liq salomlashish esa keyin keladi. «Avval qo\'ng\'iroqni tugatib, keyin salomlashish» varianti aynan «mehmonni payqamasdan kuttirish» xatosidir.',
+      en: 'The lesson requires acknowledging the guest within the first 10 seconds even when busy: eye contact and "I\'ll be right with you" is enough, with the full greeting by name afterwards. "Finish the call, then greet" is exactly the mistake of making the guest wait without acknowledging them.',
+    },
+  },
 
   // check-in
   {
@@ -128,6 +149,27 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'Сотрудник ресепшена должен уметь быстро проверить детали бронирования в системе, чтобы дать гостю точный и уверенный ответ.',
       uz: "Resepshen xodimi mehmonga aniq va ishonchli javob berish uchun bron tafsilotlarini tizimda tezda tekshira olishi kerak.",
       en: 'Front desk staff should be able to quickly check reservation details in the system to give the guest a confident, accurate answer.',
+    },
+  },
+  {
+    id: 'quiz-check-in-4',
+    moduleSlug: 'check-in',
+    question: {
+      ru: 'К стойке подходит г-н Ахмедов, за ним очередь из трёх гостей. В PMS дата рождения указана 12.03.1985, а в паспорте — 12.08.1985; имя и номер документа совпадают. Как поступить?',
+      uz: 'Stoykaga janob Ahmedov keladi, uning orqasida uch mehmondan iborat navbat bor. PMSda tug\'ilgan sana 12.03.1985 deb ko\'rsatilgan, pasportda esa 12.08.1985; ism va hujjat raqami mos keladi. Qanday yo\'l tutasiz?',
+      en: 'Mr. Ahmedov reaches the desk with three guests queuing behind him. The PMS shows his date of birth as 12.03.1985, while his passport says 12.08.1985; the name and document number match. What should you do?',
+    },
+    options: [
+      { ru: 'Вежливо уточнить расхождение у гостя и исправить запись до того, как выдать ключ', uz: 'Farqni mehmondan muloyimlik bilan aniqlashtirish va kalitni berishdan OLDIN yozuvni to\'g\'rilash', en: 'Politely clarify the discrepancy with the guest and correct the record before handing over the key' },
+      { ru: 'Выдать ключ от 412-го сейчас, чтобы не задерживать очередь, и исправить дату в PMS, когда гость поднимется в номер', uz: 'Navbatni ushlab qolmaslik uchun 412-xona kalitini hozir berib, mehmon xonaga chiqqach, PMSdagi sanani to\'g\'rilash', en: 'Hand over the key to room 412 now so the queue isn\'t delayed, and fix the date in the PMS once the guest has gone up' },
+      { ru: 'Отказать в заселении и попросить гостя принести другой документ, удостоверяющий личность', uz: 'Ro\'yxatdan o\'tkazishni rad etib, mehmondan boshqa shaxsni tasdiqlovchi hujjat olib kelishni so\'rash', en: 'Refuse check-in and ask the guest to bring a different identity document' },
+      { ru: 'Не обращать внимания: имя и номер документа совпадают, а дата рождения — второстепенная деталь', uz: 'E\'tibor bermaslik: ism va hujjat raqami mos keladi, tug\'ilgan sana esa ikkinchi darajali tafsilot', en: 'Ignore it: the name and document number match, and the date of birth is a minor detail' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'Золотое правило урока: имя, дата рождения и номер документа должны совпадать с бронью, а любое расхождение уточняется вежливо, но всегда ДО выдачи ключа. «Выдать ключ, исправить потом» нарушает порядок, а отказ в заселении уроком не предусмотрен.',
+      uz: 'Darsning oltin qoidasi: ism, tug\'ilgan sana va hujjat raqami bron bilan mos kelishi kerak, har qanday farq muloyimlik bilan, lekin doim kalit berishdan OLDIN aniqlashtiriladi. «Kalitni berib, keyin to\'g\'rilash» tartibni buzadi, ro\'yxatdan o\'tkazishni rad etish esa darsda ko\'zda tutilmagan.',
+      en: 'The lesson\'s golden rule: name, date of birth and document number must match the reservation, and any discrepancy is clarified politely but always BEFORE the key is handed over. "Give the key, fix it later" breaks that order, and refusing check-in is not what the lesson prescribes.',
     },
   },
 
@@ -195,6 +237,27 @@ export const quizQuestions: QuizQuestion[] = [
       en: "Before answering, you should clarify the desired time and check room availability/occupancy so you can give an honest, well-founded answer.",
     },
   },
+  {
+    id: 'quiz-check-out-4',
+    moduleSlug: 'check-out',
+    question: {
+      ru: 'Гость выезжает в 11:50, на улице ждёт такси. Ваши действия: (1) за 20 минут до выезда вы проверили фолио и увидели ужин в ресторане на 85 000 сум; (2) сказали: «Выезжаете? Приложите карту, пожалуйста»; (3) после оплаты предложили помочь с багажом и такси; (4) поблагодарили по имени и попросили оставить отзыв. Какой шаг нарушает стандарт?',
+      uz: 'Mehmon 11:50 da chiqmoqda, tashqarida taksi kutyapti. Harakatlaringiz: (1) chiqishdan 20 daqiqa oldin folioni tekshirib, restorandagi 85 000 so\'mlik kechki ovqatni ko\'rdingiz; (2) «Chiqyapsizmi? Kartangizni tegizing, iltimos» dedingiz; (3) to\'lovdan so\'ng yuk va taksi bilan yordam taklif qildingiz; (4) ismi bilan rahmat aytib, fikr qoldirishni so\'radingiz. Qaysi qadam standartni buzadi?',
+      en: 'A guest checks out at 11:50 with a taxi waiting outside. Your steps: (1) 20 minutes before departure you reviewed the folio and saw a restaurant dinner of 85,000 sum; (2) you said "Checking out? Please tap your card"; (3) after payment you offered help with luggage and a taxi; (4) you thanked the guest by name and asked for feedback. Which step violates the standard?',
+    },
+    options: [
+      { ru: 'Шаг 1 — фолио проверяют только когда гость уже стоит у стойки', uz: '1-qadam — folio faqat mehmon stoyka oldida turganda tekshiriladi', en: 'Step 1 — the folio should be reviewed only once the guest is at the desk' },
+      { ru: 'Шаг 3 — предлагать такси гостю, у которого оно уже есть, значит тратить его время', uz: '3-qadam — taksisi bor mehmonga taksi taklif qilish uning vaqtini olishdir', en: 'Step 3 — offering a taxi to a guest who already has one wastes their time' },
+      { ru: 'Шаг 4 — просить отзыв у спешащего гостя считается ошибкой', uz: '4-qadam — shoshayotgan mehmondan fikr so\'rash xato hisoblanadi', en: 'Step 4 — asking a rushed guest for feedback counts as a mistake' },
+      { ru: 'Шаг 2 — оплату запросили, не озвучив вслух, за что именно начислена каждая сумма', uz: '2-qadam — har bir summa nima uchun yozilganini ovoz chiqarib aytmasdan to\'lov so\'raldi', en: 'Step 2 — payment was requested without stating out loud what each charge is for' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Золотое правило выезда: озвучить каждую позицию счёта (две ночи, ужин 85 000 сум) ДО того, как просить подтвердить оплату — это предотвращает споры. Проверка фолио за 15–20 минут до выезда, помощь с багажом/такси и просьба об отзыве — всё это часть стандарта, а не ошибки.',
+      uz: 'Chiqishning oltin qoidasi: to\'lovni tasdiqlashni so\'rashdan OLDIN hisobning har bir bandini (ikki kecha, 85 000 so\'mlik kechki ovqat) ovoz chiqarib aytish — bu nizolarning oldini oladi. Folioni 15–20 daqiqa oldin tekshirish, yuk/taksi bilan yordam va fikr so\'rash — bularning bari standartning qismi, xato emas.',
+      en: 'The check-out golden rule: state every line of the bill out loud (two nights, the 85,000 sum dinner) BEFORE asking the guest to confirm payment — this prevents disputes. Reviewing the folio 15–20 minutes early, offering luggage/taxi help and asking for feedback are all part of the standard, not mistakes.',
+    },
+  },
 
   // phone-communication
   {
@@ -237,6 +300,48 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'При плохой слышимости важно честно сообщить об этом гостю и попросить повторить информацию, а не гадать или придумывать ответ.',
       uz: "Aloqa yomon bo'lganda, buni mehmonga halol aytish va ma'lumotni takrorlashni so'rash kerak, taxmin qilish yoki javobni o'ylab topish emas.",
       en: 'When reception is poor, you should honestly tell the guest and ask them to repeat the information, rather than guessing or making up an answer.',
+    },
+  },
+  {
+    id: 'quiz-phone-communication-3',
+    moduleSlug: 'phone-communication',
+    question: {
+      ru: 'Вы в середине оформления заезда гостя у стойки. Звонит телефон — уже второй гудок. Что соответствует стандарту урока?',
+      uz: 'Siz stoykada mehmonni ro\'yxatdan o\'tkazishning o\'rtasidasiz. Telefon jiringlayapti — allaqachon ikkinchi gudok. Dars standartiga nima mos keladi?',
+      en: 'You are halfway through a guest\'s check-in at the desk. The phone rings — it is already the second ring. What matches the lesson\'s standard?',
+    },
+    options: [
+      { ru: 'Дать телефону звонить, пока не закончите с гостем: гость у стойки всегда в приоритете', uz: 'Mehmon bilan ishni tugatguncha telefonni jiringlashga qo\'yish: stoykadagi mehmon har doim ustuvor', en: 'Let the phone ring until you finish with the guest: the guest at the desk always comes first' },
+      { ru: 'Коротко извиниться перед гостем у стойки и снять трубку не позже третьего гудка: «Grand Hotel, Дильноза, чем могу помочь?»', uz: 'Stoykadagi mehmondan qisqa uzr so\'rab, uchinchi gudokdan kechiktirmay trubkani ko\'tarish: «Grand Hotel, Dilnoza, sizga qanday yordam bera olaman?»', en: 'Briefly apologize to the guest at the desk and pick up by the third ring: "Grand Hotel, Dilnoza speaking, how may I help you?"' },
+      { ru: 'Снять трубку на втором гудке, сказать «подождите» и положить её рядом, пока не закончите оформление', uz: 'Ikkinchi gudokda trubkani ko\'tarib, «kuting» deb, ro\'yxatdan o\'tkazish tugaguncha uni yoniga qo\'yib qo\'yish', en: 'Pick up on the second ring, say "hold on", and set the receiver aside until the check-in is done' },
+      { ru: 'Снять трубку и тихо сказать «Да, алло?», чтобы не мешать гостю у стойки', uz: 'Trubkani ko\'tarib, stoykadagi mehmonga xalaqit bermaslik uchun sekin «Ha, allo?» deyish', en: 'Pick up and quietly say "Yes, hello?" so as not to disturb the guest at the desk' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Золотое правило: снять трубку не позже третьего гудка, а если вы заняты с гостем — коротко извиниться перед ним и ответить, назвав отель и своё имя. Вариант «снять и оставить на удержании без объяснений» — это ошибка «долгое ожидание на линии», а «да, алло» — ответ без названия отеля и имени.',
+      uz: 'Oltin qoida: trubkani uchinchi gudokdan kechiktirmay ko\'tarish, agar mehmon bilan band bo\'lsangiz — undan qisqa uzr so\'rab, mehmonxona nomi va ismingizni aytib javob berish. «Ko\'tarib, tushuntirishsiz kutish rejimida qoldirish» — «liniyada uzoq kuttirish» xatosi, «ha, allo» esa mehmonxona nomi va ismsiz javob.',
+      en: 'The golden rule: answer by the third ring, and if you are busy with a guest, apologize to them briefly and answer with the hotel name and your own name. "Pick up and leave them on hold with no explanation" is the mistake of leaving a caller waiting, and "yes, hello?" is an answer without the hotel name or your name.',
+    },
+  },
+  {
+    id: 'quiz-phone-communication-4',
+    moduleSlug: 'phone-communication',
+    question: {
+      ru: 'Звонящий забронировал номер на двоих с 15 по 17 августа, вы проверили наличие и согласовали тариф. Как правильно завершить разговор по стандарту урока?',
+      uz: 'Qo\'ng\'iroq qiluvchi 15–17 avgustga ikki kishilik xona bron qildi, siz bo\'sh joyni tekshirib, tarifni kelishdingiz. Dars standartiga ko\'ra suhbatni qanday to\'g\'ri yakunlash kerak?',
+      en: 'The caller has booked a room for two from 15 to 17 August; you checked availability and agreed the rate. How should you end the call according to the lesson?',
+    },
+    options: [
+      { ru: 'Сказать «хорошо, до свидания» и сразу положить трубку, чтобы освободить линию для следующего звонка', uz: '«Yaxshi, xayr» deb, keyingi qo\'ng\'iroq uchun liniyani bo\'shatish maqsadida trubkani darhol qo\'yish', en: 'Say "okay, goodbye" and hang up right away to free the line for the next caller' },
+      { ru: 'Поблагодарить звонящего и первым положить трубку, чтобы не задерживать его на линии', uz: 'Qo\'ng\'iroq qiluvchiga rahmat aytib, uni liniyada ushlab turmaslik uchun birinchi bo\'lib trubkani qo\'yish', en: 'Thank the caller and hang up first so you don\'t keep them on the line' },
+      { ru: 'Попросить гостя самого повторить вам детали брони, чтобы убедиться, что он всё правильно понял', uz: 'Mehmondan hamma narsani to\'g\'ri tushunganiga ishonch hosil qilish uchun bron tafsilotlarini o\'zi takrorlashini so\'rash', en: 'Ask the guest to repeat the booking details back to you to make sure they understood everything' },
+      { ru: 'Подытожить договорённости (даты, тип номера, число гостей), поблагодарить и дождаться, пока звонящий положит трубку первым', uz: 'Kelishuvlarni jamlash (sanalar, xona turi, mehmonlar soni), rahmat aytish va qo\'ng\'iroq qiluvchi birinchi bo\'lib trubkani qo\'yishini kutish', en: 'Summarize what was agreed (dates, room type, number of guests), thank the caller and wait for them to hang up first' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Урок: подытожьте договорённости, поблагодарите и дождитесь, пока звонящий положит трубку первым — это знак вежливости. Повторять ключевые детали должен сотрудник, а не гость; класть трубку первым — нарушение правила.',
+      uz: 'Dars: kelishuvlarni jamlang, rahmat ayting va qo\'ng\'iroq qiluvchi birinchi bo\'lib trubkani qo\'yishini kuting — bu xushmuomalalik belgisi. Asosiy tafsilotlarni mehmon emas, xodim takrorlashi kerak; trubkani birinchi bo\'lib qo\'yish qoidani buzadi.',
+      en: 'The lesson: summarize what was agreed, thank the caller and wait for them to hang up first — a sign of courtesy. It is the staff member, not the guest, who repeats the key details back; hanging up first breaks the rule.',
     },
   },
 
@@ -283,6 +388,48 @@ export const quizQuestions: QuizQuestion[] = [
       en: "A professional message includes a greeting, the guest's name, clear reservation details, and a polite closing.",
     },
   },
+  {
+    id: 'quiz-whatsapp-communication-3',
+    moduleSlug: 'whatsapp-communication',
+    question: {
+      ru: '10:40, рабочее время. Гость пишет в WhatsApp: «Можно завтра выехать в 14:00?» Чтобы ответить, нужно сверить завтрашние заезды и уточнить у хаускипинга — это займёт около 20 минут. Что делать?',
+      uz: 'Soat 10:40, ish vaqti. Mehmon WhatsAppga yozadi: «Ertaga 14:00 da chiqsam bo\'ladimi?» Javob berish uchun ertangi kelishlarni solishtirib, xaus-kipingdan aniqlashtirish kerak — bu taxminan 20 daqiqa oladi. Nima qilasiz?',
+      en: 'It is 10:40, working hours. A guest writes on WhatsApp: "Can I check out at 14:00 tomorrow?" To answer, you need to compare tomorrow\'s arrivals and check with housekeeping — about 20 minutes. What do you do?',
+    },
+    options: [
+      { ru: 'В течение пары минут написать, что уточняете и вернётесь с ответом примерно через 15–20 минут, а затем прислать результат письменно', uz: 'Bir-ikki daqiqa ichida aniqlashtirayotganingizni va taxminan 15–20 daqiqadan so\'ng javob berishingizni yozish, so\'ng natijani yozma yuborish', en: 'Within a couple of minutes write that you are checking and will get back in about 15–20 minutes, then send the result in writing' },
+      { ru: 'Дождаться точного ответа и только тогда написать одно полное сообщение, чтобы не давать гостю «полуответов»', uz: 'Aniq javobni kutib, mehmonga «yarim javob» bermaslik uchun faqat shundan keyin bitta to\'liq xabar yozish', en: 'Wait until you have the definite answer and only then send one complete message, so the guest doesn\'t get half-answers' },
+      { ru: 'Сразу ответить «ок», чтобы гость видел, что сообщение прочитано, а детали прислать к концу смены', uz: 'Mehmon xabar o\'qilganini ko\'rishi uchun darhol «ok» deb javob berib, tafsilotlarni smena oxirida yuborish', en: 'Reply "ok" right away so the guest sees the message was read, and send the details by the end of the shift' },
+      { ru: 'Сразу позвонить гостю вместо переписки и не дублировать договорённость письменно, раз всё обсудили голосом', uz: 'Yozishmalar o\'rniga mehmonga darhol qo\'ng\'iroq qilish va hammasi og\'zaki kelishilgani uchun uni yozma takrorlamaslik', en: 'Call the guest right away instead of texting, and don\'t repeat the agreement in writing since it was discussed by voice' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'Золотое правило: в мессенджере ждут почти мгновенной реакции — если ответ требует времени, сообщите об этом сразу, а не оставляйте сообщение без ответа. Молчать 20 минут ради «полного ответа» и писать «ок» с деталями через несколько часов — ошибки из урока; договорённости всегда подтверждаются письменно.',
+      uz: 'Oltin qoida: messenjerda deyarli bir zumda javob kutiladi — agar javob vaqt talab qilsa, xabarni javobsiz qoldirmay, buni darhol ayting. «To\'liq javob» uchun 20 daqiqa jim turish va «ok» deb yozib, tafsilotlarni soatlab kechiktirish — darsdagi xatolar; kelishuvlar doim yozma tasdiqlanadi.',
+      en: 'Golden rule: in a messenger guests expect an almost instant response — if the answer needs time, say so right away instead of leaving the message unanswered. Staying silent for 20 minutes for a "complete answer" and a one-word "ok" with details hours later are mistakes named in the lesson; agreements are always confirmed in writing.',
+    },
+  },
+  {
+    id: 'quiz-whatsapp-communication-4',
+    moduleSlug: 'whatsapp-communication',
+    question: {
+      ru: 'После телефонного разговора нужно подтвердить г-ну Киму бронь в WhatsApp. Какое сообщение соблюдает ВСЕ правила урока: тон, эмодзи, длину и письменное подтверждение деталей?',
+      uz: 'Telefon suhbatidan so\'ng janob Kimga WhatsAppda bronni tasdiqlash kerak. Qaysi xabar darsning BARCHA qoidalariga — ohang, emoji, uzunlik va tafsilotlarni yozma tasdiqlashga — rioya qiladi?',
+      en: 'After a phone call you need to confirm Mr. Kim\'s booking on WhatsApp. Which message follows ALL the lesson\'s rules: tone, emoji, length and written confirmation of the details?',
+    },
+    options: [
+      { ru: '«Уважаемый господин гость! Настоящим подтверждаем получение Вашего обращения и уведомляем, что вышеуказанное бронирование надлежащим образом зарегистрировано в нашей системе на указанный период с соблюдением всех условий тарифа.»', uz: '«Hurmatli mehmon janob! Ushbu xabar orqali murojaatingiz qabul qilinganini tasdiqlaymiz va yuqorida ko\'rsatilgan bron tarifning barcha shartlariga muvofiq ko\'rsatilgan davr uchun tizimimizda tegishli tarzda ro\'yxatga olinganini ma\'lum qilamiz.»', en: '"Dear Esteemed Guest, we hereby acknowledge receipt of your request and inform you that the aforementioned reservation has been duly registered in our system for the indicated period in accordance with all rate conditions."' },
+      { ru: '«Привет!!! 😍🎉🏨🥳 Да-да, всё ок, увидимся!! 😘😘»', uz: '«Salom!!! 😍🎉🏨🥳 Ha-ha, hammasi ok, ko\'rishamiz!! 😘😘»', en: '"Hi!!! 😍🎉🏨🥳 Yes yes all good, see u!! 😘😘"' },
+      { ru: '«Добрый день, господин Ким! 🙂 Ваша бронь подтверждена: Deluxe, 15–17 августа, 2 гостя, 420 000 сум/ночь, завтрак включён.» и вторым сообщением: «Заезд с 14:00. Ждём вас!»', uz: '«Xayrli kun, janob Kim! 🙂 Broningiz tasdiqlandi: Deluxe, 15–17 avgust, 2 mehmon, kechasiga 420 000 so\'m, nonushta kiritilgan.» va ikkinchi xabar: «Kelish 14:00 dan. Sizni kutamiz!»', en: '"Good afternoon, Mr. Kim! 🙂 Your booking is confirmed: Deluxe, 15–17 August, 2 guests, 420,000 sum per night, breakfast included." followed by a second message: "Check-in from 14:00. See you soon!"' },
+      { ru: '«Добрый день! Всё подтверждено, как обсудили по телефону, детали повторять не буду. До встречи 15-го 🙂»', uz: '«Xayrli kun! Telefonda kelishganimizdek hammasi tasdiqlandi, tafsilotlarni takrorlamayman. 15-sanada ko\'rishguncha 🙂»', en: '"Good afternoon! Everything is confirmed as we discussed on the phone, no need to repeat the details. See you on the 15th 🙂"' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Урок требует тёплого, но профессионального тона, 1–2 эмодзи максимум, коротких сообщений по 1–2 предложения и письменного подтверждения дат, цены и условий. Вариант с «как обсудили по телефону» выглядит вежливо, но нарушает главное правило — важные детали после звонка фиксируются письменно.',
+      uz: 'Dars iliq, lekin professional ohang, ko\'pi bilan 1–2 ta emoji, 1–2 gaplik qisqa xabarlar va sanalar, narx hamda shartlarni yozma tasdiqlashni talab qiladi. «Telefonda kelishganimizdek» varianti muloyim ko\'rinadi, lekin asosiy qoidani buzadi — qo\'ng\'iroqdan keyingi muhim tafsilotlar yozma qayd etiladi.',
+      en: 'The lesson requires a warm but professional tone, at most 1–2 emoji, short 1–2 sentence messages and written confirmation of dates, price and conditions. The "as discussed on the phone" option sounds polite but breaks the key rule — important details must be put in writing after a call.',
+    },
+  },
 
   // booking-com-guests
   {
@@ -325,6 +472,48 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'Отмену бронирований с Booking.com гость должен оформлять через платформу, а сотрудник должен объяснить условия тарифа (возвратный/невозвратный).',
       uz: "Booking.com orqali qilingan bronlarni bekor qilishni mehmon platforma orqali amalga oshirishi kerak, xodim esa tarif shartlarini (qaytariladigan/qaytarilmaydigan) tushuntirishi lozim.",
       en: "Cancellations of Booking.com reservations should be handled by the guest through the platform, while staff explain the rate's terms (refundable/non-refundable).",
+    },
+  },
+  {
+    id: 'quiz-booking-com-guests-3',
+    moduleSlug: 'booking-com-guests',
+    question: {
+      ru: 'Вторник, 15:00. Приезжает гость с Booking.com. В его ваучере: «невозвратный тариф, завтрак включён, оплачено». В PMS бронь стоит как «без завтрака, оплата в отеле». Гость расхождения не заметил. Что сделать ПЕРВЫМ?',
+      uz: 'Seshanba, 15:00. Booking.com orqali bron qilgan mehmon keladi. Uning vaucherida: «qaytarilmaydigan tarif, nonushta kiritilgan, to\'langan». PMSda esa bron «nonushtasiz, to\'lov mehmonxonada» deb turibdi. Mehmon farqni payqamagan. BIRINCHI nima qilasiz?',
+      en: 'Tuesday, 15:00. A Booking.com guest arrives. The voucher says "non-refundable rate, breakfast included, prepaid". In the PMS the booking shows "room only, pay at hotel". The guest hasn\'t noticed the discrepancy. What do you do FIRST?',
+    },
+    options: [
+      { ru: 'Заселить по данным PMS и взять оплату в отеле — PMS является основной системой отеля', uz: 'PMS ma\'lumotlari bo\'yicha joylashtirib, to\'lovni mehmonxonada olish — PMS mehmonxonaning asosiy tizimi', en: 'Check the guest in per the PMS and take payment at the hotel — the PMS is the hotel\'s system of record' },
+      { ru: 'До завершения заселения сверить бронь в Экстранете Booking.com с PMS, исправить запись и коротко напомнить гостю условия его тарифа', uz: 'Ro\'yxatdan o\'tkazishni yakunlashdan oldin Booking.com Ekstranetidagi bronni PMS bilan solishtirib, yozuvni to\'g\'rilash va mehmonga tarif shartlarini qisqacha eslatish', en: 'Before completing check-in, match the Booking.com Extranet reservation against the PMS, correct the record and briefly remind the guest of their rate conditions' },
+      { ru: 'Попросить гостя самому позвонить в Booking.com и разобраться — бронь пришла с их платформы', uz: 'Mehmondan Booking.comga o\'zi qo\'ng\'iroq qilib, hal qilishini so\'rash — bron ularning platformasidan kelgan', en: 'Ask the guest to call Booking.com themselves to sort it out — the booking came from their platform' },
+      { ru: 'Заселить молча, а вопрос завтрака и оплаты прояснить завтра утром, чтобы не создавать неловкости у стойки', uz: 'Indamay joylashtirib, nonushta va to\'lov masalasini stoykada noqulaylik yaratmaslik uchun ertaga ertalab aniqlashtirish', en: 'Check the guest in without comment and clear up breakfast and payment tomorrow morning to avoid awkwardness at the desk' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Первый шаг с бронью Booking.com — всегда точная сверка Экстранета и PMS (даты, тип номера, тариф, завтрак, статус оплаты) до заселения, а условия тарифа объясняются спокойно и заранее. Отправить гостя «разбираться с Booking.com» — это тот самый уход от ответственности из плохого диалога урока.',
+      uz: 'Booking.com broni bilan birinchi qadam — har doim joylashtirishdan oldin Ekstranet va PMSni aniq solishtirish (sanalar, xona turi, tarif, nonushta, to\'lov holati), tarif shartlari esa xotirjam va oldindan tushuntiriladi. Mehmonni «Booking.com bilan o\'zingiz hal qiling» deb yuborish — darsdagi yomon dialogdagi mas\'uliyatdan qochishning o\'zi.',
+      en: 'The first step with a Booking.com reservation is always a precise match of the Extranet against the PMS (dates, room type, rate, breakfast, payment status) before check-in, with rate conditions explained calmly and in advance. Sending the guest to "sort it out with Booking.com" is exactly the deflection shown in the lesson\'s bad dialogue.',
+    },
+  },
+  {
+    id: 'quiz-booking-com-guests-4',
+    moduleSlug: 'booking-com-guests',
+    question: {
+      ru: 'Довольный гость с Booking.com выезжает и говорит: «Всё было отлично!» Какая фраза — ЕДИНСТВЕННАЯ, соответствующая правилам урока об отзывах и отношении к платформе?',
+      uz: 'Booking.com orqali kelgan mamnun mehmon chiqib ketayotib: «Hammasi zo\'r bo\'ldi!» deydi. Qaysi ibora darsning fikr-mulohaza va platformaga munosabat qoidalariga mos keladigan YAGONA ibora?',
+      en: 'A happy Booking.com guest is checking out and says: "Everything was great!" Which phrase is the ONLY one that follows the lesson\'s rules on reviews and on talking about the platform?',
+    },
+    options: [
+      { ru: '«Поставьте нам, пожалуйста, 10 из 10 на Booking.com — всё, что ниже 9, сильно портит наш рейтинг»', uz: '«Iltimos, Booking.comda bizga 10 dan 10 qo\'ying — 9 dan pasti reytingimizni qattiq buzadi»', en: '"Please give us 10 out of 10 on Booking.com — anything below 9 really hurts our rating"' },
+      { ru: '«В следующий раз бронируйте напрямую — Booking.com берёт с нас огромную комиссию и завышает цены»', uz: '«Keyingi safar to\'g\'ridan-to\'g\'ri bron qiling — Booking.com bizdan katta komissiya oladi va narxlarni oshiradi»', en: '"Next time book direct — Booking.com takes a huge commission from us and inflates the prices"' },
+      { ru: 'Ничего не говорить об отзыве: любая просьба оценить проживание считается давлением на гостя', uz: 'Fikr-mulohaza haqida hech narsa demaslik: baholashni so\'rashning har qanday turi mehmonga bosim hisoblanadi', en: 'Say nothing about a review: any request to rate the stay counts as pressuring the guest' },
+      { ru: '«Если вам у нас понравилось, мы будем очень благодарны за отзыв на Booking.com — это помогает нам развиваться»', uz: '«Agar bizda sizga yoqqan bo\'lsa, Booking.comda fikr qoldirsangiz juda minnatdor bo\'lamiz — bu bizga rivojlanishga yordam beradi»', en: '"If you enjoyed your stay, we\'d really appreciate a review on Booking.com — it helps us grow"' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Урок: на выезде пригласите оставить честный отзыв, не прося напрямую высокий балл, и никогда не критикуйте платформу при госте. Молчать тоже неверно — приглашение к отзыву входит в золотые правила.',
+      uz: 'Dars: chiqishda to\'g\'ridan-to\'g\'ri yuqori ball so\'ramasdan, halol fikr qoldirishga taklif qiling va mehmon oldida platformani hech qachon tanqid qilmang. Jim turish ham noto\'g\'ri — fikr qoldirishga taklif qilish oltin qoidalarga kiradi.',
+      en: 'The lesson: at check-out invite an honest review without asking directly for a high score, and never criticize the platform in front of the guest. Staying silent is also wrong — inviting a review is one of the golden rules.',
     },
   },
 
@@ -371,6 +560,48 @@ export const quizQuestions: QuizQuestion[] = [
       en: 'It is important to explain to the guest what makes up the price (cancellation flexibility, included options) and offer an alternative if possible, rather than simply refusing or agreeing thoughtlessly.',
     },
   },
+  {
+    id: 'quiz-walk-in-guests-3',
+    moduleSlug: 'walk-in-guests',
+    question: {
+      ru: '21:30. Уставшая пара без брони спрашивает номер на одну ночь. Вы проверили систему: отель полностью занят. Какой ответ — ЕДИНСТВЕННЫЙ правильный?',
+      uz: 'Soat 21:30. Bronsiz charchagan er-xotin bir kechaga xona so\'rashadi. Siz tizimni tekshirdingiz: mehmonxona to\'liq band. Qaysi javob YAGONA to\'g\'ri javob?',
+      en: 'It is 21:30. A tired couple without a reservation asks for a room for one night. You check the system: the hotel is fully booked. Which answer is the ONLY correct one?',
+    },
+    options: [
+      { ru: 'Извиниться, сообщить, что на сегодня мест нет, порекомендовать партнёрский отель рядом и предложить позвонить туда, чтобы уточнить наличие', uz: 'Uzr so\'rab, bugunga joy yo\'qligini aytish, yaqin atrofdagi hamkor mehmonxonani tavsiya qilish va bo\'sh joyni aniqlash uchun u yerga qo\'ng\'iroq qilishni taklif qilish', en: 'Apologize, say there are no rooms tonight, recommend a nearby partner hotel and offer to call them to check availability' },
+      { ru: 'Вежливо сказать: «К сожалению, на сегодня свободных номеров нет», пожелать удачи и не задерживать гостей', uz: 'Muloyimlik bilan: «Afsuski, bugunga bo\'sh xona yo\'q» deb, omad tilab, mehmonlarni ushlab qolmaslik', en: 'Politely say "Unfortunately there are no rooms tonight", wish them luck and not hold them up' },
+      { ru: 'Предложить подождать в лобби до ночного аудита — вдруг кто-то не заедет и номер освободится, — не упоминая другие отели', uz: 'Boshqa mehmonxonalarni tilga olmasdan, tungi auditgacha lobbida kutishni taklif qilish — balki kimdir kelmay, xona bo\'shab qolar', en: 'Suggest they wait in the lobby until the night audit in case a no-show frees up a room, without mentioning other hotels' },
+      { ru: 'Сначала уточнить количество ночей и гостей, как учит урок, и только потом сообщить, что мест нет', uz: 'Avval darsda o\'rgatilganidek kechalar va mehmonlar sonini aniqlashtirish, keyingina joy yo\'qligini aytish', en: 'First clarify the number of nights and guests, as the lesson teaches, and only then say there are no rooms' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'Золотое правило: при полной загрузке никогда не ограничивайтесь «мест нет» — всегда предложите партнёрский отель и помогите связаться с ним. Вопрос о ночах и гостях нужен перед тем, как называть цену, а не как прелюдия к отказу.',
+      uz: 'Oltin qoida: to\'liq bandlikda hech qachon «joy yo\'q» bilan cheklanmang — har doim hamkor mehmonxonani taklif qiling va u bilan bog\'lanishga yordam bering. Kechalar va mehmonlar haqidagi savol narx aytishdan oldin kerak, rad etishdan oldingi muqaddima sifatida emas.',
+      en: 'Golden rule: when fully booked, never stop at "no rooms" — always recommend a partner hotel and help the guest get in touch with it. The nights-and-guests question belongs before quoting a price, not as a prelude to a refusal.',
+    },
+  },
+  {
+    id: 'quiz-walk-in-guests-4',
+    moduleSlug: 'walk-in-guests',
+    question: {
+      ru: 'Гость без брони подходит к стойке: «Сколько у вас стоит номер?» Свободны Standard (350 000 сум) и Superior с видом во двор (420 000 сум), в оба включён завтрак. Какой ПЕРВЫЙ шаг верен по уроку?',
+      uz: 'Bronsiz mehmon stoykaga keladi: «Sizda xona qancha turadi?» Standard (350 000 so\'m) va hovliga qaraydigan Superior (420 000 so\'m) bo\'sh, ikkalasiga ham nonushta kiritilgan. Darsga ko\'ra qaysi BIRINCHI qadam to\'g\'ri?',
+      en: 'A guest without a reservation comes to the desk: "How much is a room?" A Standard (350,000 sum) and a Superior with a courtyard view (420,000 sum) are free, breakfast included in both. Which FIRST step is correct per the lesson?',
+    },
+    options: [
+      { ru: 'Сразу назвать самый дешёвый вариант — 350 000 сум, чтобы гость быстро получил ответ', uz: 'Mehmon tez javob olishi uchun darhol eng arzon variantni — 350 000 so\'mni aytish', en: 'Quote the cheapest option right away — 350,000 sum — so the guest gets a quick answer' },
+      { ru: 'Сразу уверенно назвать оба варианта с ценами и спросить, какой больше нравится', uz: 'Darhol ishonch bilan ikkala variantni narxlari bilan aytib, qaysi biri ko\'proq yoqishini so\'rash', en: 'Confidently quote both options with prices right away and ask which one they prefer' },
+      { ru: 'Спросить, на сколько ночей и сколько гостей, и затем предложить один–два подходящих варианта с чёткой ценой', uz: 'Necha kecha va necha mehmon ekanini so\'rab, so\'ng aniq narx bilan bir-ikkita mos variantni taklif qilish', en: 'Ask how many nights and how many guests, then present one or two suitable options with a clear price' },
+      { ru: 'Сказать «сейчас посмотрю, может, что-то найдётся» и пойти уточнить у менеджера', uz: '«Hozir qarayman, balki biror narsa topilar» deb, menejerdan aniqlashtirgani ketish', en: 'Say "let me look, maybe there\'s something" and go check with the manager' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Совет урока: прежде чем называть цену, уточните количество ночей и гостей — так вы сразу предложите подходящий номер, а не просто самый дешёвый. Назвать оба варианта — правильное действие, но в неверном порядке; «может, что-то найдётся» — неуверенность, названная в уроке ошибкой.',
+      uz: 'Dars maslahati: narx aytishdan oldin kechalar va mehmonlar sonini aniqlashtiring — shunda shunchaki eng arzonini emas, mos xonani darhol taklif qilasiz. Ikkala variantni aytish — to\'g\'ri harakat, lekin noto\'g\'ri tartibda; «balki biror narsa topilar» — darsda xato deb nomlangan ikkilanish.',
+      en: 'The lesson\'s tip: before quoting a price, ask about the number of nights and guests — this lets you offer the right room immediately, not just the cheapest one. Quoting both options is the right action in the wrong order; "maybe there\'s something" is the hesitancy the lesson calls a mistake.',
+    },
+  },
 
   // upselling-rooms
   {
@@ -413,6 +644,48 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'Хороший апселлинг — это краткое, конкретное и привлекательное описание ценности с понятной ценой, без давления.',
       uz: "Yaxshi upsell — bu qisqa, aniq va jozibali qiymat tavsifi, tushunarli narx bilan, bosimsiz.",
       en: 'Good upselling is a brief, specific, appealing description of value paired with a clear price, without pressure.',
+    },
+  },
+  {
+    id: 'quiz-upselling-rooms-3',
+    moduleSlug: 'upselling-rooms',
+    question: {
+      ru: '23:00. Заезжает одинокий командированный после 11-часового перелёта, забронирован Standard; говорит: «Я просто хочу спать». Сегодня свободен Deluxe на тихом верхнем этаже (+15 $). Какой вариант соответствует уроку?',
+      uz: 'Soat 23:00. 11 soatlik parvozdan so\'ng yolg\'iz xizmat safaridagi mehmon keladi, Standard bron qilingan; «Men shunchaki uxlamoqchiman», deydi. Bugun tinch yuqori qavatda Deluxe bo\'sh (+15 $). Qaysi variant darsga mos keladi?',
+      en: 'It is 23:00. A solo business traveller arrives after an 11-hour flight with a Standard room booked and says: "I just want to sleep." A Deluxe on a quiet upper floor is free tonight (+$15). Which option follows the lesson?',
+    },
+    options: [
+      { ru: '«У нас есть Deluxe с видом на бассейн за +15 $, завтрак за 10 $, трансфер обратно в аэропорт за 25 $ и поздний выезд за 50 % тарифа — что выбираете?»', uz: '«Bizda +15 $ ga basseyn manzarali Deluxe, 10 $ ga nonushta, 25 $ ga aeroportga qaytish transferi va tarifning 50 % iga kech chiqish bor — qaysi birini tanlaysiz?»', en: '"We have a Deluxe with a pool view for +$15, breakfast for $10, a transfer back to the airport for $25 and late check-out for 50% of the rate — which would you like?"' },
+      { ru: 'Учесть сигнал усталости и коротко предложить одну уместную опцию: «За небольшую разницу могу разместить вас на тихом верхнем этаже подальше от лифта — то, что нужно после перелёта», а при отказе сразу продолжить заселение', uz: 'Charchoq belgisini hisobga olib, qisqacha bitta o\'rinli variantni taklif qilish: «Kichik farq evaziga sizni liftdan uzoqroq, tinch yuqori qavatga joylashtira olaman — parvozdan keyin ayni kerakli narsa», rad etilsa, darhol ro\'yxatdan o\'tkazishni davom ettirish', en: 'Read the fatigue cue and briefly offer one relevant option: "For a small difference I can put you on a quiet upper floor away from the elevator — just what you need after a flight", and if declined, continue check-in at once' },
+      { ru: '«Честно говоря, стандартные номера маленькие и шумные — чтобы выспаться, вам точно нужен Deluxe»', uz: '«Ochig\'i, standart xonalar kichkina va shovqinli — yaxshi uxlash uchun sizga aniq Deluxe kerak»', en: '"Honestly, the standard rooms are small and noisy — to get a good night\'s sleep you really need the Deluxe"' },
+      { ru: 'Вообще не делать предложения: уставшему гостю никогда ничего не предлагают', uz: 'Umuman taklif qilmaslik: charchagan mehmonga hech qachon hech narsa taklif qilinmaydi', en: 'Make no offer at all: a tired guest should never be offered anything' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Урок учит читать сигналы гостя (усталость после перелёта — один из них), предлагать ОДНУ самую уместную опцию как совет и уважать отказ. Перечислять несколько апселлов сразу и принижать забронированный номер — ошибки из урока; полный отказ от предложения тоже неверен, ведь тихий номер здесь реальная ценность для гостя.',
+      uz: 'Dars mehmon signallarini o\'qishni (parvozdan keyingi charchoq — shulardan biri), maslahat sifatida eng o\'rinli BITTA variantni taklif qilishni va rad javobini hurmat qilishni o\'rgatadi. Bir nechta upsellni birdan sanash va bron qilingan xonani kamsitish — darsdagi xatolar; taklifdan butunlay voz kechish ham noto\'g\'ri, chunki tinch xona bu yerda mehmon uchun haqiqiy qadriyat.',
+      en: 'The lesson teaches reading the guest\'s cues (fatigue after travel is one), offering ONE most relevant option as advice and respecting a refusal. Listing several upsells at once and talking down the booked room are mistakes from the lesson; making no offer at all is also wrong, since a quiet room is genuine value for this guest.',
+    },
+  },
+  {
+    id: 'quiz-upselling-rooms-4',
+    moduleSlug: 'upselling-rooms',
+    question: {
+      ru: 'Вы предложили гостю Deluxe за +15 $ и показали фото. Гость: «Нет, спасибо, меня устраивает то, что я забронировал». Что дальше?',
+      uz: 'Siz mehmonga +15 $ ga Deluxe taklif qilib, rasmini ko\'rsatdingiz. Mehmon: «Yo\'q, rahmat, bron qilganim meni qoniqtiradi». Keyin nima qilasiz?',
+      en: 'You offered the guest a Deluxe for +$15 and showed a photo. The guest: "No thanks, I\'m fine with what I booked." What next?',
+    },
+    options: [
+      { ru: '«Вы уверены? Deluxe намного просторнее и тише — давайте я покажу ещё одно фото»', uz: '«Ishonchingiz komilmi? Deluxe ancha keng va tinch — yana bitta rasm ko\'rsatay»', en: '"Are you sure? The Deluxe is much more spacious and quieter — let me show you one more photo"' },
+      { ru: 'Оставить тему номера, но тут же предложить завтрак и трансфер, чтобы попытка апселлинга не пропала даром', uz: 'Xona mavzusini qoldirib, upsell urinishi bekor ketmasligi uchun darhol nonushta va transfer taklif qilish', en: 'Drop the room topic but immediately offer breakfast and a transfer so the upsell attempt isn\'t wasted' },
+      { ru: 'Предложить скидку 5 $ на повышение категории, чтобы гостю было легче согласиться', uz: 'Mehmon rozi bo\'lishi osonroq bo\'lishi uchun toifani oshirishga 5 $ chegirma taklif qilish', en: 'Offer a $5 discount on the upgrade to make it easier for the guest to say yes' },
+      { ru: 'Сразу принять решение: «Конечно» — и продолжить заселение, больше не возвращаясь к предложению', uz: 'Qarorni darhol qabul qilish: «Albatta» — va taklifga boshqa qaytmasdan ro\'yxatdan o\'tkazishni davom ettirish', en: 'Accept the decision at once — "Of course" — and continue check-in without returning to the offer' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Золотое правило: если гость один раз сказал «нет», не переформулируйте и не предлагайте снова — уважение к решению важнее упущенной продажи. Переключение на завтрак и трансфер — это та же «повторная попытка» плюс ошибка «несколько апселлов сразу».',
+      uz: 'Oltin qoida: mehmon bir marta «yo\'q» desa, qayta ifodalab, yana taklif qilmang — qarorga hurmat o\'tkazib yuborilgan savdodan muhimroq. Nonushta va transferga o\'tish — o\'sha «qayta urinish» va «bir nechta upsell birdan» xatosi.',
+      en: 'Golden rule: if the guest says "no" once, do not rephrase and offer again — respecting the decision matters more than a missed sale. Switching to breakfast and a transfer is the same "second attempt" plus the mistake of pitching several upsells at once.',
     },
   },
 
@@ -459,6 +732,48 @@ export const quizQuestions: QuizQuestion[] = [
       en: 'High-loyalty-status guests are often granted privileges, including a complimentary late check-out when possible, in recognition of their continued patronage.',
     },
   },
+  {
+    id: 'quiz-late-checkout-3',
+    moduleSlug: 'late-checkout',
+    question: {
+      ru: '09:00. Гость просит выезд в 15:00. Вы проверили систему: номер на сегодняшний заезд не стоит. По правилам отеля выезд до 15:00 стоит 50 % от стоимости ночи. Какой ответ верен?',
+      uz: 'Soat 09:00. Mehmon 15:00 da chiqishni so\'raydi. Siz tizimni tekshirdingiz: xona bugungi kelishga qo\'yilmagan. Mehmonxona qoidalariga ko\'ra 15:00 gacha chiqish bir kecha narxining 50 % ini tashkil qiladi. Qaysi javob to\'g\'ri?',
+      en: 'It is 09:00. A guest asks to check out at 15:00. You checked the system: the room is not booked for tonight\'s arrival. By hotel policy, check-out until 15:00 costs 50% of the nightly rate. Which answer is correct?',
+    },
+    options: [
+      { ru: '«Могу продлить до 15:00, это 50 % от стоимости ночи — подтверждаем?» — и после согласия сообщить хаускипингу новое время выезда', uz: '«15:00 gacha uzaytira olaman, bu bir kecha narxining 50 % i — tasdiqlaymizmi?» — rozilikdan so\'ng xaus-kipingga yangi chiqish vaqtini xabar qilish', en: '"I can extend you to 3pm, which comes to 50% of the nightly rate — shall I confirm that?" — and after agreement notify housekeeping of the new check-out time' },
+      { ru: '«Да, без проблем, 15:00 подходит» — а 50 % добавить в фолио, чтобы гость увидел сумму в итоговом счёте при выезде', uz: '«Ha, muammo yo\'q, 15:00 bo\'ladi» — 50 % ni esa mehmon summani chiqishdagi yakuniy hisobda ko\'rishi uchun folioga qo\'shish', en: '"Yes, no problem, 3pm is fine" — and add the 50% to the folio so the guest sees it on the final bill at departure' },
+      { ru: 'Подтвердить 15:00 и озвучить плату, но хаускипинг не предупреждать — горничные и так увидят, что гость ещё в номере', uz: '15:00 ni tasdiqlab, to\'lovni aytish, lekin xaus-kipingni ogohlantirmaslik — xonaki xodimlar mehmon hali xonada ekanini baribir ko\'rishadi', en: 'Confirm 3pm and state the fee, but don\'t tell housekeeping — the maids will see the guest is still in the room anyway' },
+      { ru: 'Отказать: поздний выезд — привилегия только для участников программы лояльности, — и предложить хранение багажа', uz: 'Rad etish: kech chiqish — faqat sodiqlik dasturi a\'zolari uchun imtiyoz, — va yuk saqlashni taklif qilish', en: 'Decline: late check-out is a privilege for loyalty members only — and offer luggage storage' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'Урок: если поздний выезд платный, назовите плату заранее и спокойно — никогда не удивляйте гостя суммой потом; а забыть предупредить хаускипинг о новом времени — отдельная ошибка из списка. Номер свободен, поэтому отказ не обоснован.',
+      uz: 'Dars: agar kech chiqish pullik bo\'lsa, to\'lovni oldindan va xotirjam ayting — mehmonni keyin summa bilan hech qachon hayron qoldirmang; xaus-kipingni yangi vaqt haqida ogohlantirishni unutish esa ro\'yxatdagi alohida xato. Xona bo\'sh, shuning uchun rad etish asossiz.',
+      en: 'The lesson: if the late check-out carries a fee, state it upfront and calmly — never surprise the guest with a charge afterwards; forgetting to notify housekeeping of the changed time is a separate listed mistake. The room is free, so a refusal is unjustified.',
+    },
+  },
+  {
+    id: 'quiz-late-checkout-4',
+    moduleSlug: 'late-checkout',
+    question: {
+      ru: 'Гость у стойки: «Можно выехать в 15:00?» Вы знаете, что на сегодня загрузка около 95 %, но карточку именно этого номера ещё не открывали. Какое ПЕРВОЕ действие — единственно верное?',
+      uz: 'Mehmon stoykada: «15:00 da chiqsam bo\'ladimi?» Bugunga bandlik taxminan 95 % ekanini bilasiz, lekin aynan shu xonaning kartochkasini hali ochmagansiz. Qaysi BIRINCHI harakat yagona to\'g\'ri?',
+      en: 'A guest at the desk: "Can I check out at 3pm?" You know tonight\'s occupancy is around 95%, but you haven\'t opened this particular room\'s record yet. Which FIRST action is the only correct one?',
+    },
+    options: [
+      { ru: 'Сказать «да, конечно, без проблем» — 5 % номеров всё равно свободны, почти наверняка получится', uz: '«Ha, albatta, muammo yo\'q» deyish — baribir 5 % xona bo\'sh, deyarli aniq bo\'ladi', en: 'Say "yes, sure, no problem" — 5% of rooms are free anyway, it will almost certainly work out' },
+      { ru: 'Сказать «к сожалению, сегодня почти полная загрузка, не получится» и сразу предложить бесплатное хранение багажа', uz: '«Afsuski, bugun deyarli to\'liq bandlik, iloji yo\'q» deb, darhol bepul yuk saqlashni taklif qilish', en: 'Say "unfortunately we\'re nearly full tonight, it won\'t be possible" and immediately offer free luggage storage' },
+      { ru: 'Сказать «одну минуту, проверю доступность вашего номера на сегодняшнюю ночь», проверить статус брони этого номера и только потом ответить', uz: '«Bir daqiqa, xonangizning bugungi kechaga bo\'shligini tekshiray» deb, shu xonaning bron holatini tekshirib, keyingina javob berish', en: 'Say "one moment, let me check the room\'s availability for tonight", check this room\'s booking status and only then answer' },
+      { ru: 'Сказать, что уточните у хаускипинга и перезвоните в номер ближе к обеду', uz: 'Xaus-kipingdan aniqlashtirib, tushga yaqin xonaga qo\'ng\'iroq qilishingizni aytish', en: 'Say you will check with housekeeping and call the room back closer to lunchtime' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Поздний выезд зависит от того, заселяется ли именно этот номер сегодня, — проверка статуса делается быстро и незаметно, пока гость ждёт у стойки. Отказ «по общей загрузке» без проверки номера и обещание «почти наверняка» — обе крайности, которые урок запрещает.',
+      uz: 'Kech chiqish aynan shu xonaga bugun kelish bor-yo\'qligiga bog\'liq — holat tekshiruvi mehmon stoykada kutayotganda tez va sezdirmay bajariladi. Xonani tekshirmasdan «umumiy bandlik» bo\'yicha rad etish va «deyarli aniq» va\'da — dars taqiqlaydigan ikki chekka.',
+      en: 'Late check-out depends on whether this specific room has an arrival tonight — the status check is done quickly and discreetly while the guest waits at the desk. Refusing based on overall occupancy without checking the room, and promising "almost certainly", are both extremes the lesson forbids.',
+    },
+  },
 
   // early-checkin
   {
@@ -501,6 +816,48 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'Гарантировать точное время раннего заезда нельзя без учёта предыдущего выезда — важно честно объяснить зависимость и предложить максимально возможное решение.',
       uz: "Oldingi chiqishni hisobga olmasdan erta kelishning aniq vaqtini kafolatlab bo'lmaydi — bog'liqlikni halol tushuntirish va imkon qadar yaxshi yechim taklif qilish muhim.",
       en: "You cannot guarantee an exact early check-in time without accounting for the prior guest's check-out — it's important to honestly explain the dependency and offer the best possible solution.",
+    },
+  },
+  {
+    id: 'quiz-early-checkin-3',
+    moduleSlug: 'early-checkin',
+    question: {
+      ru: '09:00. Пара после ночного рейса просит заселиться пораньше. В системе их номер — «освобождён, не убран», хаускипинг обещает готовность около 12:00. Какой ответ соответствует уроку?',
+      uz: 'Soat 09:00. Tungi parvozdan keyin er-xotin ertaroq joylashishni so\'rashadi. Tizimda ularning xonasi — «bo\'shatilgan, tozalanmagan», xaus-kiping taxminan 12:00 ga tayyor bo\'lishini aytadi. Qaysi javob darsga mos keladi?',
+      en: 'It is 09:00. A couple off an overnight flight asks to check in early. In the system their room is "vacant dirty"; housekeeping says it will be ready around 12:00. Which answer follows the lesson?',
+    },
+    options: [
+      { ru: '«Может, чуть позже, постараемся — подойдите через какое-то время»', uz: '«Balki birozdan keyin, harakat qilamiz — biroz vaqt o\'tgach keling»', en: '"Maybe a bit later, we\'ll try our best — come back in a while"' },
+      { ru: '«Ваш номер будет готов примерно к 12:00, я позвоню вам, как только он освободится. А пока могу принять багаж на хранение, и вы можете позавтракать в нашем лобби-кафе»', uz: '«Xonangiz taxminan 12:00 ga tayyor bo\'ladi, bo\'shashi bilan sizga qo\'ng\'iroq qilaman. Hozircha yukingizni saqlashga olishim mumkin, lobbi-kafemizda nonushta qilishingiz mumkin»', en: '"Your room should be ready around 12:00, and I\'ll call you the moment it\'s available. Meanwhile I can store your luggage, and you\'re welcome to have breakfast in our lobby café"' },
+      { ru: 'Выдать ключ прямо сейчас, чтобы уставшие гости отдохнули, — горничные уберут позже, когда гости выйдут', uz: 'Charchagan mehmonlar dam olishi uchun kalitni hozir berish — mehmonlar chiqqanda xonaki xodimlar keyinroq tozalaydi', en: 'Hand over the key right now so the tired guests can rest — housekeeping can clean later when they go out' },
+      { ru: 'Предложить хранение багажа и лаунж, сказать, что номер будет готов «где-то после обеда», и попросить подойти узнать', uz: 'Yuk saqlash va launjni taklif qilib, xona «tushlikdan keyin qachondir» tayyor bo\'lishini aytish va bilib ketishni so\'rash', en: 'Offer luggage storage and the lounge, say the room will be ready "sometime after lunch" and ask them to check back' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Урок требует проверить статус номера и назвать конкретное время плюс альтернативу, а также перезвонить гостю, как только номер готов. Вариант с лаунжем выглядит заботливым, но «где-то после обеда» — та самая расплывчатость, которую урок называет ошибкой; выдать неубранный номер недопустимо.',
+      uz: 'Dars xona holatini tekshirib, aniq vaqt va muqobil variantni aytishni, shuningdek, xona tayyor bo\'lishi bilan mehmonga qo\'ng\'iroq qilishni talab qiladi. Launjli variant g\'amxo\'r ko\'rinadi, lekin «tushlikdan keyin qachondir» — dars xato deb ataydigan o\'sha noaniqlik; tozalanmagan xonani berish mumkin emas.',
+      en: 'The lesson requires checking the room status and giving a specific time plus an alternative, and calling the guest as soon as the room is ready. The lounge option looks caring, but "sometime after lunch" is exactly the vagueness the lesson calls a mistake; handing over an uncleaned room is unacceptable.',
+    },
+  },
+  {
+    id: 'quiz-early-checkin-4',
+    moduleSlug: 'early-checkin',
+    question: {
+      ru: 'В 09:00 вы сказали гостям, что номер будет готов примерно к 12:00, и они ждут в лобби-кафе. В 11:30 хаускипинг сообщает: в номере сломан кондиционер, ремонт закончат не раньше 14:00. Что делать?',
+      uz: 'Soat 09:00 da mehmonlarga xona taxminan 12:00 ga tayyor bo\'lishini aytdingiz, ular lobbi-kafeda kutishyapti. 11:30 da xaus-kiping xabar beradi: xonada konditsioner buzilgan, ta\'mirlash 14:00 dan oldin tugamaydi. Nima qilasiz?',
+      en: 'At 09:00 you told the guests their room would be ready around 12:00, and they are waiting in the lobby café. At 11:30 housekeeping reports the air conditioner in the room is broken and repairs won\'t finish before 14:00. What do you do?',
+    },
+    options: [
+      { ru: 'Дождаться 12:00 и, если гости сами подойдут к стойке, объяснить задержку', uz: '12:00 ni kutib, agar mehmonlar o\'zlari stoykaga kelsa, kechikishni tushuntirish', en: 'Wait until 12:00 and, if the guests come to the desk themselves, explain the delay' },
+      { ru: 'Ничего не говорить и в 12:00 всё же выдать номер — неисправный кондиционер мелочь по сравнению с усталостью гостей', uz: 'Hech narsa demay, 12:00 da baribir xonani berish — buzuq konditsioner mehmonlar charchog\'i oldida arzimas narsa', en: 'Say nothing and hand over the room at 12:00 anyway — a broken air conditioner is minor compared to the guests\' tiredness' },
+      { ru: 'Позвонить гостям в 14:00, когда номер будет готов, — нет смысла сообщать плохую новость раньше', uz: 'Xona tayyor bo\'lganda, 14:00 da mehmonlarga qo\'ng\'iroq qilish — yomon xabarni ertaroq aytishdan ma\'no yo\'q', en: 'Call the guests at 14:00 once the room is ready — there is no point in giving bad news earlier' },
+      { ru: 'Сразу подойти к гостям, извиниться, назвать новое конкретное время (около 14:00) и проверить в системе, нет ли готового номера той же категории, чтобы заселить их раньше', uz: 'Darhol mehmonlar oldiga borib, uzr so\'rash, yangi aniq vaqtni (taxminan 14:00) aytish va ularni ertaroq joylashtirish uchun tizimda o\'sha toifadagi tayyor xona bor-yo\'qligini tekshirish', en: 'Go to the guests at once, apologize, give the new specific time (around 14:00) and check the system for a ready room of the same category to move them in earlier' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Золотое правило раннего заезда: держите гостя в курсе, если что-то меняется, и всегда называйте конкретное время. Молчать до 12:00 или до 14:00 превращает ваше обещание в ту самую «ложную надежду», которую урок запрещает.',
+      uz: 'Erta kelishning oltin qoidasi: biror narsa o\'zgarsa, mehmonni xabardor qiling va doim aniq vaqt ayting. 12:00 yoki 14:00 gacha jim turish va\'dangizni dars taqiqlaydigan o\'sha «soxta umid»ga aylantiradi.',
+      en: 'The early check-in golden rule: keep the guest updated if anything changes, and always give a specific time. Staying silent until 12:00 or 14:00 turns your promise into exactly the "false hope" the lesson forbids.',
     },
   },
 
@@ -568,6 +925,27 @@ export const quizQuestions: QuizQuestion[] = [
       en: 'Arguing with the guest escalates conflict; the right approach is to listen, apologize, offer a solution, and thank them.',
     },
   },
+  {
+    id: 'quiz-complaints-4',
+    moduleSlug: 'complaints',
+    question: {
+      ru: '22:00. Гость с подтверждённой бронью Booking.com стоит у стойки, но свободных номеров нет — овербукинг. Гость повышает голос: «Как это у вас нет номеров?!» Какой ответ соответствует уроку?',
+      uz: 'Soat 22:00. Booking.com orqali tasdiqlangan broni bor mehmon stoykada turibdi, lekin bo\'sh xona yo\'q — overbuking. Mehmon ovozini ko\'taradi: «Qanday qilib xonangiz yo\'q?!» Qaysi javob darsga mos keladi?',
+      en: 'It is 22:00. A guest with a confirmed Booking.com reservation is at the desk, but there are no rooms left — overbooking. The guest raises his voice: "How can you have no rooms?!" Which answer follows the lesson?',
+    },
+    options: [
+      { ru: 'Тише и медленнее: «Искренне прошу прощения — это полностью наша ответственность. Мы организуем номер такого же или более высокого класса в партнёрском отеле рядом, оплатим транспорт и компенсируем первую ночь у нас»', uz: 'Pastroq va sekinroq ohangda: «Chin dildan uzr so\'rayman — bu to\'liq bizning mas\'uliyatimiz. Yaqin atrofdagi hamkor mehmonxonada shunday yoki yuqoriroq toifadagi xona tashkil qilamiz, transportni to\'laymiz va bizdagi birinchi kechani kompensatsiya qilamiz»', en: 'More quietly and slowly: "I sincerely apologize — this is entirely our responsibility. We\'ll arrange an equal or upgraded room at a partner hotel nearby, cover your transport and compensate your first night with us"' },
+      { ru: '«Извините, но Booking.com передал бронь слишком поздно и наша система не синхронизировалась — давайте объясню, как работает менеджер каналов, чтобы вы поняли»', uz: '«Kechirasiz, lekin Booking.com bronni juda kech uzatdi va tizimimiz sinxronlashmadi — tushunishingiz uchun kanal menejeri qanday ishlashini tushuntirib beray»', en: '"I\'m sorry, but Booking.com sent the reservation too late and our system didn\'t sync — let me explain how the channel manager works so you understand"' },
+      { ru: '«У нас перебронь. Могу дать номер менеджера — он утром решит вопрос компенсации»', uz: '«Bizda ortiqcha bron. Menejer raqamini bera olaman — u ertalab kompensatsiya masalasini hal qiladi»', en: '"We\'re overbooked. I can give you the manager\'s number — he\'ll decide on compensation in the morning"' },
+      { ru: 'Извиниться и предложить подождать в лаунже с напитком до ночного аудита — вдруг кто-то не заедет и номер освободится', uz: 'Uzr so\'rab, tungi auditgacha launjda ichimlik bilan kutishni taklif qilish — balki kimdir kelmay, xona bo\'shab qolar', en: 'Apologize and suggest waiting in the lounge with a drink until the night audit in case a no-show frees up a room' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'При овербукинге урок требует полностью взять ответственность отеля на себя, не винить систему бронирования и сразу предложить конкретное решение: партнёрский отель, транспорт, компенсация. Объяснять гостю работу менеджера каналов — это перекладывание вины, а «ждать аудита» — обещание, которое может не сбыться.',
+      uz: 'Overbukingda dars mehmonxona mas\'uliyatini to\'liq o\'z zimmasiga olishni, bron tizimini ayblamaslikni va darhol aniq yechim taklif qilishni talab qiladi: hamkor mehmonxona, transport, kompensatsiya. Mehmonga kanal menejeri ishini tushuntirish — aybni ag\'darish, «auditni kutish» esa bajarilmasligi mumkin bo\'lgan va\'da.',
+      en: 'In an overbooking the lesson requires owning the hotel\'s responsibility fully, not blaming the booking system, and offering a concrete solution at once: partner hotel, transport, compensation. Explaining the channel manager to the guest is shifting blame, and "wait for the audit" is a promise that may not be kept.',
+    },
+  },
 
   // vip-guests
   {
@@ -633,6 +1011,27 @@ export const quizQuestions: QuizQuestion[] = [
       en: 'High-level service for returning VIP guests means recognizing them and using their accumulated preference history without asking them to repeat it.',
     },
   },
+  {
+    id: 'quiz-vip-guests-4',
+    moduleSlug: 'vip-guests',
+    question: {
+      ru: 'Людное лобби, у стойки очередь. Заезжает постоянная гостья г-жа Ортега; в профиле: угловой номер с видом на море и гипоаллергенные подушки. Сегодня ни одного номера с видом на море нет. Какое действие — ЕДИНСТВЕННОЕ верное по уроку?',
+      uz: 'Gavjum lobbi, stoykada navbat. Doimiy mehmon xonim Ortega keladi; profilida: dengizga qaraydigan burchak xona va gipoallergen yostiqlar. Bugun dengizga qaraydigan birorta xona yo\'q. Darsga ko\'ra qaysi harakat YAGONA to\'g\'ri?',
+      en: 'A crowded lobby with a queue at the desk. Returning guest Mrs. Ortega arrives; her profile notes a sea-view corner room and hypoallergenic pillows. Today no sea-view room is available. Which action is the ONLY correct one per the lesson?',
+    },
+    options: [
+      { ru: 'Громко на всё лобби: «Госпожа Ортега, наша VIP-гостья, с возвращением! Ваш угловой люкс уже ждёт!»', uz: 'Butun lobbiga baland ovozda: «Xonim Ortega, bizning VIP-mehmonimiz, qaytganingiz bilan! Burchak lyuksingiz allaqachon kutmoqda!»', en: 'Loudly across the lobby: "Mrs. Ortega, our VIP guest, welcome back! Your corner suite is waiting!"' },
+      { ru: 'Пообещать номер с видом на море «как всегда», чтобы не расстраивать гостью, а потом решать вопрос с хаускипингом', uz: 'Mehmonni xafa qilmaslik uchun «har doimgidek» dengizga qaraydigan xonani va\'da qilib, keyin masalani xaus-kiping bilan hal qilish', en: 'Promise the sea-view room "as always" so as not to upset her, and sort it out with housekeeping later' },
+      { ru: 'Тихо у стойки поприветствовать по имени, сказать, что гипоаллергенные подушки уже готовы, честно объяснить, что сегодня номера с видом на море нет, и предложить лучший доступный вариант', uz: 'Stoykada sekin ovozda ismi bilan kutib olish, gipoallergen yostiqlar tayyor ekanini aytish, bugun dengizga qaraydigan xona yo\'qligini halol tushuntirish va eng yaxshi mavjud variantni taklif qilish', en: 'Quietly at the desk greet her by name, say the hypoallergenic pillows are ready, honestly explain that no sea-view room is available today and offer the best available alternative' },
+      { ru: 'Ради справедливости обслужить её как всех в очереди и заново спросить о предпочтениях у стойки', uz: 'Adolat uchun uni navbatdagilar kabi xizmat ko\'rsatib, afzalliklarini stoykada qaytadan so\'rash', en: 'To be fair, serve her like everyone else in the queue and ask about her preferences again at the desk' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Урок сочетает два правила: персонализация должна быть видна гостю, но невидима окружающим (никогда не объявлять VIP-статус вслух), и нельзя обещать апгрейд, который невозможно предоставить. Только вариант с тихим приветствием по имени, учтёнными подушками и честным объяснением выполняет оба.',
+      uz: 'Dars ikki qoidani birlashtiradi: shaxsiylashtirish mehmonga ko\'rinishi, atrofdagilarga esa ko\'rinmasligi kerak (VIP-statusni hech qachon ovoz chiqarib e\'lon qilmaslik), va berib bo\'lmaydigan apgreydni va\'da qilish mumkin emas. Faqat sekin ovozda ismi bilan kutib olish, hisobga olingan yostiqlar va halol tushuntirish varianti ikkalasini ham bajaradi.',
+      en: 'The lesson combines two rules: personalization must be visible to the guest but invisible to everyone around (never announce VIP status aloud), and never promise an upgrade that cannot be provided. Only the option with a quiet greeting by name, the pillows taken care of and an honest explanation satisfies both.',
+    },
+  },
 
   // foreign-guests
   {
@@ -677,6 +1076,48 @@ export const quizQuestions: QuizQuestion[] = [
       en: 'A good front desk agent acts as a cultural guide for foreign guests, helping them feel more confident in a new country.',
     },
   },
+  {
+    id: 'quiz-foreign-guests-3',
+    moduleSlug: 'foreign-guests',
+    question: {
+      ru: 'Гость на ломаном английском: «Sorry, my English not good. Room key, problem». Рядом стоят коллеги. Какая реакция соответствует уроку?',
+      uz: 'Mehmon buzuq ingliz tilida: «Sorry, my English not good. Room key, problem». Yonida hamkasblar turibdi. Qaysi reaktsiya darsga mos keladi?',
+      en: 'A guest in broken English: "Sorry, my English not good. Room key, problem." Colleagues are standing nearby. Which reaction follows the lesson?',
+    },
+    options: [
+      { ru: 'Повторить медленно и ГРОМЧЕ, по слогам: «ВАША… КАРТА… НЕ… РАБОТАЕТ?»', uz: 'Sekin va BALANDROQ, bo\'g\'inlab takrorlash: «SIZNING… KARTA… ISHLAMAYAPTI?»', en: 'Repeat slowly and LOUDER, syllable by syllable: "YOUR... CARD... NOT... WORKING?"' },
+      { ru: 'Короткой простой фразой уточнить, показать ключ-карту и жестом — дверь, при необходимости подтвердить через приложение-переводчик и выдать новую карту', uz: 'Qisqa sodda ibora bilan aniqlashtirish, kalit-kartani ko\'rsatib, imo bilan eshikni ko\'rsatish, zarur bo\'lsa tarjimon ilova orqali tasdiqlab, yangi karta berish', en: 'Clarify with a short simple phrase, show the key card and gesture towards the door, confirm via a translation app if needed and issue a new card' },
+      { ru: 'Дать гостю телефон с открытым переводчиком и вернуться к компьютеру, пока он не напечатает свою проблему', uz: 'Mehmonga tarjimon ochilgan telefonni berib, u muammosini yozguncha kompyuterga qaytish', en: 'Hand the guest a phone with the translator open and go back to your computer until they have typed out their problem' },
+      { ru: 'С улыбкой успокоить: «No worries, it\'s a piece of cake, we\'ll sort it out in a jiffy»', uz: 'Jilmayib tinchlantirish: «No worries, it\'s a piece of cake, we\'ll sort it out in a jiffy»', en: 'Reassure with a smile: "No worries, it\'s a piece of cake, we\'ll sort it out in a jiffy"' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Урок: короткие простые фразы без идиом и сленга, жесты и наглядность, переводчик как инструмент, а не замена живого общения, и никогда не повышать голос. «Piece of cake» и «in a jiffy» звучат дружелюбно, но это идиомы, которые урок прямо называет ошибкой.',
+      uz: 'Dars: idioma va slengsiz qisqa sodda iboralar, imo-ishora va ko\'rgazmalilik, tarjimon jonli muloqot o\'rnini bosuvchi emas, vosita sifatida, va hech qachon ovozni ko\'tarmaslik. «Piece of cake» va «in a jiffy» do\'stona eshitiladi, lekin bular dars to\'g\'ridan-to\'g\'ri xato deb ataydigan idiomalar.',
+      en: 'The lesson: short simple phrases without idioms or slang, gestures and visual aids, a translation app as a tool rather than a replacement for direct communication, and never raising your voice. "Piece of cake" and "in a jiffy" sound friendly, but they are idioms the lesson explicitly calls a mistake.',
+    },
+  },
+  {
+    id: 'quiz-foreign-guests-4',
+    moduleSlug: 'foreign-guests',
+    question: {
+      ru: 'Заезжает семья из другой страны; они говорят по-английски с трудом и спрашивают, где поужинать. Что из перечисленного НЕ входит в стандарт урока по работе с иностранными гостями?',
+      uz: 'Boshqa mamlakatdan oila keladi; ular ingliz tilida qiynalib gapirishadi va qayerda kechki ovqat qilish mumkinligini so\'rashadi. Quyidagilardan qaysi biri chet ellik mehmonlar bilan ishlash bo\'yicha dars standartiga KIRMAYDI?',
+      en: 'A family from abroad checks in; they speak English with difficulty and ask where to have dinner. Which of the following is NOT part of the lesson\'s standard for working with foreign guests?',
+    },
+    options: [
+      { ru: 'Прежде чем рекомендовать ресторан, уточнить диетические потребности — халяль, вегетарианское меню', uz: 'Restoran tavsiya qilishdan oldin parhez ehtiyojlarini aniqlashtirish — halol, vegetarian menyu', en: 'Before recommending a restaurant, clarify dietary needs — halal, vegetarian' },
+      { ru: 'Помнить, что не во всех культурах принято рукопожатие или прямой зрительный контакт', uz: 'Hamma madaniyatlarda ham qo\'l berib ko\'rishish yoki to\'g\'ridan-to\'g\'ri ko\'z aloqasi qabul qilinmaganini yodda tutish', en: 'Keep in mind that not every culture is comfortable with a handshake or direct eye contact' },
+      { ru: 'Показать дорогу на карте и написать цены цифрами вместо длинного устного объяснения', uz: 'Uzun og\'zaki tushuntirish o\'rniga yo\'lni xaritada ko\'rsatish va narxlarni raqamlar bilan yozish', en: 'Show the way on a map and write prices in figures instead of a long verbal explanation' },
+      { ru: 'Полностью перевести разговор в приложение-переводчик, чтобы исключить любое недопонимание', uz: 'Har qanday tushunmovchilikni istisno qilish uchun suhbatni butunlay tarjimon ilovaga o\'tkazish', en: 'Move the whole conversation into a translation app to rule out any misunderstanding' },
+    ],
+    correctIndex: 3,
+    explanation: {
+      ru: 'Переводчик в уроке — инструмент, а не повод перестать понимать друг друга напрямую; «полностью полагаться на приложение» — ошибка из списка. Диетические потребности, обычаи приветствия и наглядные средства (карты, цифры) — часть стандарта.',
+      uz: 'Darsda tarjimon — vosita, bir-birini bevosita tushunishdan voz kechish uchun bahona emas; «butunlay ilovaga tayanish» — ro\'yxatdagi xato. Parhez ehtiyojlari, salomlashish odatlari va ko\'rgazmali vositalar (xarita, raqamlar) — standartning qismi.',
+      en: 'In the lesson a translation app is a tool, not an excuse to stop understanding each other directly; "relying entirely on the app" is a listed mistake. Dietary needs, greeting customs and visual aids (maps, figures) are part of the standard.',
+    },
+  },
 
   // lost-items
   {
@@ -719,6 +1160,48 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'Любая найденная вещь должна быть немедленно передана и зарегистрирована в журнале находок (lost & found) с точным описанием, датой и местом обнаружения.',
       uz: "Har qanday topilgan buyum darhol topshirilishi va aniq tavsif, sana hamda topilgan joyi bilan topilmalar jurnaliga (lost & found) qayd etilishi kerak.",
       en: 'Any found item must be immediately turned in and logged in the lost & found register with an accurate description, date, and location found.',
+    },
+  },
+  {
+    id: 'quiz-lost-items-3',
+    moduleSlug: 'lost-items',
+    question: {
+      ru: '16:00. Звонит гость: «Кажется, я оставил зарядку в 214-м, выехал вчера». Вы открываете журнал находок — по 214-му записей нет. Что делать?',
+      uz: 'Soat 16:00. Mehmon qo\'ng\'iroq qiladi: «Shekilli, 214-xonada zaryadlovchini qoldirdim, kecha chiqqanman». Topilmalar jurnalini ochasiz — 214-xona bo\'yicha yozuv yo\'q. Nima qilasiz?',
+      en: 'It is 16:00. A guest calls: "I think I left my charger in room 214, I checked out yesterday." You open the lost-and-found register — nothing is logged for 214. What do you do?',
+    },
+    options: [
+      { ru: 'Сказать, что проверите и перезвоните; связаться с хаускипингом, проверить сам номер и общие зоны и только после этого дать ответ', uz: 'Tekshirib, qayta qo\'ng\'iroq qilishingizni aytish; xaus-kiping bilan bog\'lanish, xonaning o\'zini va umumiy zonalarni tekshirish va faqat shundan keyin javob berish', en: 'Say you will check and call back; contact housekeeping, check the room itself and the common areas, and only then give an answer' },
+      { ru: 'Ответить: «В журнале ничего нет, значит, ничего не находили» — журнал и есть единственный источник информации', uz: '«Jurnalda hech narsa yo\'q, demak, hech narsa topilmagan» deb javob berish — jurnal yagona ma\'lumot manbai', en: 'Reply "nothing is logged, so nothing was found" — the register is the single source of truth' },
+      { ru: 'Сразу пообещать, что зарядку найдут и вышлют, а поиски начать после разговора', uz: 'Zaryadlovchi topilib, yuborilishini darhol va\'da qilib, qidiruvni suhbatdan keyin boshlash', en: 'Promise right away that the charger will be found and shipped, and start searching after the call' },
+      { ru: 'Попросить гостя перезвонить завтра, когда хаускипинг закончит уборку всех номеров', uz: 'Mehmondan xaus-kiping barcha xonalarni tozalab bo\'lgach, ertaga qayta qo\'ng\'iroq qilishini so\'rash', en: 'Ask the guest to call back tomorrow once housekeeping has finished all the rooms' },
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: 'Урок: прежде чем сказать «не найдено», проверьте журнал, номер, общие зоны и свяжитесь с хаускипингом — пустая запись в журнале сама по себе не ответ, а отписка, которая может оказаться неверной. Обещать находку до поиска — обещание, которое вы можете не выполнить.',
+      uz: 'Dars: «topilmadi» deyishdan oldin jurnalni, xonani, umumiy zonalarni tekshiring va xaus-kiping bilan bog\'laning — jurnaldagi bo\'sh yozuvning o\'zi javob emas, noto\'g\'ri bo\'lib chiqishi mumkin bo\'lgan quruq javob. Qidiruvdan oldin topilishini va\'da qilish — bajara olmasligingiz mumkin bo\'lgan va\'da.',
+      en: 'The lesson: before saying "not found", check the register, the room, the common areas and contact housekeeping — an empty register entry is not an answer in itself but a brush-off that could simply be wrong. Promising a find before searching is a promise you may not be able to keep.',
+    },
+  },
+  {
+    id: 'quiz-lost-items-4',
+    moduleSlug: 'lost-items',
+    question: {
+      ru: '11:20. Горничная приносит на стойку часы, найденные в 305-м; гость выехал в 11:00. У вас в очереди три гостя. Какая последовательность — ЕДИНСТВЕННО верная?',
+      uz: 'Soat 11:20. Xonaki xodim 305-xonadan topilgan soatni stoykaga olib keladi; mehmon 11:00 da chiqib ketgan. Navbatingizda uch mehmon bor. Qaysi ketma-ketlik YAGONA to\'g\'ri?',
+      en: 'It is 11:20. A housekeeper brings a watch found in room 305 to the desk; the guest checked out at 11:00. You have three guests in the queue. Which sequence is the ONLY correct one?',
+    },
+    options: [
+      { ru: 'Убрать часы в ящик, обслужить очередь, внести запись в журнал в конце смены и ждать звонка гостя', uz: 'Soatni tortmaga solib, navbatni o\'tkazish, smena oxirida jurnalga yozuv kiritish va mehmonning qo\'ng\'irog\'ini kutish', en: 'Put the watch in the drawer, serve the queue, log it at the end of the shift and wait for the guest to call' },
+      { ru: 'Сразу записать в журнал (описание, 305-й, время, кто нашёл), затем самим связаться с гостем по контактам из брони и предложить забрать или отправить за его счёт, заранее назвав стоимость и сроки', uz: 'Darhol jurnalga yozish (tavsif, 305-xona, vaqt, kim topgani), so\'ng brondagi kontaktlar orqali mehmon bilan o\'zingiz bog\'lanib, olib ketish yoki uning hisobidan yuborishni taklif qilish, narx va muddatni oldindan aytib', en: 'Log it immediately (description, room 305, time, finder), then contact the guest yourself via the reservation contact details and offer pickup or shipping at their expense, stating the cost and delivery time upfront' },
+      { ru: 'Сразу записать в журнал и ждать звонка гостя — звонить первыми неуместно, это как намёк на его рассеянность', uz: 'Darhol jurnalga yozib, mehmonning qo\'ng\'irog\'ini kutish — birinchi bo\'lib qo\'ng\'iroq qilish noo\'rin, bu uning parishonligiga ishoradek', en: 'Log it immediately and wait for the guest to call — calling first is inappropriate, as if hinting that they are careless' },
+      { ru: 'Сначала позвонить гостю, ведь гость важнее бумаг, а в журнал внести позже, если он не захочет забирать часы', uz: 'Avval mehmonga qo\'ng\'iroq qilish, chunki mehmon qog\'ozlardan muhimroq, jurnalga esa keyinroq, agar u soatni olishni xohlamasa, yozish', en: 'Call the guest first, since the guest matters more than paperwork, and log it later if they don\'t want the watch back' },
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: 'Урок задаёт порядок: запись в журнал — немедленно, даже если вы заняты (отложенная запись часто не делается вовсе); если ценная вещь найдена после выезда — не ждите звонка, свяжитесь первыми; доставку предлагайте с прозрачной стоимостью и сроками. «Записать и ждать» нарушает правило проактивного контакта.',
+      uz: 'Dars tartibni belgilaydi: jurnalga yozish — band bo\'lsangiz ham darhol (kechiktirilgan yozuv ko\'pincha umuman qilinmaydi); qimmatbaho buyum chiqishdan keyin topilsa — qo\'ng\'iroqni kutmang, birinchi bo\'lib bog\'laning; yetkazib berishni shaffof narx va muddat bilan taklif qiling. «Yozib, kutish» faol bog\'lanish qoidasini buzadi.',
+      en: 'The lesson sets the order: log immediately even when busy (a delayed entry often never happens); if a valuable item is found after departure, don\'t wait for a call — reach out first; offer shipping with transparent cost and timing. "Log and wait" breaks the proactive-contact rule.',
     },
   },
 
@@ -784,6 +1267,27 @@ export const quizQuestions: QuizQuestion[] = [
       ru: 'В экстренных ситуациях важны немедленный доступ к контактам служб спасения, плану эвакуации и актуальному списку гостей для их учёта при эвакуации.',
       uz: "Favqulodda vaziyatlarda qutqaruv xizmatlari kontaktlariga, evakuatsiya rejasiga va evakuatsiya paytida hisobga olish uchun dolzarb mehmonlar ro'yxatiga darhol kirish imkoniyati muhim.",
       en: 'In emergencies, immediate access to emergency service contacts, the evacuation plan, and an up-to-date guest list is essential for accounting for everyone during evacuation.',
+    },
+  },
+  {
+    id: 'quiz-emergency-procedures-4',
+    moduleSlug: 'emergency-procedures',
+    question: {
+      ru: '03:10. Сработала пожарная сигнализация. Вы один на ресепшене, гость из лобби спрашивает, что делать; сотрудник охраны будет через две минуты. Какое действие соответствует протоколу урока?',
+      uz: 'Soat 03:10. Yong\'in signalizatsiyasi ishga tushdi. Resepshenda yolg\'izsiz, lobbidagi mehmon nima qilishni so\'raydi; qo\'riqlash xodimi ikki daqiqadan keyin keladi. Qaysi harakat dars protokoliga mos keladi?',
+      en: 'It is 03:10. The fire alarm goes off. You are alone at the desk, a guest in the lobby asks what to do; the security officer will arrive in two minutes. Which action follows the lesson\'s protocol?',
+    },
+    options: [
+      { ru: 'Направить гостей к лестнице, а самому покинуть стойку и пойти проверять верхние этажи', uz: 'Mehmonlarni zinaga yo\'naltirib, o\'zingiz stoykani tashlab, yuqori qavatlarni tekshirgani ketish', en: 'Direct guests to the stairwell, then leave the desk and go to check the upper floors yourself' },
+      { ru: 'Остаться у стойки и сказать гостям спускаться на лифте — с 9-го этажа так быстрее', uz: 'Stoykada qolib, mehmonlarga lift bilan tushishni aytish — 9-qavatdan shunday tezroq', en: 'Stay at the desk and tell guests to take the elevator — it is faster from the 9th floor' },
+      { ru: 'Спокойно направить гостей к ближайшему эвакуационному выходу через лестницу (не лифт) и оставаться у стойки как точка контакта для гостей и служб, пока обязанности не переданы по протоколу', uz: 'Mehmonlarni xotirjam ravishda zina orqali eng yaqin evakuatsiya chiqishiga (lift emas) yo\'naltirish va vazifalar protokol bo\'yicha topshirilguncha mehmonlar va xizmatlar uchun aloqa nuqtasi sifatida stoykada qolish', en: 'Calmly direct guests to the nearest evacuation exit via the stairwell (not the elevator) and stay at the desk as the point of contact for guests and emergency services until duties are handed off per protocol' },
+      { ru: 'Ждать у стойки, пока охрана не подтвердит, что тревога настоящая, и до этого не давать гостям никаких указаний, чтобы не вызвать панику', uz: 'Qo\'riqlash xodimi tashvish haqiqiy ekanini tasdiqlaguncha stoykada kutish va vahima qo\'zg\'atmaslik uchun ungacha mehmonlarga hech qanday ko\'rsatma bermaslik', en: 'Wait at the desk until security confirms the alarm is real and give guests no instructions until then, so as not to cause panic' },
+    ],
+    correctIndex: 2,
+    explanation: {
+      ru: 'Урок сочетает два правила: при пожарной тревоге гостей направляют к эвакуационному выходу, никогда не к лифту, а стойка не должна оставаться без сотрудника — обязанности передаются по плану. Уходить проверять этажи — ошибка «оставить стойку без покрытия», а ждать подтверждения — бездействие в критический момент.',
+      uz: 'Dars ikki qoidani birlashtiradi: yong\'in tashvishida mehmonlar evakuatsiya chiqishiga yo\'naltiriladi, hech qachon liftga emas, stoyka esa xodimsiz qolmasligi kerak — vazifalar reja bo\'yicha topshiriladi. Qavatlarni tekshirgani ketish — «stoykani qoplamasiz qoldirish» xatosi, tasdiqni kutish esa — eng muhim paytdagi harakatsizlik.',
+      en: 'The lesson combines two rules: during a fire alarm guests are directed to the evacuation exit, never the elevator, and the front desk must never be left unstaffed — duties are handed off per the coverage plan. Leaving to check the floors is the "unstaffed desk" mistake, and waiting for confirmation is inaction at the critical moment.',
     },
   },
 ]

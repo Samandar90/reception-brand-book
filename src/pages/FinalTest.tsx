@@ -58,8 +58,8 @@ const WAITING_POLL_MS = 20_000
 /** Lobby participant-count refresh: at most one re-read per window, however many realtime events arrive. */
 const LOBBY_REFRESH_MS = 2_000
 const AUTO_SUBMIT_MS = 1_500
-/** The server still accepts an answer up to 3 s after the deadline (submit_final_answer). */
-const GRACE_MS = 3_000
+/** The server still accepts an answer up to 1 s after the deadline (submit_final_answer). */
+const GRACE_MS = 1_000
 /** Minimum grace left for the one automatic re-send after a network failure. */
 const GRACE_RETRY_MIN_MS = 500
 const OPEN_MAX_LENGTH = 2000

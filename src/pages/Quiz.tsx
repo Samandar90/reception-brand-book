@@ -14,6 +14,7 @@ import {
   RotateCcw,
   ShieldCheck,
   Target,
+  Timer,
   Trophy,
   type LucideIcon,
 } from 'lucide-react'
@@ -29,10 +30,27 @@ import { quizQuestions } from '@/data/quizQuestions'
 import { modules } from '@/data/modules'
 import { shuffle } from '@/lib/shuffle'
 import { clientSignals } from '@/lib/api'
-import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, TOTAL_MODULES } from '@/lib/constants'
-import type { Module, NewAttemptInput, QuizQuestion } from '@/types'
+import { ApiError } from '@/lib/http'
+import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, KNOWLEDGE_RETAKE_HOURS, QUIZ_QUESTION_SECONDS, TOTAL_MODULES } from '@/lib/constants'
+import type { Language, Module, NewAttemptInput, QuizQuestion } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
+const LOCALES: Record<Language, string> = { ru: 'ru-RU', uz: 'uz-Latn-UZ', en: 'en-GB' }
+
+type Forfeit = 'timeout' | 'focus'
+
+function formatClock(seconds: number): string {
+  const s = Math.max(0, seconds)
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
+}
+
+function formatDateTime(ms: number, lang: Language): string {
+  try {
+    return new Date(ms).toLocaleString(LOCALES[lang], { dateStyle: 'medium', timeStyle: 'short' })
+  } catch {
+    return new Date(ms).toLocaleString()
+  }
+}
 
 interface TestItem {
   question: QuizQuestion
@@ -43,10 +61,11 @@ interface TestItem {
 interface AnswerRecord {
   id: string
   moduleSlug: string | null
-  /** Original option index. */
-  selected: number
+  /** Original option index; null when the question was forfeited (time ran out or the page was left). */
+  selected: number | null
   correct: boolean
   ms: number
+  forfeited?: Forfeit
 }
 
 interface TestResult {
@@ -75,7 +94,7 @@ function toneOf(ratio: number): { bar: string; text: string } {
 }
 
 export default function Quiz() {
-  const { t, tf, tx } = useLanguage()
+  const { t, tf, tx, lang } = useLanguage()
   const { user, signOut } = useAuth()
   const { recordAttempt, logEvent, attemptsOf } = useProgress()
 
@@ -85,6 +104,10 @@ export default function Quiz() {
   const [selected, setSelected] = useState<number | null>(null)
   const [result, setResult] = useState<TestResult | null>(null)
   const [signingOut, setSigningOut] = useState(false)
+  /** Seconds left for the question on screen. */
+  const [remaining, setRemaining] = useState(QUIZ_QUESTION_SECONDS)
+  /** Why the previous question was forfeited, shown above the next one. */
+  const [notice, setNotice] = useState<Forfeit | null>(null)
 
   // Synchronous mirrors of phase/items/index: clicks on cards that are still animating out hold stale
   // closures, so every handler re-checks against these refs before acting.
@@ -95,28 +118,58 @@ export default function Quiz() {
   const startedAtRef = useRef('')
   const shownAtRef = useRef(0)
   const focusLostRef = useRef(0)
+  const deadlineRef = useRef(Number.POSITIVE_INFINITY)
   const pendingRef = useRef<NewAttemptInput | null>(null)
   const busyRef = useRef(false)
   const topRef = useRef<HTMLDivElement>(null)
 
-  const assessmentAttempts = attemptsOf('knowledge').filter((a) => a.details.mode === 'assessment')
+  const knowledgeAttempts = attemptsOf('knowledge')
+  const assessmentAttempts = knowledgeAttempts.filter((a) => a.details.mode === 'assessment')
   const bestSoFar = assessmentAttempts.length ? Math.max(...assessmentAttempts.map((a) => a.percent)) : null
 
-  // Per-question timer + keep the question in view on phones.
+  // One attempt per KNOWLEDGE_RETAKE_HOURS (the server enforces the same rule; administrators are exempt).
+  const lastFinishedAt = knowledgeAttempts.reduce((best, a) => Math.max(best, Date.parse(a.finishedAt) || 0), 0)
+  const cooldownUntil = lastFinishedAt ? lastFinishedAt + KNOWLEDGE_RETAKE_HOURS * 3_600_000 : 0
+  const onCooldown = user?.role !== 'admin' && cooldownUntil > Date.now()
+
+  // Per-question clock: QUIZ_QUESTION_SECONDS from the moment the question appears. Time with the page hidden is
+  // not counted, because leaving the page forfeits the open question instead (see the visibility effect).
   useEffect(() => {
-    if (phase === 'running') shownAtRef.current = Date.now()
+    if (phase !== 'running') return
+    const now = Date.now()
+    shownAtRef.current = now
+    deadlineRef.current = now + QUIZ_QUESTION_SECONDS * 1000
+    setRemaining(QUIZ_QUESTION_SECONDS)
     const el = topRef.current
     if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== 'visible') return
+      const left = deadlineRef.current - Date.now()
+      setRemaining(Math.max(0, Math.ceil(left / 1000)))
+      if (left <= 0) forfeit('timeout')
+    }, 250)
+    return () => window.clearInterval(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, index])
 
-  // Focus losses while answering.
+  // Leaving the page (another tab or app, locked screen) forfeits the question open at that moment; the next
+  // question gets a full clock once the page is visible again.
   useEffect(() => {
     if (phase !== 'running') return
     const onVisibility = () => {
-      if (document.visibilityState === 'hidden') focusLostRef.current += 1
+      if (document.visibilityState === 'hidden') {
+        focusLostRef.current += 1
+        forfeit('focus')
+        return
+      }
+      const now = Date.now()
+      shownAtRef.current = now
+      deadlineRef.current = now + QUIZ_QUESTION_SECONDS * 1000
+      setRemaining(QUIZ_QUESTION_SECONDS)
     }
     document.addEventListener('visibilitychange', onVisibility)
     return () => document.removeEventListener('visibilitychange', onVisibility)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
 
   // Warn before closing the tab while answers are not saved yet.
@@ -171,6 +224,10 @@ export default function Quiz() {
   function start() {
     const current = phaseRef.current
     if (busyRef.current || current === 'running' || current === 'submitting' || current === 'failed') return
+    if (onCooldown) {
+      toast.error(tf('learn.quiz.cooldownNotice', { date: formatDateTime(cooldownUntil, lang) }))
+      return
+    }
     const nextItems = buildItems()
     itemsRef.current = nextItems
     indexRef.current = 0
@@ -181,6 +238,7 @@ export default function Quiz() {
     answersRef.current = []
     focusLostRef.current = 0
     pendingRef.current = null
+    setNotice(null)
     startedAtRef.current = new Date().toISOString()
     go('running')
     logEvent('test_start', { kind: 'knowledge' })
@@ -202,7 +260,14 @@ export default function Quiz() {
         answers,
       })
       go('result')
-    } catch {
+    } catch (e) {
+      if (e instanceof ApiError && e.code === 'retake_too_soon') {
+        // The server refused the attempt: nothing to retry, back to the rules screen.
+        pendingRef.current = null
+        toast.error(tf('learn.quiz.cooldownToast', { hours: KNOWLEDGE_RETAKE_HOURS }))
+        go('intro')
+        return
+      }
       toast.error(t('common.saveFailed'))
       go('failed')
     } finally {
@@ -219,20 +284,25 @@ export default function Quiz() {
     if (isCurrent(questionId)) setSelected(original)
   }
 
-  function confirmAnswer(questionId: string) {
-    if (selected === null || !isCurrent(questionId)) return
+  /** Records the answer for the question on screen (null = forfeited), then moves on or submits. */
+  function commit(selectedOriginal: number | null, forfeited?: Forfeit) {
+    if (phaseRef.current !== 'running') return
     const i = indexRef.current
     const list = itemsRef.current
     const item = list[i]
     if (!item) return
+    // Stop the clock until the next question's effect restarts it (also guards against a double forfeit).
+    deadlineRef.current = Number.POSITIVE_INFINITY
     const record: AnswerRecord = {
       id: item.question.id,
       moduleSlug: item.question.moduleSlug ?? null,
-      selected,
-      correct: selected === item.question.correctIndex,
+      selected: selectedOriginal,
+      correct: selectedOriginal !== null && selectedOriginal === item.question.correctIndex,
       ms: Math.max(0, Date.now() - shownAtRef.current),
+      ...(forfeited ? { forfeited } : {}),
     }
     answersRef.current = [...answersRef.current.slice(0, i), record]
+    setNotice(forfeited ?? null)
 
     if (i < list.length - 1) {
       indexRef.current = i + 1
@@ -252,11 +322,23 @@ export default function Quiz() {
         mode: 'assessment',
         answers,
         focusLost: focusLostRef.current,
+        timedOut: answers.filter((a) => a.forfeited === 'timeout').length,
+        forfeited: answers.filter((a) => a.forfeited === 'focus').length,
+        secondsPerQuestion: QUIZ_QUESTION_SECONDS,
         ...clientSignals(),
       },
     }
     pendingRef.current = payload
     void submit(payload, answers)
+  }
+
+  function confirmAnswer(questionId: string) {
+    if (selected === null || !isCurrent(questionId)) return
+    commit(selected)
+  }
+
+  function forfeit(reason: Forfeit) {
+    commit(null, reason)
   }
 
   function retrySave() {
@@ -283,9 +365,11 @@ export default function Quiz() {
   if (phase === 'intro') {
     const rules: { icon: LucideIcon; text: string }[] = [
       { icon: ListChecks, text: tf('learn.quiz.ruleQuestions', { count: quizQuestions.length, modules: TOTAL_MODULES }) },
+      { icon: Timer, text: tf('learn.quiz.ruleTimer', { sec: QUIZ_QUESTION_SECONDS }) },
       { icon: EyeOff, text: t('learn.quiz.ruleNoHints') },
-      { icon: ShieldCheck, text: t('learn.quiz.ruleRecorded') },
       { icon: AppWindow, text: t('learn.quiz.ruleFocus') },
+      { icon: RotateCcw, text: tf('learn.quiz.ruleCooldown', { hours: KNOWLEDGE_RETAKE_HOURS }) },
+      { icon: ShieldCheck, text: t('learn.quiz.ruleRecorded') },
       { icon: Award, text: tf('learn.quiz.ruleCertificate', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT }) },
     ]
     const initials =
@@ -349,10 +433,17 @@ export default function Quiz() {
               {tf('learn.quiz.bestSoFar', { percent: Math.round(bestSoFar), count: assessmentAttempts.length })}
             </p>
           )}
-          <Button size="lg" onClick={start} className="mt-6 w-full gap-2 sm:w-auto">
-            {t('learn.quiz.start')}
-            <ArrowRight className="size-4" />
-          </Button>
+          {onCooldown ? (
+            <p className="mt-6 flex items-start gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
+              <CircleAlert className="mt-0.5 size-4 shrink-0" />
+              <span>{tf('learn.quiz.cooldownNotice', { date: formatDateTime(cooldownUntil, lang) })}</span>
+            </p>
+          ) : (
+            <Button size="lg" onClick={start} className="mt-6 w-full gap-2 sm:w-auto">
+              {t('learn.quiz.start')}
+              <ArrowRight className="size-4" />
+            </Button>
+          )}
         </div>
       </motion.div>
     )
@@ -373,10 +464,35 @@ export default function Quiz() {
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('quiz.title')}</p>
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>{tf('learn.quiz.counter', { n: index + 1, total })}</span>
-            <span>{Math.round((index / total) * 100)}%</span>
+            <span
+              aria-live="polite"
+              className={cn(
+                'flex items-center gap-1.5 font-medium tabular-nums',
+                remaining <= 10 ? 'text-rose-600 dark:text-rose-400' : 'text-foreground',
+              )}
+            >
+              <Timer className="size-4" />
+              {tf('lang.timeRemaining', { time: formatClock(remaining) })}
+            </span>
           </div>
           <Progress value={(index / total) * 100} className="h-1.5" />
+          <div className="h-1 w-full overflow-hidden rounded-full bg-muted" aria-hidden>
+            <div
+              className={cn('h-full rounded-full transition-[width] duration-200', remaining <= 10 ? 'bg-rose-500' : 'bg-primary/60')}
+              style={{ width: `${Math.min(100, (remaining / QUIZ_QUESTION_SECONDS) * 100)}%` }}
+            />
+          </div>
         </div>
+
+        {notice && (
+          <p
+            role="status"
+            className="flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300"
+          >
+            <CircleAlert className="size-4 shrink-0" />
+            {notice === 'timeout' ? t('learn.quiz.timeOut') : t('learn.quiz.focusForfeit')}
+          </p>
+        )}
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -519,11 +635,18 @@ export default function Quiz() {
                 ? t('learn.quiz.passedBody')
                 : tf('learn.quiz.failedBody', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT })}
             </p>
+            {onCooldown && (
+              <p className="max-w-md text-sm text-muted-foreground">
+                {tf('learn.quiz.cooldownNotice', { date: formatDateTime(cooldownUntil, lang) })}
+              </p>
+            )}
             <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-              <Button onClick={start} size="lg" className="gap-2">
-                <RotateCcw className="size-4" />
-                {t('quiz.retake')}
-              </Button>
+              {!onCooldown && (
+                <Button onClick={start} size="lg" className="gap-2">
+                  <RotateCcw className="size-4" />
+                  {t('quiz.retake')}
+                </Button>
+              )}
               <Button asChild variant="outline" size="lg" className="gap-2">
                 <Link to="/">
                   <Home className="size-4" />

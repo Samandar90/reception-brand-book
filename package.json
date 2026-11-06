@@ -11,7 +11,8 @@
     "typecheck": "tsc -b --noEmit && tsc -p server/tsconfig.json",
     "smoke": "tsx scripts/smoke-test.mjs",
     "dev:server": "tsx watch server/index.ts",
-    "start": "tsx server/index.ts"
+    "start": "tsx server/index.ts",
+    "validate:banks": "tsx scripts/validate-banks.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",

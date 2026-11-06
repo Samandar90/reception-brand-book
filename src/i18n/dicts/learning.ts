@@ -17,6 +17,11 @@ export const learningDict = {
     uz: "Barcha {modules} modul bo'yicha {count} ta savol, savollar va javoblar tartibi aralashtirilgan",
     en: '{count} questions from all {modules} modules, in a shuffled order with shuffled answers',
   },
+  'learn.quiz.ruleTimer': {
+    ru: 'На каждый вопрос {sec} секунд. Не успели подтвердить ответ — вопрос засчитывается как неверный, вернуться к нему нельзя',
+    uz: "Har bir savolga {sec} soniya. Javobni vaqtida tasdiqlamasangiz, savol noto'g'ri deb hisoblanadi va unga qaytib bo'lmaydi",
+    en: '{sec} seconds per question. If you do not confirm in time, the question counts as wrong and cannot be revisited',
+  },
   'learn.quiz.ruleNoHints': {
     ru: 'Во время теста нет подсказок и правильных ответов: выберите вариант и нажмите «Далее»',
     uz: "Test davomida maslahat va to'g'ri javoblar ko'rsatilmaydi: variantni tanlang va «Keyingi» tugmasini bosing",
@@ -28,9 +33,34 @@ export const learningDict = {
     en: 'Your result is saved and visible to the administrator',
   },
   'learn.quiz.ruleFocus': {
-    ru: 'Не уходите со страницы до конца теста: переходы в другие вкладки и приложения фиксируются, а незавершённый тест не сохраняется',
-    uz: "Test tugaguncha sahifadan chiqmang: boshqa oyna va ilovalarga o'tishlar qayd etiladi, tugallanmagan test esa saqlanmaydi",
-    en: 'Stay on this page until the end: switching to other tabs or apps is recorded, and an unfinished test is not saved',
+    ru: 'Не уходите со страницы: переход в другую вкладку или приложение фиксируется, а открытый в этот момент вопрос засчитывается как неверный. Незавершённый тест не сохраняется',
+    uz: "Sahifadan chiqmang: boshqa oyna yoki ilovaga o'tish qayd etiladi, o'sha paytda ochiq turgan savol esa noto'g'ri deb hisoblanadi. Tugallanmagan test saqlanmaydi",
+    en: 'Stay on this page: switching to another tab or app is recorded, and the question open at that moment counts as wrong. An unfinished test is not saved',
+  },
+  'learn.quiz.ruleCooldown': {
+    ru: 'Одна попытка в {hours} часа: пересдать тест можно не раньше чем через {hours} ч после предыдущей попытки',
+    uz: "{hours} soatda bitta urinish: testni oldingi urinishdan kamida {hours} soat o'tgach qayta topshirish mumkin",
+    en: 'One attempt per {hours} hours: the test can be retaken no sooner than {hours} h after the previous attempt',
+  },
+  'learn.quiz.cooldownNotice': {
+    ru: 'Следующая попытка будет доступна {date}.',
+    uz: 'Keyingi urinish {date} kuni ochiladi.',
+    en: 'Your next attempt opens on {date}.',
+  },
+  'learn.quiz.cooldownToast': {
+    ru: 'Пересдача пока недоступна: с предыдущей попытки должно пройти {hours} ч. Эта попытка не сохранена.',
+    uz: "Qayta topshirish hali mumkin emas: oldingi urinishdan {hours} soat o'tishi kerak. Bu urinish saqlanmadi.",
+    en: 'Retake not available yet: {hours} h must pass since your previous attempt. This attempt was not saved.',
+  },
+  'learn.quiz.timeOut': {
+    ru: 'Время вышло — вопрос засчитан как неверный',
+    uz: "Vaqt tugadi — savol noto'g'ri deb hisoblandi",
+    en: 'Time is up — the question counts as wrong',
+  },
+  'learn.quiz.focusForfeit': {
+    ru: 'Вы ушли со страницы — открытый вопрос засчитан как неверный',
+    uz: "Siz sahifadan chiqdingiz — ochiq savol noto'g'ri deb hisoblandi",
+    en: 'You left the page — the open question counts as wrong',
   },
   'learn.quiz.leaveConfirm': {
     ru: 'Выйти из теста? Ваши ответы не сохранятся.',
@@ -84,9 +114,19 @@ export const learningDict = {
   // ─── "Check yourself" at the end of each lesson ────────────────────────────
   'learn.check.title': { ru: 'Проверь себя', uz: "O'zingizni tekshiring", en: 'Check yourself' },
   'learn.check.intro': {
-    ru: 'Вопросов по этому уроку: {count}. Чтобы модуль засчитался, ответьте правильно хотя бы на {pass}.',
-    uz: "Ushbu dars bo'yicha savollar: {count} ta. Modul hisobga olinishi uchun kamida {pass} tasiga to'g'ri javob bering.",
-    en: '{count} short questions on this lesson. Answer at least {pass} correctly to complete the module.',
+    ru: 'Вопросов по этому уроку: {count}, на каждый {sec} секунд. Чтобы модуль засчитался, нужно ответить правильно на все {pass} — одна ошибка или просроченный вопрос означают повторную попытку.',
+    uz: "Ushbu dars bo'yicha savollar: {count} ta, har biriga {sec} soniya. Modul hisobga olinishi uchun barcha {pass} tasiga to'g'ri javob berish kerak — bitta xato yoki vaqti o'tgan savol qayta urinishni bildiradi.",
+    en: '{count} questions on this lesson, {sec} seconds each. To complete the module you must answer all {pass} correctly — one mistake or one timed-out question means another attempt.',
+  },
+  'learn.check.timeOut': {
+    ru: 'Время вышло',
+    uz: 'Vaqt tugadi',
+    en: 'Time is up',
+  },
+  'learn.check.timeOutBody': {
+    ru: 'Ответ не был дан за отведённое время, вопрос засчитан как неверный.',
+    uz: "Ajratilgan vaqt ichida javob berilmadi, savol noto'g'ri deb hisoblandi.",
+    en: 'No answer was given in the allotted time, so the question counts as wrong.',
   },
   'learn.check.start': { ru: 'Начать проверку', uz: 'Tekshiruvni boshlash', en: 'Start the check' },
   'learn.check.seeResult': { ru: 'Показать результат', uz: "Natijani ko'rish", en: 'See result' },
@@ -103,9 +143,9 @@ export const learningDict = {
   },
   'learn.check.failedTitle': { ru: 'Почти получилось', uz: 'Oz qoldi', en: 'Almost there' },
   'learn.check.failedBody': {
-    ru: 'Правильно {score} из {total}, а нужно хотя бы {pass}. Перечитайте урок — особенно золотые правила — и попробуйте ещё раз.',
-    uz: "{total} tadan {score} ta to'g'ri, kamida {pass} ta kerak. Darsni, ayniqsa oltin qoidalarni qayta o'qing va yana urinib ko'ring.",
-    en: '{score} of {total} correct — you need at least {pass}. Re-read the lesson, especially the golden rules, and try again.',
+    ru: 'Правильно {score} из {total}, а нужно все {pass}. Перечитайте урок — особенно золотые правила и типичные ошибки — и попробуйте ещё раз.',
+    uz: "{total} tadan {score} ta to'g'ri, barcha {pass} tasi kerak. Darsni, ayniqsa oltin qoidalar va tipik xatolarni qayta o'qing va yana urinib ko'ring.",
+    en: '{score} of {total} correct — you need all {pass}. Re-read the lesson, especially the golden rules and common mistakes, and try again.',
   },
   'learn.check.stillComplete': {
     ru: 'Модуль по-прежнему засчитан.',

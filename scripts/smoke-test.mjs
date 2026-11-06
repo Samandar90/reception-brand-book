@@ -178,13 +178,17 @@ async function main() {
   check('admin sees the progress', progAdmin.data?.[0]?.moduleSlug === 'check-in' && progAdmin.data?.[0]?.checkScore === 3, progAdmin)
 
   const now = new Date().toISOString()
-  const know = await emp.post('/me/attempts', { kind: 'knowledge', score: 30, total: 36, details: { mode: 'assessment', answers: [{ id: 'q1', correct: true }] }, startedAt: now })
+  const know = await emp.post('/me/attempts', { kind: 'knowledge', score: 50, total: 60, writingScore: 5, details: { mode: 'assessment', answers: [{ id: 'q1', correct: true }] }, startedAt: now })
   check('knowledge attempt stored with server-computed percent', know.status === 200 && know.data?.percent === 83.33, know)
-  const preGraded = await emp.post('/me/attempts', { kind: 'knowledge', score: 1, total: 2, writingScore: 5, startedAt: now })
-  check('employee cannot pre-grade an attempt', preGraded.status === 200 && preGraded.data?.writingScore === null, preGraded)
+  check('employee cannot pre-grade an attempt', know.data?.writingScore === null, know)
+  const tooSoon = await emp.post('/me/attempts', { kind: 'knowledge', score: 1, total: 2, startedAt: now })
+  check('knowledge retake within 24 h is refused', tooSoon.status === 403 && tooSoon.error === 'retake_too_soon', tooSoon)
+  const adminKnow = await admin.post('/me/attempts', { kind: 'knowledge', score: 1, total: 2, startedAt: now })
+  const adminKnow2 = await admin.post('/me/attempts', { kind: 'knowledge', score: 2, total: 2, startedAt: now })
+  check('administrator is exempt from the knowledge cooldown', adminKnow.status === 200 && adminKnow2.status === 200, { adminKnow, adminKnow2 })
   const fakeFinal = await emp.post('/me/attempts', { kind: 'final', score: 10, total: 10, startedAt: now })
   check('employee cannot insert a final attempt', fakeFinal.status === 400, fakeFinal)
-  const overScore = await emp.post('/me/attempts', { kind: 'knowledge', score: 40, total: 36, startedAt: now })
+  const overScore = await emp.post('/me/attempts', { kind: 'knowledge', score: 70, total: 60, startedAt: now })
   check('score above total rejected', overScore.status === 400, overScore)
 
   // ── Language retake grants ─────────────────────────────────────────────────

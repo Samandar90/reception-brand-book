@@ -3,6 +3,7 @@ import { db, nowIso, round2, uuid } from '../db.ts'
 import { body, fail, int, isoDate, obj, oneOf, optInt, SLUG_RE } from '../http.ts'
 import { requireUser } from '../auth.ts'
 import { toAttempt, toGrant, toModule, type AttemptRow, type GrantRow, type ModuleRow } from '../mappers.ts'
+import { KNOWLEDGE_RETAKE_HOURS } from '../../src/lib/constants.ts'
 
 export const meRouter = Router()
 meRouter.use('/me', requireUser)
@@ -71,6 +72,14 @@ meRouter.post('/me/attempts', (req, res) => {
   const id = uuid()
 
   const insert = db.transaction(() => {
+    // Knowledge test: one attempt per KNOWLEDGE_RETAKE_HOURS for employees, so the bank cannot be memorised by
+    // repeating the test back to back. Administrators are exempt so the owner can try the test freely.
+    if (kind === 'knowledge' && req.user!.role !== 'admin') {
+      const last = db
+        .prepare("SELECT finished_at FROM test_attempts WHERE user_id = ? AND kind = 'knowledge' ORDER BY finished_at DESC LIMIT 1")
+        .get(userId) as { finished_at: string } | undefined
+      if (last && Date.parse(finishedAt) - Date.parse(last.finished_at) < KNOWLEDGE_RETAKE_HOURS * 3_600_000) fail(403, 'retake_too_soon')
+    }
     // Language tests: the first attempt is free, every retake needs an unused, unexpired grant.
     if (kind === 'english' || kind === 'russian') {
       const previous = db.prepare('SELECT 1 FROM test_attempts WHERE user_id = ? AND kind = ? LIMIT 1').get(userId, kind)

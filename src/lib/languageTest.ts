@@ -4,15 +4,15 @@ import { shuffle } from '@/lib/shuffle'
 
 // ─── Rules ───────────────────────────────────────────────────────────────────
 
-/** Questions asked per level: 2 of each skill. */
-export const QUESTIONS_PER_LEVEL = 8
-export const PER_SKILL = 2
-/** Correct answers needed (out of 8) to unlock the next level. */
-export const LEVEL_PASS_SCORE = 6
-/** Seconds allowed per level section. */
+/** Questions asked per level: 3 of each skill. */
+export const QUESTIONS_PER_LEVEL = 12
+export const PER_SKILL = 3
+/** Correct answers needed (out of 12) to unlock the next level. */
+export const LEVEL_PASS_SCORE = 10
+/** Seconds allowed per level section (25 s per question on average). */
 export const LEVEL_SECONDS = 300
 /** Seconds allowed for the writing task. */
-export const WRITING_SECONDS = 600
+export const WRITING_SECONDS = 480
 /** Writing is offered once this level has been reached. */
 export const WRITING_MIN_LEVEL: CefrLevel = 'A2'
 
@@ -33,7 +33,7 @@ export function levelAtLeast(level: ReachedLevel, min: CefrLevel): boolean {
 // ─── Question selection ──────────────────────────────────────────────────────
 
 /**
- * Picks 8 questions for a level: 2 per skill, preferring ones the employee has not seen in
+ * Picks 12 questions for a level: 3 per skill, preferring ones the employee has not seen in
  * previous attempts. Falls back to seen ones (and to other skills) if the bank is short.
  */
 export function buildLevelSet(bank: LanguageQuestion[], level: CefrLevel, seen: ReadonlySet<string>): LanguageQuestion[] {

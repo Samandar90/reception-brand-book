@@ -649,7 +649,11 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
     if (!s || s.phase !== 'writing') return
     const current = textRef.current
     const prompt = s.writingPromptId ? getWritingPrompt(s.writingPromptId) : undefined
-    if (!skip && prompt && countWords(current) < prompt.minWords) return
+    if (!skip && prompt) {
+      const words = countWords(current)
+      // Both limits are hard: too short or too long cannot be submitted (skipping is still possible).
+      if (words < prompt.minWords || words > prompt.maxWords) return
+    }
     setSkipOpen(false)
     advance(finishWriting(s, current, skip || !prompt, Date.now()))
   }
@@ -800,7 +804,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
     const rules: string[] = [
       t('lang.ruleStairs'),
       tf('lang.ruleQuestions', { n: QUESTIONS_PER_LEVEL }),
-      tf('lang.ruleTime', { min: Math.round(LEVEL_SECONDS / 60) }),
+      tf('lang.ruleTime', { min: Math.round(LEVEL_SECONDS / 60), n: QUESTIONS_PER_LEVEL }),
       tf('lang.rulePass', { pass: LEVEL_PASS_SCORE, n: QUESTIONS_PER_LEVEL }),
       t('lang.ruleNoBack'),
       tf('lang.ruleWriting', { min: Math.round(WRITING_SECONDS / 60), level: WRITING_MIN_LEVEL }),
@@ -1027,7 +1031,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
             <Button
               size="lg"
               onClick={() => handleFinishWriting(false)}
-              disabled={!enough || saveStatus === 'saving'}
+              disabled={!enough || tooLong || saveStatus === 'saving'}
               className="h-11 w-full gap-2 px-5 sm:w-auto"
             >
               <Send className="size-4" />

@@ -130,14 +130,14 @@ export const testsDict = {
     en: 'Levels go up step by step: A1 → A2 → B1 → B2 → C1.',
   },
   'lang.ruleQuestions': {
-    ru: 'На каждом уровне {n} вопросов: 2 по грамматике, 2 по лексике, 2 по диалогам и 2 на понимание текста.',
-    uz: "Har bir darajada {n} ta savol: 2 tadan grammatika, lug'at, dialog va matnni tushunish bo'yicha.",
-    en: 'Each level has {n} questions: 2 grammar, 2 vocabulary, 2 dialogue and 2 reading.',
+    ru: 'На каждом уровне {n} вопросов: 3 по грамматике, 3 по лексике, 3 по диалогам и 3 на понимание текста.',
+    uz: "Har bir darajada {n} ta savol: 3 tadan grammatika, lug'at, dialog va matnni tushunish bo'yicha.",
+    en: 'Each level has {n} questions: 3 grammar, 3 vocabulary, 3 dialogue and 3 reading.',
   },
   'lang.ruleTime': {
-    ru: 'На каждый уровень даётся {min} минут.',
-    uz: 'Har bir daraja uchun {min} daqiqa beriladi.',
-    en: 'You have {min} minutes per level.',
+    ru: 'На каждый уровень даётся {min} минут на все {n} вопросов — около 25 секунд на вопрос. Неотвеченные вопросы считаются неверными.',
+    uz: "Har bir darajaga barcha {n} savol uchun {min} daqiqa beriladi — har savolga taxminan 25 soniya. Javobsiz qolgan savollar noto'g'ri deb hisoblanadi.",
+    en: 'You have {min} minutes per level for all {n} questions — about 25 seconds each. Unanswered questions count as wrong.',
   },
   'lang.rulePass': {
     ru: '{pass} правильных ответов из {n} открывают следующий уровень.',
@@ -254,9 +254,9 @@ export const testsDict = {
   'lang.words': { ru: 'Слов: {n}', uz: "So'zlar: {n}", en: 'Words: {n}' },
   'lang.wordsRange': { ru: 'нужно {min}–{max}', uz: 'kerak: {min}–{max}', en: 'required {min}–{max}' },
   'lang.tooLong': {
-    ru: 'Ответ длиннее рекомендуемого — постарайтесь сократить.',
-    uz: 'Javob tavsiya etilganidan uzun — qisqartirishga harakat qiling.',
-    en: 'Your reply is longer than recommended — try to shorten it.',
+    ru: 'Ответ длиннее допустимого — сократите его, иначе отправить нельзя.',
+    uz: "Javob ruxsat etilganidan uzun — qisqartiring, aks holda yuborib bo'lmaydi.",
+    en: 'Your reply is over the limit — shorten it, otherwise it cannot be submitted.',
   },
   'lang.pasteBlocked': {
     ru: 'Вставка текста отключена — пишите ответ сами.',

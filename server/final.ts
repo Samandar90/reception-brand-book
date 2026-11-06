@@ -350,7 +350,8 @@ export function submitAnswer(
     const joined = db.prepare('SELECT 1 FROM final_participants WHERE session_id = ? AND user_id = ?').get(sessionId, userId)
     if (!joined) fail(409, 'not_participant')
     const now = nowIso()
-    if (!session.question_deadline_at || Date.parse(now) > Date.parse(session.question_deadline_at) + 3000) fail(409, 'time_over')
+    // 1 s of network grace after the deadline, no more.
+    if (!session.question_deadline_at || Date.parse(now) > Date.parse(session.question_deadline_at) + 1000) fail(409, 'time_over')
 
     const elapsed = Math.max(0, Date.parse(now) - Date.parse(session.question_started_at ?? now))
     const q = questionOrFail(questionId)
@@ -360,7 +361,8 @@ export function submitAnswer(
     if (q.type === 'choice') {
       if (answerIndex === null) fail(400, 'empty_answer')
       isCorrect = answerIndex === q.correctIndex ? 1 : 0
-      points = isCorrect ? 100 + (elapsed < settings.choiceSeconds * 500 ? 20 : 0) : 0
+      // Speed bonus only for answers given within the first third of the time.
+      points = isCorrect ? 100 + (elapsed * 3 < settings.choiceSeconds * 1000 ? 20 : 0) : 0
     } else {
       if (!answerText || !answerText.trim()) fail(400, 'empty_answer')
     }

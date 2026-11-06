@@ -37,8 +37,8 @@ import type { FinalChoiceQuestion, FinalSession, FinalStatus, Language } from '@
 
 const EASE = [0.16, 1, 0.3, 1] as const
 const CHOICE_MIN = 5
-const CHOICE_MAX = Math.min(30, finalChoiceQuestions.length)
-const OPEN_MAX = Math.min(8, finalOpenQuestions.length)
+const CHOICE_MAX = Math.min(45, finalChoiceQuestions.length)
+const OPEN_MAX = Math.min(12, finalOpenQuestions.length)
 const CHOICE_SECONDS = [15, 20, 30, 45, 60] as const
 const OPEN_SECONDS = [60, 90, 120, 180] as const
 const TITLE_MAX = 120
@@ -267,12 +267,12 @@ export default function AdminFinal() {
 
   // form
   const [title, setTitle] = useState<string | null>(null)
-  const [choiceCount, setChoiceCount] = useState(Math.min(20, CHOICE_MAX))
-  const [openCount, setOpenCount] = useState(Math.min(2, OPEN_MAX))
+  const [choiceCount, setChoiceCount] = useState(Math.min(30, CHOICE_MAX))
+  const [openCount, setOpenCount] = useState(Math.min(4, OPEN_MAX))
   const [manualPick, setManualPick] = useState(false)
   const [picked, setPicked] = useState<string[]>([])
-  const [choiceSeconds, setChoiceSeconds] = useState<number>(30)
-  const [openSeconds, setOpenSeconds] = useState<number>(120)
+  const [choiceSeconds, setChoiceSeconds] = useState<number>(20)
+  const [openSeconds, setOpenSeconds] = useState<number>(90)
   const [creating, setCreating] = useState(false)
 
   const [confirm, setConfirm] = useState<ConfirmState>(null)

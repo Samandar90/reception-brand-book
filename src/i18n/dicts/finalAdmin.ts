@@ -32,9 +32,9 @@ export const finalAdminDict = {
   },
   'finalAdmin.how.step4.title': { ru: 'Нажмите «Начать»', uz: '«Boshlash» ni bosing', en: 'Press Start' },
   'finalAdmin.how.step4.body': {
-    ru: 'Верный ответ — 100 очков, ещё +20 за ответ в первой половине времени. После каждого вопроса — разбор.',
-    uz: "To'g'ri javob — 100 ball, vaqtning birinchi yarmida javob bersa yana +20. Har bir savoldan keyin tahlil.",
-    en: 'A correct answer earns 100 points, plus 20 for answering in the first half of the time. Each question ends with a review.',
+    ru: 'Верный ответ — 100 очков, ещё +20 за ответ в первой трети времени. После каждого вопроса — разбор.',
+    uz: "To'g'ri javob — 100 ball, vaqtning birinchi uchdan birida javob bersa yana +20. Har bir savoldan keyin tahlil.",
+    en: 'A correct answer earns 100 points, plus 20 for answering in the first third of the time. Each question ends with a review.',
   },
   'finalAdmin.how.step5.title': { ru: 'Оцените открытые ответы', uz: 'Ochiq javoblarni baholang', en: 'Grade open answers' },
   'finalAdmin.how.step5.body': {

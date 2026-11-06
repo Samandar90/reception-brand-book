@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -10,6 +10,7 @@ import {
   GraduationCap,
   PartyPopper,
   RotateCcw,
+  Timer,
   TriangleAlert,
 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -20,9 +21,13 @@ import { useProgress } from '@/contexts/ProgressContext'
 import { quizQuestions } from '@/data/quizQuestions'
 import { getAdjacentModules } from '@/data/modules'
 import { shuffle } from '@/lib/shuffle'
+import { MODULE_CHECK_QUESTION_SECONDS } from '@/lib/constants'
 import type { Language, Module, QuizQuestion } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
+
+/** Sentinel for "time ran out before an answer was picked" — scored as a wrong answer. */
+const TIMED_OUT = -1
 
 const DATE_LOCALE: Record<Language, string> = { ru: 'ru-RU', uz: 'uz-Latn-UZ', en: 'en-GB' }
 
@@ -51,7 +56,8 @@ export function ModuleCheck({ module }: { module: Module }) {
 
   const questions = useMemo(() => quizQuestions.filter((q) => q.moduleSlug === module.slug), [module.slug])
   const total = questions.length
-  const passMark = Math.ceil((total * 2) / 3)
+  /** Every question must be answered correctly for the module to count. */
+  const passMark = total
   const complete = isModuleComplete(module.slug)
   const progressRow = moduleProgress.find((m) => m.moduleSlug === module.slug) ?? null
   const { next } = getAdjacentModules(module.slug)
@@ -63,10 +69,30 @@ export function ModuleCheck({ module }: { module: Module }) {
   const [score, setScore] = useState(0)
   const [saving, setSaving] = useState(false)
   const [saveFailed, setSaveFailed] = useState(false)
+  const [deadline, setDeadline] = useState(0)
+  const [remaining, setRemaining] = useState(MODULE_CHECK_QUESTION_SECONDS)
 
   const item = items[index] as CheckItem | undefined
   const isLast = index === items.length - 1
   const passed = score >= passMark
+
+  // Per-question clock: when it runs out the question is scored as wrong and the key is revealed.
+  useEffect(() => {
+    if (phase !== 'running' || picked !== null) return
+    const tick = () => {
+      const left = deadline - Date.now()
+      setRemaining(Math.max(0, Math.ceil(left / 1000)))
+      if (left <= 0) setPicked(TIMED_OUT)
+    }
+    tick()
+    const timer = window.setInterval(tick, 250)
+    return () => window.clearInterval(timer)
+  }, [phase, picked, deadline])
+
+  function armClock() {
+    setDeadline(Date.now() + MODULE_CHECK_QUESTION_SECONDS * 1000)
+    setRemaining(MODULE_CHECK_QUESTION_SECONDS)
+  }
 
   function start() {
     setItems(buildItems(questions))
@@ -74,6 +100,7 @@ export function ModuleCheck({ module }: { module: Module }) {
     setPicked(null)
     setScore(0)
     setSaveFailed(false)
+    armClock()
     setPhase('running')
   }
 
@@ -103,6 +130,7 @@ export function ModuleCheck({ module }: { module: Module }) {
     if (!isLast) {
       setIndex(index + 1)
       setPicked(null)
+      armClock()
       return
     }
     setPhase('result')
@@ -194,11 +222,24 @@ export function ModuleCheck({ module }: { module: Module }) {
     )
   } else if (phase === 'running' && item) {
     const answered = picked !== null
+    const timedOut = picked === TIMED_OUT
     const pickedCorrect = answered && picked === item.question.correctIndex
     body = (
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-3 text-xs font-medium text-muted-foreground">
           <span>{tf('learn.quiz.counter', { n: index + 1, total: items.length })}</span>
+          {!answered && (
+            <span
+              aria-live="polite"
+              className={cn(
+                'flex items-center gap-1 tabular-nums',
+                remaining <= 7 ? 'text-rose-600 dark:text-rose-400' : 'text-foreground',
+              )}
+            >
+              <Timer className="size-3.5" />
+              {remaining} {t('common.seconds')}
+            </span>
+          )}
           <div className="flex w-24 gap-1">
             {items.map((it, i) => (
               <span
@@ -285,7 +326,10 @@ export function ModuleCheck({ module }: { module: Module }) {
                     <CircleX className="mt-0.5 size-4 shrink-0" />
                   )}
                   <div className="min-w-0">
-                    <p className="font-semibold">{pickedCorrect ? t('quiz.correct') : t('quiz.incorrect')}</p>
+                    <p className="font-semibold">
+                      {pickedCorrect ? t('quiz.correct') : timedOut ? t('learn.check.timeOut') : t('quiz.incorrect')}
+                    </p>
+                    {timedOut && <p className="mt-1">{t('learn.check.timeOutBody')}</p>}
                     <p className="mt-1 text-muted-foreground">{tx(item.question.explanation)}</p>
                   </div>
                 </div>
@@ -420,7 +464,9 @@ export function ModuleCheck({ module }: { module: Module }) {
         <div className="min-w-0">
           <h2 className="text-lg font-semibold tracking-tight">{t('learn.check.title')}</h2>
           <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
-            {total > 0 ? tf('learn.check.intro', { count: total, pass: passMark }) : t('learn.check.noQuestions')}
+            {total > 0
+              ? tf('learn.check.intro', { count: total, pass: passMark, sec: MODULE_CHECK_QUESTION_SECONDS })
+              : t('learn.check.noQuestions')}
           </p>
         </div>
       </div>
