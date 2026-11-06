@@ -22,6 +22,7 @@ import { quizQuestions } from '@/data/quizQuestions'
 import { getAdjacentModules } from '@/data/modules'
 import { shuffle } from '@/lib/shuffle'
 import { MODULE_CHECK_QUESTION_SECONDS } from '@/lib/constants'
+import { useTestGuard } from '@/lib/useTestGuard'
 import type { Language, Module, QuizQuestion } from '@/types'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -75,6 +76,9 @@ export function ModuleCheck({ module }: { module: Module }) {
   const item = items[index] as CheckItem | undefined
   const isLast = index === items.length - 1
   const passed = score >= passMark
+
+  // Siren when the page is left + no copying of question texts while the check runs.
+  useTestGuard(phase === 'running')
 
   // Per-question clock: when it runs out the question is scored as wrong and the key is revealed.
   useEffect(() => {

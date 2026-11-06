@@ -16,6 +16,7 @@ import {
   Target,
   Timer,
   Trophy,
+  Volume2,
   type LucideIcon,
 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -31,6 +32,7 @@ import { modules } from '@/data/modules'
 import { shuffle } from '@/lib/shuffle'
 import { clientSignals } from '@/lib/api'
 import { ApiError } from '@/lib/http'
+import { useTestGuard } from '@/lib/useTestGuard'
 import { CERTIFICATE_MIN_KNOWLEDGE_PERCENT, KNOWLEDGE_RETAKE_HOURS, QUIZ_QUESTION_SECONDS, TOTAL_MODULES } from '@/lib/constants'
 import type { Language, Module, NewAttemptInput, QuizQuestion } from '@/types'
 
@@ -131,6 +133,9 @@ export default function Quiz() {
   const lastFinishedAt = knowledgeAttempts.reduce((best, a) => Math.max(best, Date.parse(a.finishedAt) || 0), 0)
   const cooldownUntil = lastFinishedAt ? lastFinishedAt + KNOWLEDGE_RETAKE_HOURS * 3_600_000 : 0
   const onCooldown = user?.role !== 'admin' && cooldownUntil > Date.now()
+
+  // Siren when the page is left + no copying of question texts while the test runs.
+  useTestGuard(phase === 'running')
 
   // Per-question clock: QUIZ_QUESTION_SECONDS from the moment the question appears. Time with the page hidden is
   // not counted, because leaving the page forfeits the open question instead (see the visibility effect).
@@ -368,6 +373,7 @@ export default function Quiz() {
       { icon: Timer, text: tf('learn.quiz.ruleTimer', { sec: QUIZ_QUESTION_SECONDS }) },
       { icon: EyeOff, text: t('learn.quiz.ruleNoHints') },
       { icon: AppWindow, text: t('learn.quiz.ruleFocus') },
+      { icon: Volume2, text: t('learn.quiz.ruleAlarm') },
       { icon: RotateCcw, text: tf('learn.quiz.ruleCooldown', { hours: KNOWLEDGE_RETAKE_HOURS }) },
       { icon: ShieldCheck, text: t('learn.quiz.ruleRecorded') },
       { icon: Award, text: tf('learn.quiz.ruleCertificate', { min: CERTIFICATE_MIN_KNOWLEDGE_PERCENT }) },

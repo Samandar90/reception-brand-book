@@ -30,6 +30,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
+import { useTestGuard } from '@/lib/useTestGuard'
 import { useLanguage } from '@/i18n/LanguageContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
@@ -543,6 +544,9 @@ export default function FinalTest() {
   const remainingMs = deadlineMs !== null && clockReady ? Math.max(0, deadlineMs - (now + offset)) : null
   const graceLeftMs = deadlineMs !== null && clockReady ? deadlineMs + GRACE_MS - (now + offset) : null
   const totalMs = deadlineMs !== null && startedMs !== null ? Math.max(1, deadlineMs - startedMs) : 0
+
+  // Siren when a participant leaves the page while a question is open + no copying of the question text.
+  useTestGuard(shouldJoin && session?.status === 'question')
 
   const standings = useMemo<Standings>(() => {
     const list = participants.sessionId === sessionId ? participants.list : []

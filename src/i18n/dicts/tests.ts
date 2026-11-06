@@ -164,6 +164,11 @@ export const testsDict = {
     uz: 'Sahifadan chiqmang va tarjimondan foydalanmang — bu natijada qayd etiladi.',
     en: "Don't leave the page or use a translator — this is recorded in your result.",
   },
+  'lang.ruleAlarm': {
+    ru: 'Уход со страницы включает громкий сигнал, который слышит администратор. Копирование текста вопросов и контекстное меню отключены.',
+    uz: "Sahifadan chiqish administrator eshitadigan baland signalni yoqadi. Savol matnini nusxalash va kontekst menyusi o'chirilgan.",
+    en: 'Leaving the page sets off a loud alarm the administrator can hear. Copying question text and the context menu are disabled.',
+  },
   'lang.timeRemaining': { ru: 'Осталось {time}', uz: 'Qoldi: {time}', en: '{time} left' },
   'lang.alreadyTaken': {
     ru: 'Вы уже прошли этот тест',

@@ -42,6 +42,11 @@ export const learningDict = {
     uz: "{hours} soatda bitta urinish: testni oldingi urinishdan kamida {hours} soat o'tgach qayta topshirish mumkin",
     en: 'One attempt per {hours} hours: the test can be retaken no sooner than {hours} h after the previous attempt',
   },
+  'learn.quiz.ruleAlarm': {
+    ru: 'Уход со страницы (другая вкладка, приложение или окно) включает громкий сигнал, который слышит администратор. Копирование текста вопросов, выделение и контекстное меню отключены',
+    uz: "Sahifadan chiqish (boshqa oyna, ilova yoki darcha) administrator eshitadigan baland signalni yoqadi. Savol matnini nusxalash, belgilash va kontekst menyusi o'chirilgan",
+    en: 'Leaving the page (another tab, app or window) sets off a loud alarm the administrator can hear. Copying question text, text selection and the context menu are disabled',
+  },
   'learn.quiz.cooldownNotice': {
     ru: 'Следующая попытка будет доступна {date}.',
     uz: 'Keyingi urinish {date} kuni ochiladi.',

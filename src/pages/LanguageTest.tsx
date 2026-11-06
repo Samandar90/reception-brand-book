@@ -43,6 +43,7 @@ import type { TranslationKey } from '@/i18n/translations'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProgress } from '@/contexts/ProgressContext'
 import { clientSignals, errorMessage, fetchAttempts } from '@/lib/api'
+import { useTestGuard } from '@/lib/useTestGuard'
 import { getLanguageQuestion, getWritingPrompt, languageBank, writingPrompts } from '@/data/languageTests'
 import {
   LEVEL_PASS_SCORE,
@@ -442,6 +443,8 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
   // administrator. It is counted when the page becomes visible again, so a refresh or closing the tab is not
   // counted, and neither is time spent on the untimed screens between the parts.
   const listening = active && run !== null && run.phase !== 'done'
+  // Siren when the page is left + no copying of question texts while a part of the test is running.
+  useTestGuard(listening)
   useEffect(() => {
     if (!listening) return
     const onVisibility = () => {
@@ -810,6 +813,7 @@ function LanguageTestRunner({ kind, testLang, userId }: { kind: LangKind; testLa
       tf('lang.ruleWriting', { min: Math.round(WRITING_SECONDS / 60), level: WRITING_MIN_LEVEL }),
       t('lang.ruleAdmin'),
       t('lang.ruleHonesty'),
+      t('lang.ruleAlarm'),
     ]
 
     return (
